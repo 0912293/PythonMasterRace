@@ -1,0 +1,24 @@
+#if ($username)
+  Logged in as $username with password $pass
+
+  <h1>Buy Products</h1>
+  <form action='/do_something'>
+    <div class="form-group">
+      <label for="search">Search Products</label>
+      <input id="search" name="search" class="form-control" type="text">
+    </div>
+    <button type="submit" class="btn">Go!</button>
+  </form>
+
+
+#else
+  <form action="/login" method="post">
+    <label for="username">Username</label>
+    <input id="username" name="username" type="text">
+    <label for="pass">Password(will be printed)</label>
+    <input id="pass" name="pass" type="password">
+    <button type="submit">Submit name</button>
+  </form>
+#end
+
+<a href="/">Return to home page</a>
