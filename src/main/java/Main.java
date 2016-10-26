@@ -71,8 +71,7 @@ public class Main {
             model.put("username", request.session().attribute("username"));
             model.put("template", "templates/welcome.vtl");
             return new ModelAndView(model, layout3);
-        }, new VelocityTemplateEngine());
-
+        }, new VelocityTemplateEngine()); //
 
         post("/welcome", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();
