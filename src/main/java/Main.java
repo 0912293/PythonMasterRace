@@ -1,8 +1,5 @@
 import static spark.Spark.*;
 
-import com.steen.Cryptr;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.eclipse.jetty.util.PathWatcher;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -35,11 +32,11 @@ public class Main {
         staticFileLocation("/public");              // sets folder for non java files
 
         //--------------------------------------------------------project
-        String h_layout = "templates/p_home.vtl";
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
             homeModel.put("username", req.session().attribute("username"));
             homeModel.put("pass", req.session().attribute("pass"));
+            homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
@@ -62,7 +59,9 @@ public class Main {
             homeModel.put("userCheck", userCheck);
             homeModel.put("passCheck", passCheck);
 
-            return new ModelAndView(homeModel, h_layout);
+            homeModel.put("login_modal", "templates/login_mod.vtl");
+            homeModel.put("template","templates/p_home.vtl");
+            return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
 

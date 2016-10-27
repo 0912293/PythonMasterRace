@@ -1,3 +1,5 @@
+import com.steen.Cryptr;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +13,7 @@ public class Login {
 
     public Login(String username, String password){
         this.username = username;
-        this.password = password;
+        this.password = Cryptr.getInstance(password).getString();
     }
 
     public void ParseLogin() {

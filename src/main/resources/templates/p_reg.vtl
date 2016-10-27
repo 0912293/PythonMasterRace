@@ -1,5 +1,5 @@
 #if ($username)
-  Logged in as $username with password $pass
+  Logged in as $username
 
   <h1>Buy Products</h1>
   <form action='/do_something'>
@@ -12,8 +12,9 @@
 
 
 #else
+<h1>Register</h1>
   <form action="/regist" method="post">
-  <h1>Register</h1>
+
 
   <div class="form-group row">
     <label for="username" class="col-xs-2 col-form-label">Username</label>
@@ -83,8 +84,6 @@
       </div>
     </div>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
 </form>
 #end
-
-<a href="/">Return to home page</a>
