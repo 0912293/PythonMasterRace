@@ -34,12 +34,20 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
-            homeModel.put("username", req.session().attribute("username"));
-            homeModel.put("pass", req.session().attribute("pass"));
+
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
+
+        get("/p_log", (req, res) -> {
+            homeModel.put("username", req.session().attribute("username"));
+            homeModel.put("pass", req.session().attribute("pass"));
+            homeModel.put("login_modal", "templates/login_mod.vtl");
+            homeModel.put("template","templates/p_login.vtl");
+            return new ModelAndView(homeModel, p_layout);
+        }, new VelocityTemplateEngine());
+
 
         post("/login", (req, res) -> {
             Username = req.queryParams("username");
@@ -82,6 +90,8 @@ public class Main {
             model.put("email", req.session().attribute("email"));
 
             model.put("template","templates/p_reg.vtl");
+
+            model.put("login_modal","templates/login_mod.vtl");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -116,6 +126,8 @@ public class Main {
             req.session().attribute("search", product);
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
+
+            model.put("template","templates/p_reg.vtl");
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());

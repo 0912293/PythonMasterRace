@@ -1,10 +1,26 @@
 #if ($correctinfo && $userCheck && $passCheck )
-already logged in
+<div id="login_modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Error</h4>
+      </div>
+
+      <div class="modal-body">
+      <p>Already logged in as $username</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 #else
-<!-- Trigger the modal with a button -->
 
 <!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<div id="login_modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -43,7 +59,7 @@ already logged in
 
       <div class="modal-footer">
           New To Steen?
-          <a href="#" class="btn btn-primary">Register</a>
+          <a href="/p_reg" class="btn btn-primary">Register</a>
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

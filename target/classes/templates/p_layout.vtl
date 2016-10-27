@@ -21,7 +21,7 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-        <li><a href="/">Login</a></li>
+        <li><a href="/p_log">Login</a></li>
         <li><a href="/p_reg">Register</a></li>
       </ul>
       <form class="navbar-form navbar-left">
@@ -33,7 +33,7 @@
 
       <ul class="nav navbar-nav navbar-right">
             <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       </ul>
     </div>
   </nav>
@@ -43,7 +43,7 @@
 <!-----------------------template html------------------------------>
 
     <div class="container">
-#parse ($login_modal)
+      #parse ($login_modal)
       #parse( $template )
 
     </div>
