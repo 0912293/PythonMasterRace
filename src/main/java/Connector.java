@@ -8,7 +8,7 @@ public final class Connector {
         try {
             String url = "jdbc:mysql://localhost:3306/webshoptest";
             String user = "root";
-            String password = "Test123";
+            String password = "root";
 
             Connection connection = DriverManager.getConnection(url, user, password);
 

@@ -1,10 +1,10 @@
 import static spark.Spark.*;
-
-import com.steen.Cryptr;
+//import com.steen.Cryptr;
 import org.eclipse.jetty.util.PathWatcher;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import javax.jws.soap.SOAPBinding;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +15,19 @@ public class Main {
     static String Password;
     static String Username;
     static Login login;
+    static String name;
+    static String surname;
+    static String country;
+    static String city;
+    static String street;
+    static String postal;
+    static String number;
+    static String day;
+    static String month;
+    static String year;
+    static String email;
+    static Register regist;
+    static DateBuilder dbuilder = new DateBuilder();
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
@@ -52,6 +65,51 @@ public class Main {
             return new ModelAndView(homeModel, h_layout);
         }, new VelocityTemplateEngine());
 
+
+        get("/p_reg", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("username", req.session().attribute("username"));
+            model.put("pass", req.session().attribute("pass"));
+            model.put("name", req.session().attribute("name"));
+            model.put("sur", req.session().attribute("sur"));
+            model.put("country", req.session().attribute("country"));
+            model.put("city", req.session().attribute("city"));
+            model.put("number", req.session().attribute("number"));
+            model.put("street", req.session().attribute("street"));
+            model.put("postal", req.session().attribute("postal"));
+            model.put("day", req.session().attribute("day"));
+            model.put("month", req.session().attribute("month"));
+            model.put("year", req.session().attribute("year"));
+            model.put("email", req.session().attribute("email"));
+
+            model.put("template","templates/p_reg.vtl");
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        post("/regist",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            Username = req.queryParams("username");
+            Password = req.queryParams("pass");
+            name = req.queryParams("name");
+            surname = req.queryParams("sur");
+            country = req.queryParams("country");
+            city = req.queryParams("city");
+            number = req.queryParams("number");
+            street = req.queryParams("street");
+            postal = req.queryParams("postal");
+            day = req.queryParams("day");
+            month = req.queryParams("month");
+            year = req.queryParams("year");
+            email = req.queryParams("email");
+
+            dbuilder.build(day,month,year);
+
+            regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            regist.ParseReg();
+
+            model.put("template","templates/p_home.vtl");
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
 
         get("/do_something",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();

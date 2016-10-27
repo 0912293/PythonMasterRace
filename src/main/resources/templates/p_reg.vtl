@@ -1,0 +1,90 @@
+#if ($username)
+  Logged in as $username with password $pass
+
+  <h1>Buy Products</h1>
+  <form action='/do_something'>
+    <div class="form-group">
+      <label for="search">Search Products</label>
+      <input id="search" name="search" class="form-control" type="text">
+    </div>
+    <button type="submit" class="btn">Go!</button>
+  </form>
+
+
+#else
+  <form action="/regist" method="post">
+  <h1>Register</h1>
+
+  <div class="form-group row">
+    <label for="username" class="col-xs-2 col-form-label">Username</label>
+    <div class="col-xs-10">
+      <input class="form-control" name="username" type="text" id="username">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="pass" class="col-xs-2 col-form-label">Password</label>
+    <div class="col-xs-10">
+      <input class="form-control" name="pass" type="password" id="pass">
+    </div>
+  </div>
+
+    <div class="form-group row">
+      <label for="email" class="col-xs-2 col-form-label">Email</label>
+      <div class="col-xs-10">
+        <input class="form-control" name="email" type="email" id="email">
+      </div>
+    </div>
+
+  <div class="form-group row">
+    <label for="name" class="col-xs-2 col-form-label">Name</label>
+    <div class="col-xs-3">
+      <input class="form-control" type="text" name="name" id="name" placeholder="Name">
+    </div>
+    <div class="col-xs-3">
+          <input class="form-control" type="text" name="sur" id="sur" placeholder="Surname">
+        </div>
+  </div>
+
+
+  <div class="form-group row">
+    <label for="bday" class="col-xs-2 col-form-label">Birth date</label>
+    <div class="col-xs-2">
+      <input class="form-control" type="number" name="day" id="day" placeholder="DD" min="1" max="31">
+    </div>
+    <div class="col-xs-2">
+        <input class="form-control" type="number" name="month" id="month" placeholder="MM"  min="1" max="12">
+    </div>
+    <div class="col-xs-2">
+      <input class="form-control" type="number" name="year" id="year" placeholder="YYYY" min="1900" max="2010">
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="street" class="col-xs-2 col-form-label">Address</label>
+    <div class="col-xs-5">
+      <input class="form-control" type="text" name="street" id="street" placeholder="Street">
+    </div>
+    <div class="col-xs-2">
+      <input class="form-control" type="number" name="number" id="number" placeholder="Number">
+    </div>
+    <div class="col-xs-3">
+      <input class="form-control" type="text" name="postal" id="postal" placeholder="Postal">
+    </div>
+  </div>
+
+    <div class="form-group row">
+        <label for="street" class="col-xs-2 col-form-label"></label>
+      <div class="col-xs-3">
+        <input class="form-control" type="text" name="country" id="country" placeholder="Country">
+      </div>
+      <div class="col-xs-3">
+        <input class="form-control" type="text" name="city" id="city" placeholder="City">
+      </div>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+#end
+
+<a href="/">Return to home page</a>
