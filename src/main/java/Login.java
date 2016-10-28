@@ -18,8 +18,8 @@ public class Login {
 
     public void ParseLogin() {
         try {
-            sql = "SELECT U.username, U.password" +
-                    " FROM users u" +
+            sql = "SELECT users.username, users.password" +
+                    " FROM users" +
                     " WHERE username = '" + (this.username) + "' and password = '" + (this.password) + "'";
             PreparedStatement myStmt = connection.prepareStatement(sql);
             ResultSet resultSet = myStmt.executeQuery(sql);
