@@ -74,7 +74,7 @@ public class Main {
 
 
         get("/p_reg", (req, res) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             model.put("username", req.session().attribute("username"));
             model.put("pass", req.session().attribute("pass"));
             model.put("name", req.session().attribute("name"));
@@ -96,7 +96,7 @@ public class Main {
         }, new VelocityTemplateEngine());
 
         post("/regist",(req,res)->{
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             Username = req.queryParams("username");
             Password = req.queryParams("pass");
             name = req.queryParams("name");
@@ -121,7 +121,7 @@ public class Main {
         }, new VelocityTemplateEngine());
 
         get("/do_something",(req,res)->{
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             String product = req.queryParams("search");
             req.session().attribute("search", product);
             model.put("search",product);
@@ -132,10 +132,8 @@ public class Main {
         }, new VelocityTemplateEngine());
     }
 
-    private static Boolean UserInputCheck(String input){
-        if(input != null) {
-            return !input.contains(" ") || !input.contains("'") || !input.contains(";");
-        }
-        return false;
+    private static Boolean UserInputCheck(String input)
+    {
+        return (input != null) ? !input.contains(" ") || !input.contains("'") || !input.contains(";") : false;
     }
 }
