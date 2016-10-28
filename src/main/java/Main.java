@@ -1,9 +1,14 @@
 import static spark.Spark.*;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.eclipse.jetty.server.Authentication;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.sql.Array;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +31,8 @@ public class Main {
     static Register regist;
     static DateBuilder dbuilder = new DateBuilder();
     static Map<String, Object> homeModel = new HashMap<String, Object>();
-    static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
+
+
 
     public static void main(String[] args) {
         staticFileLocation("/public");              // sets folder for non java files
@@ -97,6 +103,7 @@ public class Main {
 
         post("/regist",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
+            ArrayList<String> userDetails = new ArrayList<String>();
             Username = req.queryParams("username");
             Password = req.queryParams("pass");
             name = req.queryParams("name");
@@ -111,12 +118,21 @@ public class Main {
             year = req.queryParams("year");
             email = req.queryParams("email");
 
+            userDetails.addAll(Arrays.asList(Username, Password, name, surname, country, city, number, street, postal, day, month, year, email));
+
+            Boolean nullCheck = NullCheck(userDetails);
+
             dbuilder.build(day,month,year);
 
-            regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
             regist.ParseReg();
             model.put("login_modal","templates/login_mod.vtl");
-            model.put("template","templates/p_home.vtl");
+            if(nullCheck){
+                model.put("template","templates/p_after_reg.vtl");
+            }
+            else{
+                model.put("template", "templates/p_reg.vtl");
+            }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -137,5 +153,16 @@ public class Main {
             return !input.contains(" ") || !input.contains("'") || !input.contains(";");
         }
         return false;
+    }
+
+    private static Boolean NullCheck(ArrayList<String> list){
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(list.get(i) == null || list.get(i).equals("")){
+                System.out.println(("You need to fill in all fields"));
+                return false;
+            }
+        }
+        return true;
     }
 }
