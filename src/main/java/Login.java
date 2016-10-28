@@ -1,3 +1,5 @@
+import com.steen.Cryptr;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,13 +13,13 @@ public class Login {
 
     public Login(String username, String password){
         this.username = username;
-        this.password = password;
+        this.password = Cryptr.getInstance(password).getString();
     }
 
     public void ParseLogin() {
         try {
-            sql = "SELECT U.username, U.password" +
-                    " FROM users u" +
+            sql = "SELECT users.username, users.password" +
+                    " FROM users" +
                     " WHERE username = '" + (this.username) + "' and password = '" + (this.password) + "'";
             PreparedStatement myStmt = connection.prepareStatement(sql);
             ResultSet resultSet = myStmt.executeQuery(sql);
