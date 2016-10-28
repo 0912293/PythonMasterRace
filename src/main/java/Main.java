@@ -30,6 +30,7 @@ public class Main {
     static String email;
     static Register regist;
     static DateBuilder dbuilder = new DateBuilder();
+    static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
