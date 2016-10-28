@@ -23,7 +23,7 @@ public class Register {
 
     public Register(String username, String password,String name,String surname,String country,String city,String street,String postal,String number,String bday, String email){
         this.username = username;
-        this.password = Cryptr.getInstance(password).getString();
+        this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
         this.name = name;
         this.surname = surname;
         this.country = country;

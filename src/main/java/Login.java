@@ -13,7 +13,7 @@ public class Login {
 
     public Login(String username, String password){
         this.username = username;
-        this.password = Cryptr.getInstance(password).getString();
+        this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
     }
 
     public void ParseLogin() {
