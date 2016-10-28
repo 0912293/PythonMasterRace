@@ -20,7 +20,6 @@ public class Register {
     String sql;
 
     Connection connection = Main.connection;
-    Boolean correctLoginInfo = false;
 
     public Register(String username, String password,String name,String surname,String country,String city,String street,String postal,String number,String bday, String email){
         this.username = username;
@@ -38,7 +37,7 @@ public class Register {
 
     public void ParseReg() {
         try {
-            sql = "INSERT INTO user (username,password,name,surname,country,city,street,postal,bday,number,email) VALUES ('"+
+            sql = "INSERT INTO users (username,password,name,surname,country,city,street,postal,bday,number,email) VALUES ('"+
                     this.username+"','"+
                     this.password+"','"+
                     this.name+"','"+

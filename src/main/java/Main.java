@@ -115,7 +115,7 @@ public class Main {
 
             regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
             regist.ParseReg();
-
+            model.put("login_modal","templates/login_mod.vtl");
             model.put("template","templates/p_home.vtl");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
@@ -126,8 +126,7 @@ public class Main {
             req.session().attribute("search", product);
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
-
-            model.put("template","templates/p_reg.vtl");
+            model.put("login_modal","templates/login_mod.vtl");
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
