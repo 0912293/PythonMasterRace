@@ -53,13 +53,14 @@ public class Register {
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
+
+            ParseRegUser();
+            ParseLinkAddressToUser();
+            System.out.println("User registered");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        ParseRegUser();
-        ParseLinkAddressToUser();
-        System.out.println("User registered");
     }
 
     private void ParseRegUser() {
