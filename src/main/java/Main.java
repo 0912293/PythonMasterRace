@@ -23,7 +23,9 @@ public class Main {
     static String month;
     static String year;
     static String email;
+    static Boolean Admin;
     static Register regist;
+    static Admin_log adminLog;
     static DateBuilder dbuilder = new DateBuilder();
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
@@ -34,7 +36,7 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
-
+            homeModel.put("admin",Admin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             return new ModelAndView(homeModel, p_layout);
@@ -60,6 +62,11 @@ public class Main {
             login = new Login(Username, Password);
             login.ParseLogin();
             Boolean correctInfo = login.correctLoginInfo;
+
+            adminLog = new Admin_log(Username);
+            adminLog.CheckAdmin();
+            Admin = adminLog.getAdmin();
+            req.session().attribute("admin",Admin);
 
             homeModel.put("correctinfo", correctInfo);
             homeModel.put("username", Username);

@@ -6,13 +6,13 @@ public final class Connector {
     public static Connection connect(){
 
         try {
-//            String url = "jdbc:mysql://localhost:3306/webshoptest";
-//            String user = "root";
-//            String password = "root";
+            String url = "jdbc:mysql://localhost:3306/webshoptest";
+            String user = "root";
+            String password = "root";
 
-            String url = "jdbc:mysql://g3project56.ddns.net:3306/webshoptest";
-            String user = "projectuser";
-            String password = "Hogeschool!1";
+//            String url = "jdbc:mysql://g3project56.ddns.net:3306/webshoptest";
+//            String user = "projectuser";
+//            String password = "Hogeschool!1";
 
             Connection connection = DriverManager.getConnection(url, user, password);
 
