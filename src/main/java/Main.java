@@ -25,6 +25,7 @@ public class Main {
     static String email;
     static Register regist;
     static DateBuilder dbuilder = new DateBuilder();
+    static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
@@ -113,7 +114,7 @@ public class Main {
 
             dbuilder.build(day,month,year);
 
-            regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, admin);
             regist.ParseReg();
             model.put("login_modal","templates/login_mod.vtl");
             model.put("template","templates/p_home.vtl");
