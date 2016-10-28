@@ -123,7 +123,12 @@ public class Main {
 
             dbuilder.build(day,month,year);
 
-            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            try {
+                regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            } catch (NumberFormatException nfe) {
+                model.put("template", "templates/p_reg.vtl");
+                return new ModelAndView(model, p_layout);
+            }
             regist.ParseReg();
             model.put("login_modal","templates/login_mod.vtl");
             if(nullCheck){
