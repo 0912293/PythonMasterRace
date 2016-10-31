@@ -1,11 +1,6 @@
 import static spark.Spark.*;
-
-import org.apache.commons.lang.ObjectUtils;
-import org.eclipse.jetty.server.Authentication;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
-
-import java.sql.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +23,9 @@ public class Main {
     static String month;
     static String year;
     static String email;
-    static Boolean Admin;
+    static Boolean isAdmin;
     static Register regist;
-    static Admin_log adminLog;
+//    static Admin_log adminLog;
     static DateBuilder dbuilder = new DateBuilder();
     static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
@@ -42,7 +37,7 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
-            homeModel.put("admin",Admin);
+            homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             homeModel.put("username", req.session().attribute("username"));
@@ -50,7 +45,7 @@ public class Main {
         }, new VelocityTemplateEngine());
 
         get("/p_log", (req, res) -> {
-            homeModel.put("admin",Admin);
+            homeModel.put("admin",isAdmin);
             homeModel.put("username", req.session().attribute("username"));
             homeModel.put("pass", req.session().attribute("pass"));
             homeModel.put("login_modal", "templates/login_mod.vtl");
@@ -70,22 +65,43 @@ public class Main {
             login = new Login(Username, Password);
             login.ParseLogin();
             Boolean correctInfo = login.correctLoginInfo;
-
-            adminLog = new Admin_log(Username);
-            adminLog.CheckAdmin();
-            Admin = adminLog.getAdmin();
-            req.session().attribute("admin",Admin);
+            if (correctInfo) {
+                isAdmin = login.isAdmin();
+                req.session().attribute("admin", isAdmin);
+            }
 
             homeModel.put("correctinfo", correctInfo);
             homeModel.put("username", Username);
             homeModel.put("pass", Password);
             homeModel.put("userCheck", userCheck);
             homeModel.put("passCheck", passCheck);
+
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
+        get("/logout", (req, res) -> {
+            req.session().attribute("username", null);
+            req.session().attribute("pass", null);
+            req.session().attribute("admin", false);
+
+            connection = Connector.connect();
+            Username = null;
+            login = null;
+            name = null;
+            isAdmin = null;
+            regist = null;
+//            adminLog = null;
+            dbuilder =  new DateBuilder();
+            admin = null;
+            afterLoginModel = null;
+            homeModel = new HashMap<>();
+            afterLoginModel = new HashMap<>();
+
+            res.redirect("/"); // stuurt de gebruiker naar de home page, dus hierna word de http request voor home uitgevoerd in de client.
+            return new ModelAndView(homeModel, p_layout);
+        }, new VelocityTemplateEngine());
 
         get("/p_reg", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -137,6 +153,7 @@ public class Main {
             if(nullCheck){
                 regist.ParseReg();
                 model.put("template","templates/p_after_reg.vtl");
+
             }
             else{
                 model.put("template", "templates/p_reg.vtl");
@@ -151,7 +168,7 @@ public class Main {
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
-            model.put("admin",Admin);
+            model.put("admin",isAdmin);
             model.put("username", req.session().attribute("username"));
 
             return new ModelAndView(model, p_layout);
@@ -160,7 +177,7 @@ public class Main {
         get("/admin",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
-            model.put("admin",Admin);
+            model.put("admin", isAdmin);
             model.put("username", req.session().attribute("username"));
 
             return new ModelAndView(model, p_layout);
