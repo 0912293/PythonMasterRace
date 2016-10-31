@@ -26,26 +26,12 @@ public class Login {
             ResultSet resultSet = myStmt.executeQuery(sql);
             if (resultSet.next()) {
                 correctLoginInfo = true;
-                checkAdmin();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    public boolean checkAdmin() {
-        try {
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            ResultSet resultSet = myStmt.executeQuery(sql);
-            if (resultSet.next()) {
                 admin = resultSet.getBoolean("admin");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        return false;
     }
 
     public Boolean isAdmin() {
