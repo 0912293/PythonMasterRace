@@ -8,6 +8,7 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/compiler.xml
+*.iml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
