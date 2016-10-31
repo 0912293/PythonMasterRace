@@ -41,8 +41,6 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-        <li><a href="/p_log">Login</a></li>
-        <li><a href="/p_reg">Register</a></li>
       </ul>
 
       <form action='/do_something' class="navbar-form navbar-left">
@@ -57,8 +55,8 @@
             <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
           #else
           #end
-            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          #if($username)
+            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+          #if($correctinfo)
             <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
           #else
             <li><a data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>

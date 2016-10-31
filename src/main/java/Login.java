@@ -10,25 +10,45 @@ public class Login {
     String sql;
     Connection connection = Main.connection;
     Boolean correctLoginInfo = false;
+    Boolean admin = false;
 
     public Login(String username, String password){
         this.username = username;
         this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
+        this.sql = "SELECT users.admin" +
+                " FROM users" +
+                " WHERE username = '" + (this.username) + "' AND password = '" + (this.password) + "'";
     }
 
     public void ParseLogin() {
         try {
-            sql = "SELECT users.username, users.password" +
-                    " FROM users" +
-                    " WHERE username = '" + (this.username) + "' and password = '" + (this.password) + "'";
             PreparedStatement myStmt = connection.prepareStatement(sql);
             ResultSet resultSet = myStmt.executeQuery(sql);
             if (resultSet.next()) {
                 correctLoginInfo = true;
+                checkAdmin();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public boolean checkAdmin() {
+        try {
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            ResultSet resultSet = myStmt.executeQuery(sql);
+            if (resultSet.next()) {
+                admin = resultSet.getBoolean("admin");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public Boolean isAdmin() {
+        return admin;
     }
 }
