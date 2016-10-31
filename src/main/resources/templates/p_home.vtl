@@ -1,2 +1,8 @@
-<h1>Welcome to Steen.bob</h1>
-<p>Bob is love, Bob is life.<br> &nbsp &nbsp -Bob Boss</p>
+#if($admin)
+    <h1>Welcome $username</h1>
+    <p>Admin</p>
+    <div></div>
+#else
+    <h1>Welcome to Steen.bob</h1>
+    <p>Bob is love, Bob is life.<br> &nbsp &nbsp -Bob Boss</p>
+#end

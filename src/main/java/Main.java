@@ -28,7 +28,9 @@ public class Main {
     static String month;
     static String year;
     static String email;
+    static Boolean Admin;
     static Register regist;
+    static Admin_log adminLog;
     static DateBuilder dbuilder = new DateBuilder();
     static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
@@ -40,13 +42,15 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
-
+            homeModel.put("admin",Admin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            homeModel.put("username", req.session().attribute("username"));
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
         get("/p_log", (req, res) -> {
+            homeModel.put("admin",Admin);
             homeModel.put("username", req.session().attribute("username"));
             homeModel.put("pass", req.session().attribute("pass"));
             homeModel.put("login_modal", "templates/login_mod.vtl");
@@ -66,6 +70,11 @@ public class Main {
             login = new Login(Username, Password);
             login.ParseLogin();
             Boolean correctInfo = login.correctLoginInfo;
+
+            adminLog = new Admin_log(Username);
+            adminLog.CheckAdmin();
+            Admin = adminLog.getAdmin();
+            req.session().attribute("admin",Admin);
 
             homeModel.put("correctinfo", correctInfo);
             homeModel.put("username", Username);
@@ -143,6 +152,17 @@ public class Main {
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
+            model.put("admin",Admin);
+            model.put("username", req.session().attribute("username"));
+
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/admin",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin",Admin);
+            model.put("username", req.session().attribute("username"));
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
