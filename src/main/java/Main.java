@@ -69,13 +69,20 @@ public class Main {
             if (correctInfo) {
                 isAdmin = login.isAdmin();
                 req.session().attribute("admin", isAdmin);
+                homeModel.put("correctinfo", correctInfo);
+                homeModel.put("username", Username);
+                homeModel.put("pass", Password);
+                homeModel.put("userCheck", userCheck);
+                homeModel.put("passCheck", passCheck);
             }
-
-            homeModel.put("correctinfo", correctInfo);
-            homeModel.put("username", Username);
-            homeModel.put("pass", Password);
-            homeModel.put("userCheck", userCheck);
-            homeModel.put("passCheck", passCheck);
+            else{
+                Username = null;
+                Password = null;
+                login = null;
+                correctInfo = null;
+                passCheck = null;
+                userCheck = null;
+            }
 
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
