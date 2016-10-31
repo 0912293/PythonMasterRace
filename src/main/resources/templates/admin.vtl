@@ -1,5 +1,5 @@
 #if($admin)
-<h1>Options</h1>
+<h1>Admin</h1><br>
 <div class="col-xs-12 col-md-10">
     <form action="/login" method="post">
         <div class="form-group row">
@@ -12,13 +12,14 @@
         </div>
         <div class="form-group row">
             <div class="col-xs-10">
-                <button type="submit" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#login_s_modal">Search</button>
+                <button type="submit" class="btn btn-primary btn-lg">Search</button>
             </div>
         </div>
     </form>
 </div>
 
-<div class="col-xs-6 col-md-1">
+<div class="col-xs-6 col-md-2">
+    <h3>Nav</h3>
     <p><a href="/admin"><span class="glyphicon glyphicon-stats"></span> Charts</a></p>
     <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Edit Users</a></p>
     <p><a href="/admin"><span class="glyphicon glyphicon-plus-sign"></span> Add Products</a></p>
