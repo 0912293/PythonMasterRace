@@ -1,12 +1,12 @@
-import com.steen.Cryptr;
-import org.apache.velocity.runtime.directive.Parse;
+package com.steen.Models;
 
+import com.steen.Cryptr;
+import com.steen.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
-public class Register {
+public class RegisterModel {
     String username;
     String password;
     String name;
@@ -25,7 +25,7 @@ public class Register {
 
     Connection connection = Main.connection;
 
-    public Register(String username, String password, String name, String surname, String country, String city, String street, String postal, String number, String bday, String email, Boolean admin) {
+    public RegisterModel(String username, String password, String name, String surname, String country, String city, String street, String postal, String number, String bday, String email, Boolean admin) {
         this.username = username;
         this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
         this.name = name;

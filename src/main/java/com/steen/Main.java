@@ -1,8 +1,10 @@
+package com.steen;
+
 import static spark.Spark.*;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.steen.Models.RegisterModel;
 import spark.ModelAndView;
-import spark.template.velocity.VelocityTemplateEngine;
+import com.steen.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    static Connection connection = Connector.connect();
+    public static Connection connection = Connector.connect();
     static String Password;
     static String Username;
     static String name;
@@ -27,7 +29,7 @@ public class Main {
     static Boolean isAdmin;
     static Boolean correctInfo;
     static Login login;
-    static Register regist;
+    static RegisterModel regist;
     static DateBuilder dbuilder = new DateBuilder();
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
@@ -155,7 +157,7 @@ public class Main {
             dbuilder.build(day,month,year);
 
             model.put("login_modal","templates/login_mod.vtl");
-            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, isAdmin);
+            regist = new RegisterModel(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, isAdmin);
             if(nullCheck){
                 regist.ParseReg();
                 model.put("template","templates/p_after_reg.vtl");

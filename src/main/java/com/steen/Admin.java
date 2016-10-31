@@ -1,11 +1,8 @@
-import com.steen.Cryptr;
-import org.apache.velocity.runtime.directive.Parse;
+package com.steen;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 public class Admin {
     String sql;
