@@ -1,9 +1,14 @@
 import static spark.Spark.*;
 
+import org.apache.commons.lang.ObjectUtils;
+import org.eclipse.jetty.server.Authentication;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.sql.Array;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +32,7 @@ public class Main {
     static Register regist;
     static Admin_log adminLog;
     static DateBuilder dbuilder = new DateBuilder();
+    static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
@@ -83,7 +89,7 @@ public class Main {
 
 
         get("/p_reg", (req, res) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             model.put("username", req.session().attribute("username"));
             model.put("pass", req.session().attribute("pass"));
             model.put("name", req.session().attribute("name"));
@@ -106,6 +112,7 @@ public class Main {
 
         post("/regist",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
+            ArrayList<String> userDetails = new ArrayList<String>();
             Username = req.queryParams("username");
             Password = req.queryParams("pass");
             name = req.queryParams("name");
@@ -120,17 +127,26 @@ public class Main {
             year = req.queryParams("year");
             email = req.queryParams("email");
 
+            userDetails.addAll(Arrays.asList(Username, Password, name, surname, country, city, number, street, postal, day, month, year, email));
+
+            Boolean nullCheck = NullCheck(userDetails);
+
             dbuilder.build(day,month,year);
 
-            regist = new Register(Username, Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
-            regist.ParseReg();
             model.put("login_modal","templates/login_mod.vtl");
-            model.put("template","templates/p_home.vtl");
+            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, admin);
+            if(nullCheck){
+                regist.ParseReg();
+                model.put("template","templates/p_after_reg.vtl");
+            }
+            else{
+                model.put("template", "templates/p_reg.vtl");
+            }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
         get("/do_something",(req,res)->{
-            Map<String, Object> model = new HashMap<String, Object>();
+            Map<String, Object> model = new HashMap<>();
             String product = req.queryParams("search");
             req.session().attribute("search", product);
             model.put("search",product);
@@ -152,10 +168,19 @@ public class Main {
         }, new VelocityTemplateEngine());
     }
 
-    private static Boolean UserInputCheck(String input){
-        if(input != null) {
-            return !input.contains(" ") || !input.contains("'") || !input.contains(";");
+    private static Boolean UserInputCheck(String input)
+    {
+        return (input != null) ? !input.contains(" ") || !input.contains("'") || !input.contains(";") : false;
+    }
+
+    private static Boolean NullCheck(ArrayList<String> list){
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(list.get(i) == null || list.get(i).equals("")){
+                System.out.println(("You need to fill in all fields"));
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 }
