@@ -1,3 +1,5 @@
+package com.steen;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 

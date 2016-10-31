@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package spark.template.velocity;
+package com.steen.velocity;
 
 import org.apache.velocity.app.VelocityEngine;
         import java.io.StringWriter;
@@ -23,9 +23,8 @@ import org.apache.velocity.app.VelocityEngine;
 
         import org.apache.velocity.Template;
         import org.apache.velocity.VelocityContext;
-        import org.apache.velocity.app.VelocityEngine;
 
-        import spark.ModelAndView;
+import spark.ModelAndView;
         import spark.TemplateEngine;
 
 /**
