@@ -27,12 +27,11 @@ public class Admin {
     Connection connection = Main.connection;
 
     public void searchUser(String user) {
-        sbuilder = new StringBuilder();
         try {
             sql = "SELECT * FROM users WHERE username = '" + user + "'";
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
+            myStmt.executeQuery(sql);
 
             rs = myStmt.executeQuery();
 
@@ -42,13 +41,10 @@ public class Admin {
                 name = rs.getString("name");
                 surname = rs.getString("surname");
                 email = rs.getString("email");
-                birtdate = rs.getString("birtdate");
+                birtdate = rs.getString("birth_date");
                 address_id = rs.getInt("address_id");
             }
-
             searchUserAddress();
-
-
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -61,10 +57,9 @@ public class Admin {
             sql = "SELECT * FROM address WHERE address_id = '" + address_id + "'";
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
+            myStmt.executeQuery(sql);
 
             rs = myStmt.executeQuery();
-
 
             while (rs.next()) {
                 address_country = rs.getString("address_country");
@@ -74,11 +69,50 @@ public class Admin {
                 address_street = rs.getString("address_street");
             }
 
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
 
+    public enum Data{
+        USERNAME,NAME,SURNAME,EMAIL,BIRTHDATE,COUNTRY,STREET,POSTAL,NUMBER,CITY
+    }
+
+    public String getData(Data data){
+        String result="";
+        switch(data){
+            case NAME:
+                result = name;
+                break;
+            case SURNAME:
+                result = surname;
+                break;
+            case USERNAME:
+                result = username;
+                break;
+            case EMAIL:
+                result = email;
+                break;
+            case BIRTHDATE:
+                result = birtdate;
+                break;
+            case COUNTRY:
+                result = address_country;
+                break;
+            case STREET:
+                result = address_street;
+                break;
+            case POSTAL:
+                result = address_postalcode;
+                break;
+            case NUMBER:
+                result = address_number;
+                break;
+            case CITY:
+                result = address_city;
+                break;
+        }
+        return result;
+    }
 }

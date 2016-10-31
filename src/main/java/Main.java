@@ -32,6 +32,8 @@ public class Main {
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
+    static Admin admQ = new Admin();
+
     public static void main(String[] args) {
         staticFileLocation("/public");              // sets folder for non java files
 
@@ -41,6 +43,7 @@ public class Main {
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            homeModel.put("correctinfo", correctInfo);
             homeModel.put("username", req.session().attribute("username"));
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
@@ -186,6 +189,29 @@ public class Main {
             model.put("admin", isAdmin);
             model.put("username", req.session().attribute("username"));
             model.put("correctinfo", correctInfo);
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/getUserData",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("admin", isAdmin);
+            model.put("template","templates/admin.vtl");
+            model.put("correctinfo", correctInfo);
+
+            Username = req.queryParams("user");
+            admQ.searchUser(Username);
+            model.put("result",admQ.getData(Admin.Data.USERNAME));
+
+            model.put("username",admQ.getData(Admin.Data.USERNAME));
+            model.put("name",admQ.getData(Admin.Data.NAME));
+            model.put("surname",admQ.getData(Admin.Data.SURNAME));
+            model.put("email",admQ.getData(Admin.Data.EMAIL));
+            model.put("street",admQ.getData(Admin.Data.STREET));
+            model.put("country",admQ.getData(Admin.Data.COUNTRY));
+            model.put("city",admQ.getData(Admin.Data.CITY));
+            model.put("number",Integer.parseInt(admQ.getData(Admin.Data.NUMBER)));
+            model.put("postal",admQ.getData(Admin.Data.POSTAL));
+
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
