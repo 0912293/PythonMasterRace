@@ -78,6 +78,7 @@ public class Main {
 
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            res.redirect("/");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
