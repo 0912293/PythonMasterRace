@@ -1,4 +1,6 @@
 import static spark.Spark.*;
+
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
@@ -11,7 +13,6 @@ public class Main {
     static Connection connection = Connector.connect();
     static String Password;
     static String Username;
-    static Login login;
     static String name;
     static String surname;
     static String country;
@@ -24,10 +25,10 @@ public class Main {
     static String year;
     static String email;
     static Boolean isAdmin;
+    static Boolean correctInfo;
+    static Login login;
     static Register regist;
-//    static Admin_log adminLog;
     static DateBuilder dbuilder = new DateBuilder();
-    static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
 
@@ -64,7 +65,7 @@ public class Main {
 
             login = new Login(Username, Password);
             login.ParseLogin();
-            Boolean correctInfo = login.correctLoginInfo;
+            correctInfo = login.correctLoginInfo;
             if (correctInfo) {
                 isAdmin = login.isAdmin();
                 req.session().attribute("admin", isAdmin);
@@ -78,6 +79,7 @@ public class Main {
 
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            res.redirect("/");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -85,16 +87,13 @@ public class Main {
             req.session().attribute("username", null);
             req.session().attribute("pass", null);
             req.session().attribute("admin", false);
-
-            connection = Connector.connect();
             Username = null;
             login = null;
             name = null;
-            isAdmin = null;
+            correctInfo = false;
+            isAdmin = false;
             regist = null;
-//            adminLog = null;
             dbuilder =  new DateBuilder();
-            admin = null;
             afterLoginModel = null;
             homeModel = new HashMap<>();
             afterLoginModel = new HashMap<>();
@@ -149,7 +148,7 @@ public class Main {
             dbuilder.build(day,month,year);
 
             model.put("login_modal","templates/login_mod.vtl");
-            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, admin);
+            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, isAdmin);
             if(nullCheck){
                 regist.ParseReg();
                 model.put("template","templates/p_after_reg.vtl");
@@ -179,6 +178,7 @@ public class Main {
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", correctInfo);
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
