@@ -3,6 +3,7 @@
   <head>
     <title>Project 5/6</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+      <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
@@ -51,8 +52,16 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
+          #if($admin)
+            <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
+          #else
+          #end
             <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          #if($username)
+            <li><a href=""><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          #else
             <li><a data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          #end
       </ul>
     </div>
   </nav>

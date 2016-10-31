@@ -39,10 +39,12 @@ public class Main {
             homeModel.put("admin",Admin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            homeModel.put("username", req.session().attribute("username"));
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
         get("/p_log", (req, res) -> {
+            homeModel.put("admin",Admin);
             homeModel.put("username", req.session().attribute("username"));
             homeModel.put("pass", req.session().attribute("pass"));
             homeModel.put("login_modal", "templates/login_mod.vtl");
@@ -134,6 +136,17 @@ public class Main {
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
+            model.put("admin",Admin);
+            model.put("username", req.session().attribute("username"));
+
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/admin",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin",Admin);
+            model.put("username", req.session().attribute("username"));
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
