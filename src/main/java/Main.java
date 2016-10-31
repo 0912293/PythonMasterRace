@@ -81,7 +81,6 @@ public class Main {
             homeModel.put("pass", Password);
             homeModel.put("userCheck", userCheck);
             homeModel.put("passCheck", passCheck);
-
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
             return new ModelAndView(homeModel, p_layout);
