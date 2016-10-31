@@ -82,6 +82,27 @@ public class Main {
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
+        get("/logout", (req, res) -> {
+            req.session().attribute("username", null);
+            req.session().attribute("pass", null);
+            req.session().attribute("admin", false);
+
+            connection = Connector.connect();
+            Username = null;
+            login = null;
+            name = null;
+            Admin = null;
+            regist = null;
+            adminLog = null;
+            dbuilder =  new DateBuilder();
+            admin = null;
+            afterLoginModel = null;
+            homeModel = new HashMap<>();
+            afterLoginModel = new HashMap<>();
+
+            res.redirect("/"); // stuurt de gebruiker naar de home page, dus hierna word de http request voor home uitgevoerd in de client.
+            return new ModelAndView(homeModel, p_layout);
+        }, new VelocityTemplateEngine());
 
         get("/p_reg", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
