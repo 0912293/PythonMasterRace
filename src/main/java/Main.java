@@ -1,11 +1,6 @@
 import static spark.Spark.*;
-
-import org.apache.commons.lang.ObjectUtils;
-import org.eclipse.jetty.server.Authentication;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
-
-import java.sql.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -138,6 +133,7 @@ public class Main {
             if(nullCheck){
                 regist.ParseReg();
                 model.put("template","templates/p_after_reg.vtl");
+
             }
             else{
                 model.put("template", "templates/p_reg.vtl");
