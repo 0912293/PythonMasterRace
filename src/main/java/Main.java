@@ -90,9 +90,9 @@ public class Main {
             Username = null;
             login = null;
             name = null;
-            Admin = null;
+            isAdmin = null;
             regist = null;
-            adminLog = null;
+//            adminLog = null;
             dbuilder =  new DateBuilder();
             admin = null;
             afterLoginModel = null;
