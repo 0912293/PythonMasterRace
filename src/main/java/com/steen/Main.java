@@ -42,6 +42,7 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
+
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
@@ -174,8 +175,19 @@ public class Main {
 
         get("/do_something",(req,res)->{
             Map<String, Object> model = new HashMap<>();
+            Games games = new Games();
+            games.ParseQuery();
+            ArrayList<Game> gameArrayList = games.getGamesList();
+
+
             String product = req.queryParams("search");
             req.session().attribute("search", product);
+
+            Filter filter = new Filter();
+            filter.LikeData(product);
+
+
+            model.put("games", gameArrayList);
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
