@@ -4,6 +4,7 @@ import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Models.RegisterModel;
+import com.steen.session.*;
 import spark.ModelAndView;
 import com.steen.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
@@ -26,7 +27,8 @@ public class Main {
     static String email;
     static Boolean isAdmin;
     static Boolean correctInfo;
-    static Login login;
+    static Session session = new Session();
+//    static Login login;
     static RegisterModel regist;
     static DateBuilder dbuilder = new DateBuilder();
     static Map<String, Object> homeModel = new HashMap<String, Object>();
@@ -69,11 +71,11 @@ public class Main {
             req.session().attribute("pass", Password);
             Boolean passCheck = UserInputCheck(Password);
 
-            login = new Login(Username, Password);
-            login.ParseLogin();
-            correctInfo = login.correctLoginInfo;
+            session.setLogin(Username, Password);
+
+            correctInfo = session.hasCorrectLogin();
             if (correctInfo) {
-                isAdmin = login.isAdmin();
+                isAdmin = session.isAdmin();
                 req.session().attribute("admin", isAdmin);
                 homeModel.put("correctinfo", correctInfo);
                 homeModel.put("username", Username);
@@ -84,7 +86,7 @@ public class Main {
             else{
                 Username = null;
                 Password = null;
-                login = null;
+                session = null;
                 correctInfo = null;
                 passCheck = null;
                 userCheck = null;
@@ -101,7 +103,7 @@ public class Main {
             req.session().attribute("pass", null);
             req.session().attribute("admin", false);
             Username = null;
-            login = null;
+            session = null;
             name = null;
             correctInfo = false;
             isAdmin = false;
@@ -175,37 +177,43 @@ public class Main {
 
         get("/do_something",(req,res)->{
             Map<String, Object> model = new HashMap<>();
-            Games games = new Games();
-            //games.ParseQuery();
-            List jsonList = getFormattedResult(games.ParseQuery());
-            ArrayList<Game> gameArrayList = games.getGamesList();
-
-            for (int i = 0; i < jsonList.size(); i++){
-
-                System.out.println(jsonList.get(i++));
-            }
+//            Games games = new Games();
+//            //games.ParseQuery();
+//            List jsonList = getFormattedResult(games.ParseQuery());
+//            ArrayList<Game> gameArrayList = games.getGamesList();
+//
+//            for (int i = 0; i < jsonList.size(); i++){
+//
+//                System.out.println(jsonList.get(i++));
+//            }
 
 
 
             String product = req.queryParams("search");
+            session.getSearch().clearFilters();
+            if (!product.equals("")) {
+                session.getSearch().addFilterParam("LOWER(games_name)", "'%" + product + "%'", Filter.Operator.LIKE);
+            }
             req.session().attribute("search", product);
 
-            String pricesort = req.queryParams("pricesort");
-            String alpha = req.queryParams("alpha");
-            req.session().attribute("alpha", alpha);
-            req.session().attribute("pricesort", pricesort);
-            model.put("alpha", alpha);
-            model.put("pricesort", pricesort);
+            ArrayList<Game> gameArrayList = session.getSearch().getGames();
 
-            Filter filter = new Filter();
-            filter.LikeData(product);
-
+//            String pricesort = req.queryParams("pricesort");
+//            String alpha = req.queryParams("alpha");
+//            req.session().attribute("alpha", alpha);
+//            req.session().attribute("pricesort", pricesort);
+//            model.put("alpha", alpha);
+//            model.put("pricesort", pricesort);
+//
+//            Filter filter = new Filter();
+//            filter.LikeData(product);
 
             model.put("games", gameArrayList);
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
             model.put("admin",isAdmin);
+            model.put("filtered", session.getSearch().hasFilter());
             model.put("username", req.session().attribute("username"));
 
             return new ModelAndView(model, p_layout);

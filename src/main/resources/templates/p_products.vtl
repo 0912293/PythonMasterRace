@@ -1,6 +1,8 @@
 <h1>Products</h1>
-<p>Searched for <b>$search - $alpha</b></p>
 
+#if ($filtered)
+<p>Searched for <b>$search - $alpha</b></p>
+#end
 
 #set($start = 0)
 #set($end = 6)
@@ -11,7 +13,7 @@
 <fieldset>
 
 <!-- Form Name -->
-<legend>Form Name</legend>
+<legend>Search</legend>
 
 <!-- Search input-->
 <div class="form-group">
