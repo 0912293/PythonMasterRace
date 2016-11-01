@@ -179,8 +179,17 @@ public class Main {
             ArrayList<Game> gameArrayList = games.getGamesList();
 
 
+
+
             String product = req.queryParams("search");
             req.session().attribute("search", product);
+
+            String pricesort = req.queryParams("pricesort");
+            String alpha = req.queryParams("alpha");
+            req.session().attribute("alpha", alpha);
+            req.session().attribute("pricesort", pricesort);
+            model.put("alpha", alpha);
+            model.put("pricesort", pricesort);
 
             model.put("games", gameArrayList);
             model.put("search",product);
