@@ -1,4 +1,4 @@
-package com.steen;
+package com.steen.session;
 
 /**
  * Created by Jamal on 31-10-2016.
