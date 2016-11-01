@@ -277,6 +277,18 @@ public class Main {
             model.put("postal",admQ.getData(Admin.Data.POSTAL));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        get("/api",(req,res) -> { //Voorbeeld van hoe een json aan de browser geleverd word. *bekijk via de browser de broncode*
+            Games games = new Games();
+            //games.ParseQuery();
+            List jsonList = getFormattedResult(games.ParseQuery());
+            ArrayList<Game> gameArrayList = games.getGamesList();
+            String ret = "";
+            for (int i = 0; i < jsonList.size(); i++){
+                ret = ret + jsonList.get(i++);
+            }
+            return ret;
+        });
     }
 
     private static Boolean UserInputCheck(String input)
