@@ -10,19 +10,114 @@ public class Admin {
     String name;
     String surname;
     String email;
-    String birtdate;
+    String year;
+    String month;
+    String day;
     int address_id;
     String address_country;
     String address_street;
     String address_postalcode;
     String address_number;
     String address_city;
+    String birth_date;
+    DateBuilder dbuilder = new DateBuilder();
     ResultSet rs;
-    StringBuilder sbuilder;
+
 
 
     Connection connection = Main.connection;
 
+    public void delete_user(){
+        try {
+            sql = "DELETE FROM users WHERE username = '"+ this.username +"';";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeUpdate();
+            System.out.println("deleted user");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void reset(){
+        try {
+            sql = "UPDATE users SET password = '" +
+                    Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString()+ "' WHERE username = '"+ this.username +"';";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeUpdate();
+            System.out.println("reseted password");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+
+    //---------update user
+
+    public void setData(String name, String surname, String email, String year, String month, String day, String country, String street, String postal, String number, String city){
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.year = year;
+        this.month = month;
+        this.day = day;
+        this.address_country = country;
+        this.address_street = street;
+        this.address_postalcode = postal;
+        this.address_number = number;
+        this.address_city = city;
+        dbuilder.build(this.day, this.month, this.year);
+        this.birth_date = dbuilder.getDate();
+
+        updateAddress();
+        updateUser();
+
+    }
+
+    private void updateAddress() {
+        try {
+            sql = "UPDATE address SET address_country = '" +
+                    this.address_country + "', address_postalcode = '" +
+                    this.address_postalcode + "', address_city = '" +
+                    this.address_city + "', address_street = '" +
+                    this.address_street + "', address_number = '" +
+                    this.address_number + "' WHERE address_id = '"+ this.address_id +"';";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeUpdate();
+            System.out.println("updated address");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void updateUser() {
+        try {
+            sql = "UPDATE users SET name = '" +
+                            this.name + "', surname = '" +
+                            this.surname + "', email = '" +
+                            this.email + "', birth_date = '" +
+                            this.birth_date + "' WHERE username = '"+ this.username +"';";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeUpdate();
+            System.out.println("updated user");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+    //-----------------------------------------get user data
     public void searchUser(String user) {
         try {
             sql = "SELECT * FROM users WHERE username = '" + user + "'";
@@ -38,8 +133,34 @@ public class Admin {
                 name = rs.getString("name");
                 surname = rs.getString("surname");
                 email = rs.getString("email");
-                birtdate = rs.getString("birth_date");
                 address_id = rs.getInt("address_id");
+            }
+            searchUserAddress();
+            getDate();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void getDate() {
+        try {
+            sql = "SELECT EXTRACT(YEAR FROM birth_date) AS birthyear , " +
+                    "EXTRACT(MONTH FROM birth_date) AS birthmonth , " +
+                    "EXTRACT(DAY FROM birth_date) AS birthday " +
+                    "FROM users WHERE username = '" + username + "'";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeQuery(sql);
+
+            rs = myStmt.executeQuery();
+
+
+            while (rs.next()) {
+                year = rs.getString("birthyear");
+                month = rs.getString("birthmonth");
+                day = rs.getString("birthday");
             }
             searchUserAddress();
 
@@ -48,6 +169,7 @@ public class Admin {
             e.printStackTrace();
         }
     }
+
 
     private void searchUserAddress() {
         try {
@@ -73,7 +195,7 @@ public class Admin {
     }
 
     public enum Data{
-        USERNAME,NAME,SURNAME,EMAIL,BIRTHDATE,COUNTRY,STREET,POSTAL,NUMBER,CITY
+        USERNAME,NAME,SURNAME,EMAIL,COUNTRY,STREET,POSTAL,NUMBER,CITY,YEAR,MONTH,DAY
     }
 
     public String getData(Data data){
@@ -91,8 +213,14 @@ public class Admin {
             case EMAIL:
                 result = email;
                 break;
-            case BIRTHDATE:
-                result = birtdate;
+            case YEAR:
+                result = year;
+                break;
+            case MONTH:
+                result = month;
+                break;
+            case DAY:
+                result = day;
                 break;
             case COUNTRY:
                 result = address_country;

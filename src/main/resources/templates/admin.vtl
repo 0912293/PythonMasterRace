@@ -1,7 +1,7 @@
 #if($admin)
     #if($result)
 <h1>User: $result</h1>
-<form name="edit_form" >
+<form name="edit_form"  action="/update_user" method="post">
     <div class="form-group row">
         <label for="username" class="col-xs-2 col-form-label">Username</label>
         <div class="col-xs-10">
@@ -9,15 +9,6 @@
                    required="required" value=$username>
         </div>
     </div>
-
-    <div class="form-group row">
-        <label for="pass" class="col-xs-2 col-form-label">Password</label>
-        <div class="col-xs-10">
-            <input class="form-control" name="pass" type="password" id="pass"
-                   required="required" placeholder="Ex.: password123">
-        </div>
-    </div>
-
     <div class="form-group row">
         <label for="email" class="col-xs-2 col-form-label">Email</label>
         <div class="col-xs-10">
@@ -41,15 +32,15 @@
     <div class="form-group row">
         <label for="bday" class="col-xs-2 col-form-label">Birth date</label>
         <div class="col-xs-2">
-            <input class="form-control" type="number" name="day" id="day" placeholder="DD" min="1" max="31"
+            <input class="form-control" type="number" name="day" id="day" value=$day min="1" max="31"
                    required="required">
         </div>
         <div class="col-xs-2">
-            <input class="form-control" type="number" name="month" id="month" placeholder="MM"  min="1" max="12"
+            <input class="form-control" type="number" name="month" id="month" value=$month  min="1" max="12"
                    required="required">
         </div>
         <div class="col-xs-2">
-            <input class="form-control" type="number" name="year" id="year" placeholder="YYYY" min="1900" max="2010"
+            <input class="form-control" type="number" name="year" id="year" value=$year min="1900" max="2010"
                    required="required">
         </div>
     </div>
@@ -82,6 +73,12 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+</form> <br>
+<form action="/reset_pass" method="post">
+    <button class="btn btn-danger" >Reset password</button>
+</form> <br>
+<form action="/delete_user" method="post">
+    <button class="btn btn-danger" >Delete user</button>
 </form>
 
     #else
