@@ -1,15 +1,13 @@
 package com.steen;
 
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Models.RegisterModel;
 import spark.ModelAndView;
 import com.steen.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static Connection connection = Connector.connect();
@@ -37,6 +35,8 @@ public class Main {
     static Admin admQ = new Admin();
 
     public static void main(String[] args) {
+
+
         staticFileLocation("/public");              // sets folder for non java files
 
         //--------------------------------------------------------project
@@ -175,9 +175,14 @@ public class Main {
         get("/do_something",(req,res)->{
             Map<String, Object> model = new HashMap<>();
             Games games = new Games();
-            games.ParseQuery();
+            //games.ParseQuery();
+            List jsonList = getFormattedResult(games.ParseQuery());
             ArrayList<Game> gameArrayList = games.getGamesList();
 
+            for (int i = 0; i < jsonList.size(); i++){
+
+                System.out.println(jsonList.get(i++));
+            }
 
             String product = req.queryParams("search");
             req.session().attribute("search", product);
