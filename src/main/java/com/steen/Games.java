@@ -1,4 +1,6 @@
-import com.steen.Cryptr;
+package com.steen;
+
+import com.steen.Game;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
