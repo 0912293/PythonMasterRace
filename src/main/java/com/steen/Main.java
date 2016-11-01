@@ -1,5 +1,6 @@
 package com.steen;
 
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Models.RegisterModel;
@@ -7,10 +8,7 @@ import com.steen.session.*;
 import spark.ModelAndView;
 import com.steen.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static Connection connection = Connector.connect();
@@ -39,11 +37,14 @@ public class Main {
     static Admin admQ = new Admin();
 
     public static void main(String[] args) {
+
+
         staticFileLocation("/public");              // sets folder for non java files
 
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
+
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
@@ -176,6 +177,17 @@ public class Main {
 
         get("/do_something",(req,res)->{
             Map<String, Object> model = new HashMap<>();
+//            Games games = new Games();
+//            //games.ParseQuery();
+//            List jsonList = getFormattedResult(games.ParseQuery());
+//            ArrayList<Game> gameArrayList = games.getGamesList();
+//
+//            for (int i = 0; i < jsonList.size(); i++){
+//
+//                System.out.println(jsonList.get(i++));
+//            }
+
+
 
             String product = req.queryParams("search");
             session.getSearch().clearFilters();
@@ -185,6 +197,16 @@ public class Main {
             req.session().attribute("search", product);
 
             ArrayList<Game> gameArrayList = session.getSearch().getGames();
+
+//            String pricesort = req.queryParams("pricesort");
+//            String alpha = req.queryParams("alpha");
+//            req.session().attribute("alpha", alpha);
+//            req.session().attribute("pricesort", pricesort);
+//            model.put("alpha", alpha);
+//            model.put("pricesort", pricesort);
+//
+//            Filter filter = new Filter();
+//            filter.LikeData(product);
 
             model.put("games", gameArrayList);
             model.put("search",product);
@@ -197,6 +219,8 @@ public class Main {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+
+        //--------------------------------Admin--------
         get("/admin",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
@@ -205,6 +229,37 @@ public class Main {
             model.put("correctinfo", correctInfo);
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        post("/delete_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+            admQ.delete_user();
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
+
+        post("/reset_pass" ,(req,res)->{
+            admQ.reset();
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
+
+        post("/update_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+
+            admQ.setData(req.queryParams("name"),req.queryParams("sur"),req.queryParams("email"),req.queryParams("year"),req.queryParams("month"),req.queryParams("day"),req.queryParams("country"),
+                    req.queryParams("street"),req.queryParams("postal"),req.queryParams("number"),req.queryParams("city"));
+
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
 
         get("/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
@@ -222,11 +277,12 @@ public class Main {
             model.put("email",admQ.getData(Admin.Data.EMAIL));
             model.put("street",admQ.getData(Admin.Data.STREET));
             model.put("country",admQ.getData(Admin.Data.COUNTRY));
+            model.put("year",admQ.getData(Admin.Data.YEAR));
+            model.put("day",admQ.getData(Admin.Data.DAY));
+            model.put("month",admQ.getData(Admin.Data.MONTH));
             model.put("city",admQ.getData(Admin.Data.CITY));
             model.put("number",Integer.parseInt(admQ.getData(Admin.Data.NUMBER)));
             model.put("postal",admQ.getData(Admin.Data.POSTAL));
-
-
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
     }
