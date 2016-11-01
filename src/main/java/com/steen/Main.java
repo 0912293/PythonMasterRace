@@ -42,6 +42,7 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
+
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
@@ -181,6 +182,10 @@ public class Main {
 
             String product = req.queryParams("search");
             req.session().attribute("search", product);
+
+            Filter filter = new Filter();
+            filter.LikeData(product);
+
 
             model.put("games", gameArrayList);
             model.put("search",product);
