@@ -1,6 +1,10 @@
+package com.steen;
+
 import static spark.Spark.*;
+
+import com.steen.Models.RegisterModel;
 import spark.ModelAndView;
-import spark.template.velocity.VelocityTemplateEngine;
+import com.steen.velocity.VelocityTemplateEngine;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,10 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    static Connection connection = Connector.connect();
+    public static Connection connection = Connector.connect();
     static String Password;
     static String Username;
-    static Login login;
     static String name;
     static String surname;
     static String country;
@@ -24,12 +27,14 @@ public class Main {
     static String year;
     static String email;
     static Boolean isAdmin;
-    static Register regist;
-//    static Admin_log adminLog;
+    static Boolean correctInfo;
+    static Login login;
+    static RegisterModel regist;
     static DateBuilder dbuilder = new DateBuilder();
-    static Boolean admin;
     static Map<String, Object> homeModel = new HashMap<String, Object>();
     static Map<String, Object> afterLoginModel = new HashMap<String, Object>();
+
+    static Admin admQ = new Admin();
 
     public static void main(String[] args) {
         staticFileLocation("/public");              // sets folder for non java files
@@ -40,6 +45,7 @@ public class Main {
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            homeModel.put("correctinfo", correctInfo);
             homeModel.put("username", req.session().attribute("username"));
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
@@ -64,20 +70,28 @@ public class Main {
 
             login = new Login(Username, Password);
             login.ParseLogin();
-            Boolean correctInfo = login.correctLoginInfo;
+            correctInfo = login.correctLoginInfo;
             if (correctInfo) {
                 isAdmin = login.isAdmin();
                 req.session().attribute("admin", isAdmin);
+                homeModel.put("correctinfo", correctInfo);
+                homeModel.put("username", Username);
+                homeModel.put("pass", Password);
+                homeModel.put("userCheck", userCheck);
+                homeModel.put("passCheck", passCheck);
             }
-
-            homeModel.put("correctinfo", correctInfo);
-            homeModel.put("username", Username);
-            homeModel.put("pass", Password);
-            homeModel.put("userCheck", userCheck);
-            homeModel.put("passCheck", passCheck);
+            else{
+                Username = null;
+                Password = null;
+                login = null;
+                correctInfo = null;
+                passCheck = null;
+                userCheck = null;
+            }
 
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
+            res.redirect("/");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -85,16 +99,13 @@ public class Main {
             req.session().attribute("username", null);
             req.session().attribute("pass", null);
             req.session().attribute("admin", false);
-
-            connection = Connector.connect();
             Username = null;
             login = null;
             name = null;
-            isAdmin = null;
+            correctInfo = false;
+            isAdmin = false;
             regist = null;
-//            adminLog = null;
             dbuilder =  new DateBuilder();
-            admin = null;
             afterLoginModel = null;
             homeModel = new HashMap<>();
             afterLoginModel = new HashMap<>();
@@ -149,7 +160,7 @@ public class Main {
             dbuilder.build(day,month,year);
 
             model.put("login_modal","templates/login_mod.vtl");
-            regist = new Register(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, admin);
+            regist = new RegisterModel(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email, isAdmin);
             if(nullCheck){
                 regist.ParseReg();
                 model.put("template","templates/p_after_reg.vtl");
@@ -186,6 +197,30 @@ public class Main {
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", correctInfo);
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/getUserData",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("admin", isAdmin);
+            model.put("template","templates/admin.vtl");
+            model.put("correctinfo", correctInfo);
+
+            Username = req.queryParams("user");
+            admQ.searchUser(Username);
+            model.put("result",admQ.getData(Admin.Data.USERNAME));
+
+            model.put("username",admQ.getData(Admin.Data.USERNAME));
+            model.put("name",admQ.getData(Admin.Data.NAME));
+            model.put("surname",admQ.getData(Admin.Data.SURNAME));
+            model.put("email",admQ.getData(Admin.Data.EMAIL));
+            model.put("street",admQ.getData(Admin.Data.STREET));
+            model.put("country",admQ.getData(Admin.Data.COUNTRY));
+            model.put("city",admQ.getData(Admin.Data.CITY));
+            model.put("number",Integer.parseInt(admQ.getData(Admin.Data.NUMBER)));
+            model.put("postal",admQ.getData(Admin.Data.POSTAL));
+
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());

@@ -51,15 +51,17 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-          #if($admin)
-            <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
-          #else
-          #end
-            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
           #if($correctinfo)
+              #if($admin)
+                <li style="cursor: default"><a>Welcome $username ;]</a></li>
+                <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> com.steen.Admin</a></li>
+              #else
+                  <li style="cursor: default"><a>Welcome $username</a></li>
+              #end
             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
           #else
-            <li><a data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
           #end
       </ul>
     </div>
