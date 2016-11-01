@@ -42,6 +42,7 @@ public class Main {
         //--------------------------------------------------------project
         String p_layout = "templates/p_layout.vtl";
         get("/", (req, res) -> {
+
             homeModel.put("admin",isAdmin);
             homeModel.put("login_modal", "templates/login_mod.vtl");
             homeModel.put("template","templates/p_home.vtl");
@@ -187,6 +188,10 @@ public class Main {
             String product = req.queryParams("search");
             req.session().attribute("search", product);
 
+            Filter filter = new Filter();
+            filter.LikeData(product);
+
+
             model.put("games", gameArrayList);
             model.put("search",product);
             model.put("template","templates/p_products.vtl");
@@ -197,6 +202,8 @@ public class Main {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+
+        //--------------------------------Admin--------
         get("/admin",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
@@ -205,6 +212,37 @@ public class Main {
             model.put("correctinfo", correctInfo);
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        post("/delete_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+            admQ.delete_user();
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
+
+        post("/reset_pass" ,(req,res)->{
+            admQ.reset();
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
+
+        post("/update_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+
+            admQ.setData(req.queryParams("name"),req.queryParams("sur"),req.queryParams("email"),req.queryParams("year"),req.queryParams("month"),req.queryParams("day"),req.queryParams("country"),
+                    req.queryParams("street"),req.queryParams("postal"),req.queryParams("number"),req.queryParams("city"));
+
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
 
         get("/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
@@ -222,11 +260,12 @@ public class Main {
             model.put("email",admQ.getData(Admin.Data.EMAIL));
             model.put("street",admQ.getData(Admin.Data.STREET));
             model.put("country",admQ.getData(Admin.Data.COUNTRY));
+            model.put("year",admQ.getData(Admin.Data.YEAR));
+            model.put("day",admQ.getData(Admin.Data.DAY));
+            model.put("month",admQ.getData(Admin.Data.MONTH));
             model.put("city",admQ.getData(Admin.Data.CITY));
             model.put("number",Integer.parseInt(admQ.getData(Admin.Data.NUMBER)));
             model.put("postal",admQ.getData(Admin.Data.POSTAL));
-
-
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
     }
