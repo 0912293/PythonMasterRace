@@ -1,6 +1,6 @@
 //package com.steen;
 //
-//import com.steen.session.Game;
+//import com.steen.sessionModel.Game;
 //
 //import java.sql.Connection;
 //import java.sql.PreparedStatement;

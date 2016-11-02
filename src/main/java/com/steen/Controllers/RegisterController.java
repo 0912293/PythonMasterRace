@@ -1,25 +1,31 @@
 package com.steen.Controllers;
 
+import com.steen.DateBuilder;
+import com.steen.Models.RegisterModel;
+import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import spark.Route;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.steen.Main.p_layout;
 import static com.steen.Util.ViewUtil.strictVelocityEngine;
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 /**
  * Created by jesse on 31-10-2016.
  */
 
 
-public class
-RegisterController {
-    static String layout = "templates/p_layout.vtl";
+public class RegisterController {
 
-    public RegisterController() {
-    }
-    public static Route serveRegisterPage = (req, res) -> {
+    public RegisterController(final RegisterModel registerModel) {
+
+        get("/p_reg", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("username", req.session().attribute("username"));
             model.put("pass", req.session().attribute("pass"));
@@ -35,13 +41,60 @@ RegisterController {
             model.put("year", req.session().attribute("year"));
             model.put("email", req.session().attribute("email"));
 
-            model.put("template","templates/p_reg.vtl");
+            model.put("template", "templates/p_reg.vtl");
+
+            model.put("login_modal", "templates/login_mod.vtl");
+            return strictVelocityEngine().render(new ModelAndView(model, p_layout));
+        });
+
+        post("/regist",(req,res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            ArrayList<String> userDetails = new ArrayList<String>();
+            String Username = req.queryParams("username");
+            String Password = req.queryParams("pass");
+            String name = req.queryParams("name");
+            String surname = req.queryParams("sur");
+            String country = req.queryParams("country");
+            String city = req.queryParams("city");
+            String number = req.queryParams("number");
+            String street = req.queryParams("street");
+            String postal = req.queryParams("postal");
+            String day = req.queryParams("day");
+            String month = req.queryParams("month");
+            String year = req.queryParams("year");
+            String email = req.queryParams("email");
+            DateBuilder dbuilder = new DateBuilder();
+
+            userDetails.addAll(Arrays.asList(Username, Password, name, surname, country, city, number, street, postal, day, month, year, email));
+
+            Boolean nullCheck = NullCheck(userDetails);
+
+            dbuilder.build(day,month,year);
 
             model.put("login_modal","templates/login_mod.vtl");
-        return strictVelocityEngine().render(new ModelAndView(model, layout));
-    };
+            registerModel.setParameters(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
+            if(nullCheck){
+                registerModel.ParseReg();
+                model.put("template","templates/p_after_reg.vtl");
 
+            }
+            else{
+                model.put("template", "templates/p_reg.vtl");
+            }
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+    }
 
+    private static Boolean NullCheck(ArrayList<String> list){
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(list.get(i) == null || list.get(i).equals("")){
+                System.out.println(("You need to fill in all fields"));
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
 

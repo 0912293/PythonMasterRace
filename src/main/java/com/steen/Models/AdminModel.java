@@ -1,10 +1,14 @@
-package com.steen;
+package com.steen.Models;
+
+import com.steen.Cryptr;
+import com.steen.DateBuilder;
+import com.steen.Main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Admin {
+public class AdminModel {
     String sql;
     String username;
     String name;

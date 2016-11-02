@@ -1,20 +1,24 @@
 package com.steen.session;
 
+import com.steen.Models.SessionModel;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import static com.steen.Main.connection;
+
 
 public class Search {
-    private Session session;
+    private SessionModel sessionModel;
     private ArrayList<Game> games = new ArrayList<>();
     private Filter filter;
 
     private String sqlQuery;
     private String filteredQuery;
 
-    public Search(Session session) {
-        this.session = session;
+    public Search(SessionModel sessionModel) {
+        this.sessionModel = sessionModel;
         this.filter = new Filter();
         this.sqlQuery = "SELECT * FROM games";
         getResultset();
@@ -24,18 +28,18 @@ public class Search {
         updateQuery();
         ResultSet resultSet = null;
         try {
-            PreparedStatement myStmt = session.connection.prepareStatement(filteredQuery);
+            PreparedStatement myStmt = connection.prepareStatement(filteredQuery);
             resultSet = myStmt.executeQuery(filteredQuery);
             games.clear();
-//            while (resultSet.next()) {
-//                String gameName = resultSet.getString(2);
-//                String gamePrice = resultSet.getString(3);
-//                String gamePlatform = resultSet.getString(5);
-//                Game game = new Game(gameName, gamePlatform, gamePrice);
-//                games.add(game);
-//
-//
-//            }
+            while (resultSet.next()) {
+                String gameName = resultSet.getString(2);
+                String gamePrice = resultSet.getString(3);
+                String gamePlatform = resultSet.getString(5);
+                Game game = new Game(gameName, gamePlatform, gamePrice);
+                games.add(game);
+
+
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -71,8 +75,8 @@ public class Search {
         filter.filters.clear();
     }
 
-    public Session getSession() {
-        return session;
+    public SessionModel getSessionModel() {
+        return sessionModel;
     }
 
     public ArrayList<Game> getGames() {

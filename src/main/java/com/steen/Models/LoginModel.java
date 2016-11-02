@@ -1,25 +1,22 @@
-package com.steen.session;
+package com.steen.Models;
 
 import com.steen.Cryptr;
 import com.steen.Main;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class Login {
-    private Session session;
+public class LoginModel {
+    private SessionModel sessionModel;
     private String username;
     private String password;
     private String sql;
     Boolean admin = false;
     Boolean correctLoginInfo = false;
 
-    Login(Session session) {
-        this.session = session;
-    }
+    public LoginModel() {}
 
-    void setCredentials(String username, String password){
+    public void setCredentials(String username, String password){
         this.username = username;
         this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
         this.sql = "SELECT users.admin" +
@@ -38,7 +35,7 @@ public class Login {
 
     private void parseLogin() {
         try {
-            PreparedStatement myStmt = session.connection.prepareStatement(sql);
+            PreparedStatement myStmt = Main.connection.prepareStatement(sql);
             ResultSet resultSet = myStmt.executeQuery(sql);
             if (resultSet.next()) {
                 correctLoginInfo = true;
@@ -48,5 +45,13 @@ public class Login {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public Boolean hasCorrectLoginInfo() {
+        return correctLoginInfo;
+    }
+
+    public Boolean isAdmin() {
+        return admin;
     }
 }

@@ -20,12 +20,47 @@ public class RegisterModel {
     String email;
     Boolean admin;
     int address_id;
-
     String sql;
-
     Connection connection = Main.connection;
 
-    public RegisterModel(String username, String password, String name, String surname, String country, String city, String street, String postal, String number, String bday, String email, Boolean admin) {
+    public RegisterModel() {}
+    public void setUsername(String username) {
+        this.username = username;
+    }
+    public void setPassword(String password) {
+        this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+    public void setStreet(String street) {
+        this.street = street;
+    }
+    public void setPostal(String postal) {
+        this.postal = postal;
+    }
+    public void setNumber(String number) {
+        this.number = number;
+    }
+    public void setBirth_date(String birth_date) {
+        this.birth_date = birth_date;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+    public void setParameters(String username,String password,String name,String surname,String country,String city,String street,String postal,String number,String birth_date,String email) {
         this.username = username;
         this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
         this.name = name;
@@ -35,10 +70,9 @@ public class RegisterModel {
         this.street = street;
         this.postal = postal;
         this.number = number;
-        this.birth_date = bday;
+        this.birth_date = birth_date;
         this.email = email;
-        this.admin = admin;
-
+        this.admin = false;
     }
 
     public void ParseReg() {
