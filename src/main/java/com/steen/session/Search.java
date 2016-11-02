@@ -70,7 +70,7 @@ public class Search {
 
     public void addOrderParam(String column){
         orderBy.addParameter(column);
-        updateGames();
+        getResultset();
     }
 
     public void clearFilters() {
