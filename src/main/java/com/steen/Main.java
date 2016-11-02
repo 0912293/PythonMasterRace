@@ -1,5 +1,6 @@
 package com.steen;
 
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Models.RegisterModel;
@@ -67,12 +68,13 @@ public class Main {
 
 
         post("/login", (req, res) -> {
-
             Username = req.queryParams("username");
+            req.session().attribute("username", Username);
             Boolean userCheck = UserInputCheck(Username);
             Password = req.queryParams("pass");
             req.session().attribute("pass", Password);
             Boolean passCheck = UserInputCheck(Password);
+
             session.setLogin(Username, Password);
             b_listed = session.isBlacklisted();
             if(!b_listed) {
@@ -195,22 +197,39 @@ public class Main {
 //            }
 
 
-
             String product = req.queryParams("search");
+            String alpha = req.queryParams("alpha");
+            String price = req.queryParams("pricesort");
+            String alphaOrder = "games.games_name";
+            String productFilter = "games.games_price";
+            if(price != null &&price.equals("0")){
+                productFilter = "games.games_price";
+            }
+            else{
+                productFilter = "games.games_price" + " DESC";
+            }
+            if(alpha != null && alpha.equals("0")){
+                alphaOrder = ",games.games_name";
+            }
+            else{
+                alphaOrder = ",games.games_name" + " DESC";
+            }
+
             session.getSearch().clearFilters();
+            session.getSearch().clearOrderBy();
             if (!product.equals("")) {
                 session.getSearch().addFilterParam("LOWER(games_name)", "'%" + product + "%'", Filter.Operator.LIKE);
             }
+            session.getSearch().addOrderParam("" + productFilter + alphaOrder);
             req.session().attribute("search", product);
 
             ArrayList<Game> gameArrayList = session.getSearch().getGames();
 
-//            String pricesort = req.queryParams("pricesort");
-//            String alpha = req.queryParams("alpha");
-//            req.session().attribute("alpha", alpha);
-//            req.session().attribute("pricesort", pricesort);
-//            model.put("alpha", alpha);
-//            model.put("pricesort", pricesort);
+
+            req.session().attribute("alpha", alpha);
+            req.session().attribute("pricesort", price);
+            model.put("alpha", alpha);
+            model.put("pricesort", price);
 //
 //            Filter filter = new Filter();
 //            filter.LikeData(product);
