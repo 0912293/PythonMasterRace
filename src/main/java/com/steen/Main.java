@@ -7,6 +7,8 @@ import com.steen.Models.RegisterModel;
 import com.steen.session.*;
 import spark.ModelAndView;
 import com.steen.velocity.VelocityTemplateEngine;
+import spark.Spark;
+
 import java.sql.Connection;
 import java.util.*;
 
@@ -41,7 +43,8 @@ public class Main {
     static Admin admQ = new Admin();
 
     public static void main(String[] args) {
-
+        //Spark.port(80); BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
+        Spark.port(4567);
 
         staticFileLocation("/public");              // sets folder for non java files
 
