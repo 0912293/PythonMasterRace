@@ -14,6 +14,8 @@ public class Login {
     private String sql;
     Boolean admin = false;
     Boolean correctLoginInfo = false;
+    Boolean blacklisted = false;
+    ResultSet rs;
 
     Login(Session session) {
         this.session = session;
@@ -21,11 +23,28 @@ public class Login {
 
     void setCredentials(String username, String password){
         this.username = username;
-        this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
-        this.sql = "SELECT users.admin" +
-                " FROM users" +
-                " WHERE username = '" + (this.username) + "' AND password = '" + (this.password) + "'";
-        parseLogin();
+        if(!checkBlacklist()) {
+            this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
+            this.sql = "SELECT users.admin" +
+                    " FROM users" +
+                    " WHERE username = '" + (this.username) + "' AND password = '" + (this.password) + "'";
+            parseLogin();
+        }
+    }
+
+    public boolean checkBlacklist(){
+        try {
+            sql = "SELECT blacklisted FROM blacklist WHERE username = '"+ this.username +"';";
+            PreparedStatement myStmt = session.connection.prepareStatement(sql);
+            rs = myStmt.executeQuery(sql);
+            while(rs.next()){
+                blacklisted = rs.getBoolean("blacklisted");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return blacklisted;
     }
 
     public String getUsername() {

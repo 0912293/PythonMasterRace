@@ -28,6 +28,10 @@ public class Main {
     static Boolean isAdmin;
     static Boolean correctInfo;
     static Session session = new Session();
+    static boolean b_listed;
+
+    static String user;
+
 //    static Login login;
     static RegisterModel regist;
     static DateBuilder dbuilder = new DateBuilder();
@@ -72,29 +76,34 @@ public class Main {
             Boolean passCheck = UserInputCheck(Password);
 
             session.setLogin(Username, Password);
-
-            correctInfo = session.hasCorrectLogin();
-            if (correctInfo) {
-                isAdmin = session.isAdmin();
-                req.session().attribute("admin", isAdmin);
-                homeModel.put("correctinfo", correctInfo);
-                homeModel.put("username", Username);
-                homeModel.put("pass", Password);
-                homeModel.put("userCheck", userCheck);
-                homeModel.put("passCheck", passCheck);
+            b_listed = session.isBlacklisted();
+            if(!b_listed) {
+                correctInfo = session.hasCorrectLogin();
+                if (correctInfo) {
+                    req.session().attribute("username", Username);
+                    isAdmin = session.isAdmin();
+                    req.session().attribute("admin", isAdmin);
+                    homeModel.put("correctinfo", correctInfo);
+                    homeModel.put("username", Username);
+                    homeModel.put("pass", Password);
+                    homeModel.put("userCheck", userCheck);
+                    homeModel.put("passCheck", passCheck);
+                } else {
+                    Username = null;
+                    Password = null;
+                    session = new Session();
+                    correctInfo = null;
+                    passCheck = null;
+                    userCheck = null;
+                }
+                homeModel.put("login_modal", "templates/login_mod.vtl");
+                homeModel.put("template", "templates/p_home.vtl");
+                res.redirect("/");
+            }else{
+                homeModel.put("login_modal", "templates/login_mod.vtl");
+                homeModel.put("template", "templates/blacklisted.vtl");
             }
-            else{
-                Username = null;
-                Password = null;
-                session = null;
-                correctInfo = null;
-                passCheck = null;
-                userCheck = null;
-            }
 
-            homeModel.put("login_modal", "templates/login_mod.vtl");
-            homeModel.put("template","templates/p_home.vtl");
-            res.redirect("/");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -103,7 +112,7 @@ public class Main {
             req.session().attribute("pass", null);
             req.session().attribute("admin", false);
             Username = null;
-            session = null;
+            session = new Session();
             name = null;
             correctInfo = false;
             isAdmin = false;
@@ -242,7 +251,7 @@ public class Main {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
-            model.put("username", req.session().attribute("username"));
+            model.put("username", Username);
             model.put("correctinfo", correctInfo);
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
@@ -252,6 +261,7 @@ public class Main {
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
+            model.put("username", Username);
             admQ.delete_user();
             return new ModelAndView(model, p_layout);
         },new VelocityTemplateEngine());
@@ -260,6 +270,7 @@ public class Main {
             admQ.reset();
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
+            model.put("username", Username);
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
 
@@ -268,6 +279,7 @@ public class Main {
 
         post("/update_user" ,(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
+            model.put("username", Username);
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
@@ -283,12 +295,16 @@ public class Main {
             model.put("admin", isAdmin);
             model.put("template","templates/admin.vtl");
             model.put("correctinfo", correctInfo);
+            model.put("username", Username);
 
-            Username = req.queryParams("user");
-            admQ.searchUser(Username);
+            user = req.queryParams("user");
+            admQ.searchUser(user);
+            if (admQ.check()) {
+                return new ModelAndView(model, p_layout);
+            }
             model.put("result",admQ.getData(Admin.Data.USERNAME));
 
-            model.put("username",admQ.getData(Admin.Data.USERNAME));
+            model.put("user",admQ.getData(Admin.Data.USERNAME));
             model.put("name",admQ.getData(Admin.Data.NAME));
             model.put("surname",admQ.getData(Admin.Data.SURNAME));
             model.put("email",admQ.getData(Admin.Data.EMAIL));
@@ -303,53 +319,33 @@ public class Main {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+        //---------------------Blacklist user-------------------
 
-        get("/games", (req, res) ->{
-            List jsonList = getFormattedResult(session.getSearch().getResultset());
-            String jsonstring = "[";
-            for (int i = 0; i < jsonList.size(); i++){
-                jsonstring = jsonstring + jsonList.get(i) + ",";
+        post("/blacklist_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+            model.put("username", Username);
+            admQ.blacklistUser();
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
 
-            }
-            jsonstring = jsonstring + "]";
-            return jsonstring;
-        });
+        //--------------Admin user list----------------------------
+        get("/view_users",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            ArrayList<User> userArrayList = admQ.getUsers();
 
-        get("/productpage.html", (req, res) ->{
-            String html = "<!DOCTYPE html >\n " +
-            "<html lang=\"en\">\n" +
-                    "<head>\n" +
-                    "    <script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js\"> </script>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <title>Productpage</title>\n" +
-                    "\n" +
-                    "    <script>\n" +
-                    "        window.onload = function () {\n" +
-                    "\n" +
-                    "\n" +
-                    "            $.getJSON(\"/games\", function(data){\n" +
-                    "                var games = [];\n" +
-                    "                $.each(data, function(key, val){\n" +
-                    "                    games.push(\"<li id ='\" + key + \"'>\" + val + \"</li>\");\n" +
-                    "                });\n" +
-                    "                $( \"<ul/>\", {\n" +
-                    "                    \"class\": \"my-new-list\",\n" +
-                    "                    html: items.join( \"\" )\n" +
-                    "                }).appendTo( \"body\" );\n" +
-                    "            });\n" +
-                    "\n" +
-                    "\n" +
-                    "        };\n" +
-                    "    </script>\n" +
-                    "\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "\n" +
-                    "</body>\n" +
-                    "</html>";
+            model.put("users", userArrayList);
 
-            return html;
-        });
+            model.put("template","templates/view_users.vtl");
+            model.put("admin", isAdmin);
+            model.put("username", Username);
+            model.put("correctinfo", correctInfo);
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+
     }
 
     private static Boolean UserInputCheck(String input)
