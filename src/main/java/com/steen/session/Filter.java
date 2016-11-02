@@ -30,19 +30,19 @@ public class Filter {
             case NOT_LIKE:
                 sb.append(" NOT LIKE ");
                 break;
-            case NOTEQUAL:
+            case NOT_EQUAL:
                 sb.append(" <> ");
                 break;
-            case LESSTHEN:
+            case LESS_THEN:
                 sb.append(" < ");
                 break;
-            case LESSTHENEQUAL:
+            case LESS_THAN_EQUAL:
                 sb.append(" <= ");
                 break;
             case EQUAL:
                 sb.append(" = ");
                 break;
-            case HIGHEREQUAL:
+            case HIGHER_EQUAL:
                 sb.append(" >= ");
                 break;
             case HIGHER:
@@ -91,11 +91,11 @@ public class Filter {
     public enum Operator {
         LIKE,
         NOT_LIKE,
-        NOTEQUAL,
-        LESSTHEN,
-        LESSTHENEQUAL,
+        NOT_EQUAL,
+        LESS_THEN,
+        LESS_THAN_EQUAL,
         EQUAL,
-        HIGHEREQUAL,
+        HIGHER_EQUAL,
         HIGHER
     }
 }

@@ -302,6 +302,54 @@ public class Main {
             model.put("postal",admQ.getData(Admin.Data.POSTAL));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+
+        get("/games", (req, res) ->{
+            List jsonList = getFormattedResult(session.getSearch().getResultset());
+            String jsonstring = "[";
+            for (int i = 0; i < jsonList.size(); i++){
+                jsonstring = jsonstring + jsonList.get(i) + ",";
+
+            }
+            jsonstring = jsonstring + "]";
+            return jsonstring;
+        });
+
+        get("/productpage.html", (req, res) ->{
+            String html = "<!DOCTYPE html >\n " +
+            "<html lang=\"en\">\n" +
+                    "<head>\n" +
+                    "    <script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js\"> </script>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <title>Productpage</title>\n" +
+                    "\n" +
+                    "    <script>\n" +
+                    "        window.onload = function () {\n" +
+                    "\n" +
+                    "\n" +
+                    "            $.getJSON(\"/games\", function(data){\n" +
+                    "                var games = [];\n" +
+                    "                $.each(data, function(key, val){\n" +
+                    "                    games.push(\"<li id ='\" + key + \"'>\" + val + \"</li>\");\n" +
+                    "                });\n" +
+                    "                $( \"<ul/>\", {\n" +
+                    "                    \"class\": \"my-new-list\",\n" +
+                    "                    html: items.join( \"\" )\n" +
+                    "                }).appendTo( \"body\" );\n" +
+                    "            });\n" +
+                    "\n" +
+                    "\n" +
+                    "        };\n" +
+                    "    </script>\n" +
+                    "\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "\n" +
+                    "</body>\n" +
+                    "</html>";
+
+            return html;
+        });
     }
 
     private static Boolean UserInputCheck(String input)

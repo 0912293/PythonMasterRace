@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+
 public class Search {
     private Session session;
     private ArrayList<Game> games = new ArrayList<>();
@@ -17,26 +18,30 @@ public class Search {
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
-        updateGames();
+        getResultset();
     }
 
-    private void updateGames() {
+    public ResultSet getResultset() {
         updateQuery();
+        ResultSet resultSet = null;
         try {
             PreparedStatement myStmt = session.connection.prepareStatement(filteredQuery);
-            ResultSet resultSet = myStmt.executeQuery(filteredQuery);
+            resultSet = myStmt.executeQuery(filteredQuery);
             games.clear();
-            while (resultSet.next()) {
-                String gameName = resultSet.getString(2);
-                String gamePrice = resultSet.getString(3);
-                String gamePlatform = resultSet.getString(5);
-                Game game = new Game(gameName, gamePlatform, gamePrice);
-                games.add(game);
-            }
+//            while (resultSet.next()) {
+//                String gameName = resultSet.getString(2);
+//                String gamePrice = resultSet.getString(3);
+//                String gamePlatform = resultSet.getString(5);
+//                Game game = new Game(gameName, gamePlatform, gamePrice);
+//                games.add(game);
+//
+//
+//            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+        return resultSet;
     }
 
     private void updateQuery() {
@@ -45,22 +50,22 @@ public class Search {
 
     public void addFilterParam(String param) {
         filter.addParameter(param);
-        updateGames();
+        getResultset();
     }
 
     public void addFilterParam(String column, String value, Filter.Operator operator) {
         filter.addParameter(column, value, operator);
-        updateGames();
+        getResultset();
     }
 
     public void removeFilterParam(String param) {
         filter.removeParameter(param);
-        updateGames();
+        getResultset();
     }
 
     public void removeFilterParam(int index) {
         filter.removeParameter(index);
-        updateGames();
+        getResultset();
     }
 
     public void addOrderParam(String column){
@@ -81,7 +86,7 @@ public class Search {
     }
 
     public ArrayList<Game> getGames() {
-        updateGames();
+        getResultset();
         return games;
     }
 
