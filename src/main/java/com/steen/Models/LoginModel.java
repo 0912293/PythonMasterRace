@@ -6,6 +6,8 @@ import com.steen.Main;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static com.steen.Main.connection;
+
 public class LoginModel {
     private SessionModel sessionModel;
     private String username;
@@ -32,7 +34,7 @@ public class LoginModel {
     public boolean checkBlacklist(){
         try {
             sql = "SELECT blacklisted FROM blacklist WHERE username = '"+ this.username +"';";
-            PreparedStatement myStmt = session.connection.prepareStatement(sql);
+            PreparedStatement myStmt = connection.prepareStatement(sql);
             rs = myStmt.executeQuery(sql);
             while(rs.next()){
                 blacklisted = rs.getBoolean("blacklisted");
@@ -54,7 +56,7 @@ public class LoginModel {
 
     private void parseLogin() {
         try {
-            PreparedStatement myStmt = Main.connection.prepareStatement(sql);
+            PreparedStatement myStmt = connection.prepareStatement(sql);
             ResultSet resultSet = myStmt.executeQuery(sql);
             if (resultSet.next()) {
                 correctLoginInfo = true;

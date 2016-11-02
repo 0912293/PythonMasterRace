@@ -37,26 +37,31 @@ public class LoginController {
             loginModel.setCredentials(Username, Password);
 
             Boolean correctInfo = loginModel.hasCorrectLoginInfo();
-            if (correctInfo) {
-                req.session().attribute("admin", loginModel.isAdmin());
-                req.session().attribute("correctinfo", true);
-                model.put("correctinfo", true);
-                model.put("username", Username);
-                model.put("pass", Password);
-                model.put("userCheck", userCheck);
-                model.put("passCheck", passCheck);
+            Boolean blacklisted = loginModel.checkBlacklist();
+            if (!blacklisted) {
+                if (correctInfo) {
+                    req.session().attribute("admin", loginModel.isAdmin());
+                    req.session().attribute("correctinfo", true);
+                    model.put("correctinfo", true);
+                    model.put("username", Username);
+                    model.put("pass", Password);
+                    model.put("userCheck", userCheck);
+                    model.put("passCheck", passCheck);
+                } else {
+                    Username = null;
+                    Password = null;
+                    correctInfo = false;
+                    req.session().attribute("correctinfo", correctInfo);
+                    passCheck = null;
+                    userCheck = null;
+                }
+                model.put("login_modal", "templates/login_mod.vtl");
+                model.put("template", "templates/p_home.vtl");
+                res.redirect("/");
             } else {
-                Username = null;
-                Password = null;
-                correctInfo = false;
-                req.session().attribute("correctinfo", correctInfo);
-                passCheck = null;
-                userCheck = null;
+                model.put("login_modal", "templates/login_mod.vtl");
+                model.put("template", "templates/blacklisted.vtl");
             }
-
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/p_home.vtl");
-            res.redirect("/");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 

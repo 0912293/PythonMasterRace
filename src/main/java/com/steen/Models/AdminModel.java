@@ -3,6 +3,7 @@ package com.steen.Models;
 import com.steen.Cryptr;
 import com.steen.DateBuilder;
 import com.steen.Main;
+import com.steen.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
