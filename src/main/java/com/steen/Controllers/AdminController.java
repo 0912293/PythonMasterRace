@@ -103,7 +103,15 @@ public class AdminController {
             model.put("day",adminModel.getData(AdminModel.Data.DAY));
             model.put("month",adminModel.getData(AdminModel.Data.MONTH));
             model.put("city",adminModel.getData(AdminModel.Data.CITY));
-            model.put("number",Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
+            try {
+                model.put("number",Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
+            }
+            catch (NumberFormatException e){
+                e.printStackTrace();
+                System.out.println("Deze user bestaat niet");
+                res.redirect("/admin");
+            }
+
             model.put("postal",adminModel.getData(AdminModel.Data.POSTAL));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
