@@ -28,15 +28,15 @@ public class Search {
             PreparedStatement myStmt = session.connection.prepareStatement(filteredQuery);
             resultSet = myStmt.executeQuery(filteredQuery);
             games.clear();
-//            while (resultSet.next()) {
-//                String gameName = resultSet.getString(2);
-//                String gamePrice = resultSet.getString(3);
-//                String gamePlatform = resultSet.getString(5);
-//                Game game = new Game(gameName, gamePlatform, gamePrice);
-//                games.add(game);
-//
-//
-//            }
+            while (resultSet.next()) {
+                String gameName = resultSet.getString(2);
+                String gamePrice = resultSet.getString(3);
+                String gamePlatform = resultSet.getString(5);
+                Game game = new Game(gameName, gamePlatform, gamePrice);
+                games.add(game);
+
+
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
