@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * Created by Jamal on 31-10-2016.
+ * Created by Lucas on 31-10-2016.
  */
 public class Filter {
     ArrayList<String> filters = new ArrayList<>();
