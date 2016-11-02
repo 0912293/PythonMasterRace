@@ -36,7 +36,7 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
         post("/reset_pass", (req, res) -> {
-            adminModel.reset();
+            adminModel.resetPassword();
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
@@ -77,8 +77,8 @@ public class AdminController {
 
             model.put("template", "templates/view_users.vtl");
             model.put("admin", req.session().attribute("admin"));
-            model.put("username", req.queryParams("correctinfo"));
-            model.put("correctinfo", req.session().attribute("username"));
+            model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -87,32 +87,37 @@ public class AdminController {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
-            model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
+            model.put("username", req.session().attribute("username"));
 
             String Username = req.queryParams("user");
             adminModel.searchUser(Username);
-            model.put("result",adminModel.getData(AdminModel.Data.USERNAME));
+            model.put("result", adminModel.getData(AdminModel.Data.USERNAME));
+            if(adminModel.getData(AdminModel.Data.USERNAME).length() > 0) {
 
-            model.put("username",adminModel.getData(AdminModel.Data.USERNAME));
-            model.put("name",adminModel.getData(AdminModel.Data.NAME));
-            model.put("surname",adminModel.getData(AdminModel.Data.SURNAME));
-            model.put("email",adminModel.getData(AdminModel.Data.EMAIL));
-            model.put("street",adminModel.getData(AdminModel.Data.STREET));
-            model.put("country",adminModel.getData(AdminModel.Data.COUNTRY));
-            model.put("year",adminModel.getData(AdminModel.Data.YEAR));
-            model.put("day",adminModel.getData(AdminModel.Data.DAY));
-            model.put("month",adminModel.getData(AdminModel.Data.MONTH));
-            model.put("city",adminModel.getData(AdminModel.Data.CITY));
-            try {
-                model.put("number",Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
-            }
-            catch (NumberFormatException e){
-                e.printStackTrace();
-                System.out.println("Deze user bestaat niet");
+                model.put("user", adminModel.getData(AdminModel.Data.USERNAME));
+                model.put("name", adminModel.getData(AdminModel.Data.NAME));
+                model.put("surname", adminModel.getData(AdminModel.Data.SURNAME));
+                model.put("email", adminModel.getData(AdminModel.Data.EMAIL));
+                model.put("street", adminModel.getData(AdminModel.Data.STREET));
+                model.put("country", adminModel.getData(AdminModel.Data.COUNTRY));
+                model.put("year", adminModel.getData(AdminModel.Data.YEAR));
+                model.put("day", adminModel.getData(AdminModel.Data.DAY));
+                model.put("month", adminModel.getData(AdminModel.Data.MONTH));
+                model.put("city", adminModel.getData(AdminModel.Data.CITY));
+                model.put("postal",adminModel.getData(AdminModel.Data.POSTAL));
+                try {
+                    model.put("number", Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    System.out.println("malformed 'number' attribute for selected user");
+                    res.redirect("/admin");
+                }
+                adminModel.clear();
+            } else {
+                model.put("result", "");
                 res.redirect("/admin");
             }
-
-            model.put("postal",adminModel.getData(AdminModel.Data.POSTAL));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
     }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class AdminModel {
     String sql;
-    String username;
+    String username = "";
     String name;
     String surname;
     String email;
@@ -81,7 +81,7 @@ public class AdminModel {
         }
         return admin;
     }
-//----------------------------------delete-reset-blacklist-----
+//----------------------------------delete-resetPassword-blacklist-----
 
     public void blacklistUser(){
         try {
@@ -112,7 +112,7 @@ public class AdminModel {
         }
     }
 
-    public void reset(){
+    public void resetPassword(){
         if(!check()) {
             try {
                 sql = "UPDATE users SET password = '" +
@@ -151,6 +151,23 @@ public class AdminModel {
             updateAddress();
             updateUser();
         }
+    }
+
+    public void clear() {
+        this.name = null;
+        this.surname = null;
+        this.email = null;
+        this.year = null;
+        this.month = null;
+        this.day = null;
+        this.address_country = null;
+        this.address_street = null;
+        this.address_postalcode = null;
+        this.address_number = null;
+        this.address_city = null;
+        this.birth_date = null;
+        updateAddress();
+        updateUser();
     }
 
     private void updateAddress() {
@@ -314,6 +331,7 @@ public class AdminModel {
                 result = address_city;
                 break;
         }
+        if (result == null) return "";
         return result;
     }
 }
