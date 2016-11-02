@@ -1,6 +1,5 @@
 package com.steen;
 
-import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Models.RegisterModel;
@@ -28,6 +27,10 @@ public class Main {
     static Boolean isAdmin;
     static Boolean correctInfo;
     static Session session = new Session();
+    static boolean b_listed;
+
+    static String user;
+
 //    static Login login;
     static RegisterModel regist;
     static DateBuilder dbuilder = new DateBuilder();
@@ -64,37 +67,41 @@ public class Main {
 
 
         post("/login", (req, res) -> {
+
             Username = req.queryParams("username");
-            req.session().attribute("username", Username);
             Boolean userCheck = UserInputCheck(Username);
             Password = req.queryParams("pass");
             req.session().attribute("pass", Password);
             Boolean passCheck = UserInputCheck(Password);
-
             session.setLogin(Username, Password);
-
-            correctInfo = session.hasCorrectLogin();
-            if (correctInfo) {
-                isAdmin = session.isAdmin();
-                req.session().attribute("admin", isAdmin);
-                homeModel.put("correctinfo", correctInfo);
-                homeModel.put("username", Username);
-                homeModel.put("pass", Password);
-                homeModel.put("userCheck", userCheck);
-                homeModel.put("passCheck", passCheck);
+            b_listed = session.isBlacklisted();
+            if(!b_listed) {
+                correctInfo = session.hasCorrectLogin();
+                if (correctInfo) {
+                    req.session().attribute("username", Username);
+                    isAdmin = session.isAdmin();
+                    req.session().attribute("admin", isAdmin);
+                    homeModel.put("correctinfo", correctInfo);
+                    homeModel.put("username", Username);
+                    homeModel.put("pass", Password);
+                    homeModel.put("userCheck", userCheck);
+                    homeModel.put("passCheck", passCheck);
+                } else {
+                    Username = null;
+                    Password = null;
+                    session = new Session();
+                    correctInfo = null;
+                    passCheck = null;
+                    userCheck = null;
+                }
+                homeModel.put("login_modal", "templates/login_mod.vtl");
+                homeModel.put("template", "templates/p_home.vtl");
+                res.redirect("/");
+            }else{
+                homeModel.put("login_modal", "templates/login_mod.vtl");
+                homeModel.put("template", "templates/blacklisted.vtl");
             }
-            else{
-                Username = null;
-                Password = null;
-                session = null;
-                correctInfo = null;
-                passCheck = null;
-                userCheck = null;
-            }
 
-            homeModel.put("login_modal", "templates/login_mod.vtl");
-            homeModel.put("template","templates/p_home.vtl");
-            res.redirect("/");
             return new ModelAndView(homeModel, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -103,7 +110,7 @@ public class Main {
             req.session().attribute("pass", null);
             req.session().attribute("admin", false);
             Username = null;
-            session = null;
+            session = new Session();
             name = null;
             correctInfo = false;
             isAdmin = false;
@@ -225,7 +232,7 @@ public class Main {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
-            model.put("username", req.session().attribute("username"));
+            model.put("username", Username);
             model.put("correctinfo", correctInfo);
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
@@ -235,6 +242,7 @@ public class Main {
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
+            model.put("username", Username);
             admQ.delete_user();
             return new ModelAndView(model, p_layout);
         },new VelocityTemplateEngine());
@@ -243,6 +251,7 @@ public class Main {
             admQ.reset();
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
+            model.put("username", Username);
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
 
@@ -251,6 +260,7 @@ public class Main {
 
         post("/update_user" ,(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
+            model.put("username", Username);
             model.put("template","templates/admin.vtl");
             model.put("admin", isAdmin);
             model.put("correctinfo", correctInfo);
@@ -266,12 +276,16 @@ public class Main {
             model.put("admin", isAdmin);
             model.put("template","templates/admin.vtl");
             model.put("correctinfo", correctInfo);
+            model.put("username", Username);
 
-            Username = req.queryParams("user");
-            admQ.searchUser(Username);
+            user = req.queryParams("user");
+            admQ.searchUser(user);
+            if (admQ.check()) {
+                return new ModelAndView(model, p_layout);
+            }
             model.put("result",admQ.getData(Admin.Data.USERNAME));
 
-            model.put("username",admQ.getData(Admin.Data.USERNAME));
+            model.put("user",admQ.getData(Admin.Data.USERNAME));
             model.put("name",admQ.getData(Admin.Data.NAME));
             model.put("surname",admQ.getData(Admin.Data.SURNAME));
             model.put("email",admQ.getData(Admin.Data.EMAIL));
@@ -285,6 +299,34 @@ public class Main {
             model.put("postal",admQ.getData(Admin.Data.POSTAL));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        //---------------------Blacklist user-------------------
+
+        post("/blacklist_user" ,(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template","templates/admin.vtl");
+            model.put("admin", isAdmin);
+            model.put("correctinfo", correctInfo);
+            model.put("username", Username);
+            admQ.blacklistUser();
+            return new ModelAndView(model, p_layout);
+        },new VelocityTemplateEngine());
+
+        //--------------Admin user list----------------------------
+        get("/view_users",(req,res)->{
+            Map<String, Object> model = new HashMap<String, Object>();
+            ArrayList<User> userArrayList = admQ.getUsers();
+
+            model.put("users", userArrayList);
+
+            model.put("template","templates/view_users.vtl");
+            model.put("admin", isAdmin);
+            model.put("username", Username);
+            model.put("correctinfo", correctInfo);
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+
     }
 
     private static Boolean UserInputCheck(String input)

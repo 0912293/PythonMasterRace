@@ -45,6 +45,8 @@ public class Session {
         return search;
     }
 
+    public boolean isBlacklisted(){return login.checkBlacklist();}
+
     public void setSearch(Search search) {
         this.search = search;
     }
