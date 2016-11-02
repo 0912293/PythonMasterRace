@@ -13,13 +13,14 @@ public class Search {
     private SessionModel sessionModel;
     private ArrayList<Game> games = new ArrayList<>();
     private Filter filter;
-
+    private OrderBy orderBy;
     private String sqlQuery;
     private String filteredQuery;
 
     public Search(SessionModel sessionModel) {
         this.sessionModel = sessionModel;
         this.filter = new Filter();
+        this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
         getResultset();
     }
@@ -48,7 +49,7 @@ public class Search {
     }
 
     private void updateQuery() {
-        filteredQuery = sqlQuery + " " + filter.getWhereStatement(true);
+        filteredQuery = sqlQuery + " " + filter.getWhereStatement(true) +  " " + orderBy.getOrderByStatement();
     }
 
     public void addFilterParam(String param) {
@@ -71,8 +72,17 @@ public class Search {
         getResultset();
     }
 
+    public void addOrderParam(String column){
+        orderBy.addParameter(column);
+        getResultset();
+    }
+
     public void clearFilters() {
         filter.filters.clear();
+    }
+
+    public void clearOrderBy() {
+        orderBy.orders.clear();
     }
 
     public SessionModel getSessionModel() {

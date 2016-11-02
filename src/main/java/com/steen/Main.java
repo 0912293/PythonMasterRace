@@ -20,6 +20,9 @@ public class Main {
     public static final String p_layout = "templates/p_layout.vtl";
 
     public static void main(String[] args) {
+//        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
+        Spark.port(4567);
+
         staticFileLocation("/public");              // sets folder for non java files
 
         new RootController(new SessionModel());

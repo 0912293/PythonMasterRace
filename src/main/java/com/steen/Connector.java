@@ -9,6 +9,7 @@ public final class Connector {
 //  private static String password = "root";
 
     private static String url = "jdbc:mysql://g3project56.ddns.net:3306/webshopdb";
+//    private static String url = "jdbc:mysql://localhost:3306/webshopdb"; //gebruiken bij deployen
     private static String user = "projectapp";
     private static String password = "HRO!1";
 

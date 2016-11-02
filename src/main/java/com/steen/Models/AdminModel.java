@@ -7,6 +7,7 @@ import com.steen.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class AdminModel {
     String sql;
@@ -24,62 +25,131 @@ public class AdminModel {
     String address_number;
     String address_city;
     String birth_date;
+    Boolean admin;
+    private ArrayList<User> users = new ArrayList<>();
     DateBuilder dbuilder = new DateBuilder();
     ResultSet rs;
 
 
 
     Connection connection = Main.connection;
+    //---------------------------------userlist--------------------
 
-    public void delete_user(){
+    private void userlist(){
         try {
-            sql = "DELETE FROM users WHERE username = '"+ this.username +"';";
+            sql = "SELECT * FROM users;";
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
-            System.out.println("deleted user");
+            rs = myStmt.executeQuery(sql);
+
+            users.clear();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                String name = rs.getString("name");
+                String surname = rs.getString("surname");
+                User user = new User(username, name, surname);
+                users.add(user);
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void reset(){
+    public ArrayList<User> getUsers() {
+        userlist();
+        return users;
+    }
+
+
+    //-----------------------------------------check-----------
+
+    public boolean check(){
         try {
-            sql = "UPDATE users SET password = '" +
-                    Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString()+ "' WHERE username = '"+ this.username +"';";
+            sql = "SELECT admin FROM users WHERE username = '"+ this.username +"';";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            rs = myStmt.executeQuery(sql);
+
+            while(rs.next()){
+                admin = rs.getBoolean("admin");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return admin;
+    }
+//----------------------------------delete-reset-blacklist-----
+
+    public void blacklistUser(){
+        try {
+            sql = "INSERT INTO blacklist (username,blacklisted) VALUES ('" + this.username + "',true);";
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
-            System.out.println("reseted password");
+            System.out.println("blacklisted user");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
+    }
+
+    public void delete_user(){
+        if(!check()) {
+            try {
+                sql = "DELETE FROM users WHERE username = '" + this.username + "';";
+
+                PreparedStatement myStmt = connection.prepareStatement(sql);
+                myStmt.executeUpdate();
+                System.out.println("deleted user");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void reset(){
+        if(!check()) {
+            try {
+                sql = "UPDATE users SET password = '" +
+                        Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString() + "' WHERE username = '" + this.username + "';";
+
+                PreparedStatement myStmt = connection.prepareStatement(sql);
+                myStmt.executeUpdate();
+                System.out.println("reseted password");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 
 
     //---------update user
 
     public void setData(String name, String surname, String email, String year, String month, String day, String country, String street, String postal, String number, String city){
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.address_country = country;
-        this.address_street = street;
-        this.address_postalcode = postal;
-        this.address_number = number;
-        this.address_city = city;
-        dbuilder.build(this.day, this.month, this.year);
-        this.birth_date = dbuilder.getDate();
+        if(!check()) {
+            this.name = name;
+            this.surname = surname;
+            this.email = email;
+            this.year = year;
+            this.month = month;
+            this.day = day;
+            this.address_country = country;
+            this.address_street = street;
+            this.address_postalcode = postal;
+            this.address_number = number;
+            this.address_city = city;
+            dbuilder.build(this.day, this.month, this.year);
+            this.birth_date = dbuilder.getDate();
 
-        updateAddress();
-        updateUser();
 
+            updateAddress();
+            updateUser();
+        }
     }
 
     private void updateAddress() {
@@ -138,6 +208,7 @@ public class AdminModel {
                 surname = rs.getString("surname");
                 email = rs.getString("email");
                 address_id = rs.getInt("address_id");
+                admin = rs.getBoolean("admin");
             }
             searchUserAddress();
             getDate();
