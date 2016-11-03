@@ -7,9 +7,12 @@ import spark.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import static com.steen.Main.connection;
 import static com.steen.Main.p_layout;
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -69,18 +72,32 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
 //--------------Admin user list----------------------------
-        get("/view_users", (req, res) -> {
+        get("/admin/users", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            ArrayList<User> userArrayList = adminModel.getUsers();
+//            ArrayList<User> userArrayList = adminModel.getUsers();
 
-            model.put("users", userArrayList);
+//            model.put("users", userArrayList);
 
-            model.put("template", "templates/view_users.vtl");
+            model.put("template", "templates/admin_users.html");
             model.put("admin", req.session().attribute("admin"));
             model.put("username", req.session().attribute("username"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        get("/admin/users.json", (request, response) -> {
+            List jsonList = getFormattedResult(connection.prepareStatement("SELECT * FROM users").executeQuery());
+//            String jsonstring = "{ 'products':[";
+            String jsonstring = "[";
+            for (int i = 0; i < jsonList.size(); i++){
+                jsonstring += jsonList.get(i);
+                if (!(i+1 == jsonList.size())) {
+                    jsonstring += ",";
+                }
+            }
+            jsonstring = jsonstring + "]";
+            return jsonstring;
+        });
 
 
         get("/getUserData",(req,res)->{
