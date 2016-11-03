@@ -1,0 +1,49 @@
+<head>
+    <meta charset="UTF-8">
+    <title>Games</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<table id="usersTable">
+    <tr>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Email</th>
+        <th>Birthdate</th>
+        <th>isAdmin</th>
+    </tr>
+</table>
+
+<script type="text/javascript">
+    function getJson() {
+        $.ajax({
+            type: 'GET',
+            url: "/admin/users.json",
+            dataType: "json",
+            success: function(data) {
+                var json = data;
+                var tr = [];
+                $.each(json, function (i, item) {
+                    tr = $('<tr/>');
+//                    tr.append("<td>" + item.games_id + "</td>");
+                    tr.append("<td>" + item.username + "</td>");
+                    tr.append("<td>" + item.name + "</td>");
+                    tr.append("<td>" + item.surname + "</td>");
+                    tr.append("<td>" + item.email + "</td>");
+                    tr.append("<td>" + item.birth_date + "</td>");
+                    tr.append("<td>" + item.admin + "</td>");
+                    $('table').append(tr);
+                })
+                },
+            error: function () {
+                console.log("FUK DEZE JSON")
+            }
+        });
+    }
+
+    $(function () {
+        getJson()
+    });
+</script>
+</body>

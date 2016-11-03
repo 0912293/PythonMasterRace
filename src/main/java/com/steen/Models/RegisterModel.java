@@ -24,12 +24,11 @@ public class RegisterModel {
     Connection connection = Main.connection;
 
     public RegisterModel() {}
+    //----setters-----------------------------------
     public void setUsername(String username) {
         this.username = username;
     }
-    public void setPassword(String password) {
-        this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
-    }
+    public void setPassword(String password) { this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();}
     public void setName(String name) {
         this.name = name;
     }
@@ -60,6 +59,7 @@ public class RegisterModel {
     public void setAdmin(Boolean admin) {
         this.admin = admin;
     }
+
     public void setParameters(String username,String password,String name,String surname,String country,String city,String street,String postal,String number,String birth_date,String email) {
         this.username = username;
         this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
@@ -84,7 +84,6 @@ public class RegisterModel {
                     this.street + "','" +
                     this.number + "');";
 
-
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
 
@@ -100,7 +99,6 @@ public class RegisterModel {
     private void ParseRegUser() {
         try {
             sql =
-
                     "INSERT INTO users (username, password, name, surname, email, birth_date) VALUES ('" +
                             this.username + "','" +
                             this.password + "','" +
@@ -108,7 +106,6 @@ public class RegisterModel {
                             this.surname + "','" +
                             this.email + "','" +
                             this.birth_date + "');";
-
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
@@ -122,6 +119,7 @@ public class RegisterModel {
         ResultSet rs = null;
         PreparedStatement myStmt;
         int i = 0;
+
         try {
             sql = "SELECT address_id FROM address a WHERE a.address_country = ? AND a.address_postalcode = ?" +
                     "AND a.address_city = ? AND a.address_street = ? AND a.address_number = ?;";
@@ -133,23 +131,18 @@ public class RegisterModel {
             myStmt.setString(4, this.street);
             myStmt.setString(5, this.number);
 
-
             rs = myStmt.executeQuery();
-
 
             while (rs.next()) {
                 i = rs.getInt("address_id");
             }
-
 
             System.out.println("address id found");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
         return i;
-
     }
 
     private void ParseLinkAddressToUser(){
@@ -163,7 +156,6 @@ public class RegisterModel {
             myStmt.setString(2, this.username);
 
             myStmt.executeUpdate();
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();

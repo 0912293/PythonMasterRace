@@ -16,6 +16,7 @@ import static spark.Spark.post;
 public class AdminController {
 
     public AdminController(final AdminModel adminModel) {
+
         //--------------------------------AdminModel--------
         get("/admin", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -57,7 +58,6 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
 //---------------------Blacklist user-------------------
-
         post("/blacklist_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template", "templates/admin.vtl");
