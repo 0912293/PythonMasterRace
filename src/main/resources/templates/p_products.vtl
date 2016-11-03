@@ -103,14 +103,12 @@
 </fieldset>
 </form>
 
-
-
-<div id="gameList">
-
 #foreach ($i in $games)
-    <div class="col-md-2 column productbox">
+    <div class="col-md-4 column productbox">
+        <img src = $i.imageURL/>
         <div id="div.box" class="producttitle">$i.gameName</div>
     </div>
 #end
+
 
 </div>

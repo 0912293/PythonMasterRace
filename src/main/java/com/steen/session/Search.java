@@ -36,7 +36,8 @@ public class Search {
                 String gameName = resultSet.getString(2);
                 String gamePrice = resultSet.getString(3);
                 String gamePlatform = resultSet.getString(5);
-                Game game = new Game(gameName, gamePlatform, gamePrice);
+                String imageURL = resultSet.getString("games_image");
+                Game game = new Game(gameName, gamePlatform, gamePrice, "'" + imageURL + "'");
                 games.add(game);
             }
         } catch (Exception e) {

@@ -7,13 +7,15 @@ public class Game {
     String gameName;
     String gamePlatform;
     String gamePrice;
+    String imageURL;
 
 
 
-    public Game(String gameName, String gamePlatform, String gamePrice){
+    public Game(String gameName, String gamePlatform, String gamePrice, String imageURL){
         this.gameName = gameName;
         this.gamePlatform = gamePlatform;
         this.gamePrice = gamePrice;
+        this.imageURL = imageURL;
     }
 
     public String getGameName() {
@@ -38,5 +40,13 @@ public class Game {
 
     public void setGamePrice(String gamePrice) {
         this.gamePrice = gamePrice;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

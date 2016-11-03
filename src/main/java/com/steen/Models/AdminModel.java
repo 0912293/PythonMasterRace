@@ -19,7 +19,7 @@ public class AdminModel {
     String year;
     String month;
     String day;
-    int address_id;
+    Integer address_id;
     String address_country;
     String address_street;
     String address_postalcode;
@@ -32,6 +32,24 @@ public class AdminModel {
     ResultSet rs;
 
     Connection connection = Main.connection;
+
+    public void ResetOldContent() {
+        sql = null;
+        username = null;
+        name = null;
+        surname = null;
+        email = null;
+        year = null;
+        month = null;
+        day = null;
+        address_id = null;
+        address_country = null;
+        address_street = null;
+        address_postalcode = null;
+        address_number = null;
+        address_city = null;
+        birth_date = null;
+    }
 
     //---------------------------------userlist--------------------
     private void userlist(){
