@@ -2,6 +2,7 @@ package com.steen.Controllers;
 
 import com.steen.Models.AdminModel;
 import com.steen.User;
+import com.steen.Util.SQLToJSON;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import static com.steen.Main.connection;
 import static com.steen.Main.p_layout;
+import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -88,15 +90,7 @@ public class AdminController {
         get("/admin/users.json", (request, response) -> {
             List jsonList = getFormattedResult(connection.prepareStatement("SELECT * FROM users").executeQuery());
 //            String jsonstring = "{ 'products':[";
-            String jsonstring = "[";
-            for (int i = 0; i < jsonList.size(); i++){
-                jsonstring += jsonList.get(i);
-                if (!(i+1 == jsonList.size())) {
-                    jsonstring += ",";
-                }
-            }
-            jsonstring = jsonstring + "]";
-            return jsonstring;
+            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         });
 
 

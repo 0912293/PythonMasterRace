@@ -33,23 +33,27 @@ public class AdminModel {
 
     Connection connection = Main.connection;
 
-    public void ResetOldContent() {
-        sql = null;
-        username = null;
-        name = null;
-        surname = null;
-        email = null;
-        year = null;
-        month = null;
-        day = null;
-        address_id = null;
-        address_country = null;
-        address_street = null;
-        address_postalcode = null;
-        address_number = null;
-        address_city = null;
-        birth_date = null;
+    public AdminModel() {
+        clear();
     }
+
+    //    public void ResetOldContent() {
+//        sql = null;
+//        username = null;
+//        name = null;
+//        surname = null;
+//        email = null;
+//        year = null;
+//        month = null;
+//        day = null;
+//        address_id = null;
+//        address_country = null;
+//        address_street = null;
+//        address_postalcode = null;
+//        address_number = null;
+//        address_city = null;
+//        birth_date = null;
+//    }
 
     //---------------------------------userlist--------------------
     private void userlist(){
@@ -163,20 +167,18 @@ public class AdminModel {
     }
 
     public void clear() {
-        this.name = null;
-        this.surname = null;
-        this.email = null;
-        this.year = null;
-        this.month = null;
-        this.day = null;
-        this.address_country = null;
-        this.address_street = null;
-        this.address_postalcode = null;
-        this.address_number = null;
-        this.address_city = null;
-        this.birth_date = null;
-        updateAddress();
-        updateUser();
+        this.name = "";
+        this.surname = "";
+        this.email = "";
+        this.year = "";
+        this.month = "";
+        this.day = "";
+        this.address_country = "";
+        this.address_street = "";
+        this.address_postalcode = "";
+        this.address_number = "";
+        this.address_city = "";
+        this.birth_date = "";
     }
 
     private void updateAddress() {

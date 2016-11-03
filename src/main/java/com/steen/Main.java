@@ -3,10 +3,7 @@ package com.steen;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
-import com.steen.Controllers.AdminController;
-import com.steen.Controllers.LoginController;
-import com.steen.Controllers.RegisterController;
-import com.steen.Controllers.RootController;
+import com.steen.Controllers.*;
 import com.steen.Models.AdminModel;
 import com.steen.Models.LoginModel;
 import com.steen.Models.RegisterModel;
@@ -26,10 +23,13 @@ public class Main {
 
         staticFileLocation("/public"); // sets folder for non java files
 
-        new RootController(new SessionModel());
+        SessionModel sessionModel = new SessionModel();
+
+        new RootController(sessionModel);
         new RegisterController(new RegisterModel());
         new AdminController(new AdminModel());
         new LoginController(new LoginModel());
+        new ProductsController(sessionModel);
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{

@@ -7,6 +7,7 @@
 <table id="gamesTable">
     <tr>
         <!--<th>ID</th>-->
+        <th>Image</th>
         <th>Name</th>
         <th>Price</th>
         <th>Genre</th>
@@ -28,7 +29,7 @@
                 var tr = [];
                 $.each(json, function (i, item) {
                     tr = $('<tr/>');
-//                    tr.append("<td>" + item.games_id + "</td>");
+                    tr.append("<td><img src='" + item.games_image + "'/></td>");
                     tr.append("<td>" + item.games_name + "</td>");
                     tr.append("<td>" + item.games_price + "</td>");
                     tr.append("<td>" + item.games_genre + "</td>");

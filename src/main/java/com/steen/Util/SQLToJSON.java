@@ -39,4 +39,32 @@ public class SQLToJSON {
         }
         return resList;
     }
+
+    public static String JsonListToString(List<JSONObject> jsonList, Type type) {
+        String jsonstring = "";
+        switch (type) {
+            case ARRAY: jsonstring += "[";
+                break;
+            case OBJECT: jsonstring += "{";
+                break;
+        }
+        for (int i = 0; i < jsonList.size(); i++){
+            jsonstring += jsonList.get(i);
+            if (!(i+1 == jsonList.size())) {
+                jsonstring += ",";
+            }
+        }
+        switch (type) {
+            case ARRAY: jsonstring += "]";
+                break;
+            case OBJECT: jsonstring += "}";
+                break;
+        }
+        return jsonstring;
+    }
+
+    public enum Type {
+        ARRAY,
+        OBJECT
+    }
 }
