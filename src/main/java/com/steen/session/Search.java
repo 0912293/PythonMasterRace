@@ -38,8 +38,6 @@ public class Search {
                 String gamePlatform = resultSet.getString(5);
                 Game game = new Game(gameName, gamePlatform, gamePrice);
                 games.add(game);
-
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

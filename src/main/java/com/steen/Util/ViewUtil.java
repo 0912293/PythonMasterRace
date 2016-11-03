@@ -7,10 +7,7 @@ import com.steen.velocity.VelocityTemplateEngine;
  * Created by jesse on 31-10-2016.
  */
 
-
 public class ViewUtil {
-
-
 
     public static VelocityTemplateEngine strictVelocityEngine() {
         VelocityEngine configuredEngine = new VelocityEngine();

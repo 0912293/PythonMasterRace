@@ -14,10 +14,9 @@ public class Filter {
     }
 
     public void addParameter(String param) {
-        if (filters.contains(param)) {
-            return;
+        if (!filters.contains(param)) {
+            filters.add(param);
         }
-        filters.add(param);
     }
 
     public void addParameter(String column, String value, Operator o) {
