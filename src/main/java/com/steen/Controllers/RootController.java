@@ -17,7 +17,6 @@ import static spark.Spark.get;
 public class RootController {
     public RootController(final SessionModel session) {
 
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("admin", req.session().attribute("admin"));
@@ -40,13 +39,20 @@ public class RootController {
 //
 //                System.out.println(jsonList.get(i++));
 //            }
+
             String product = req.queryParams("search");
             String alpha = req.queryParams("alpha");
             String price = req.queryParams("pricesort");
+            String alphaOrder = "games.games_name";
+            String productFilter = "games.games_price";
 
-            String alphaOrder = SubmitModel.SelectQueryColumn(alpha, "name");
-            String productFilter = SubmitModel.SelectQueryColumn(price, "price");
+            if(alpha != null) {
+                alphaOrder = SubmitModel.SelectQueryColumn(alpha, "name");
 
+            }
+            if(price != null){
+                productFilter = SubmitModel.SelectQueryColumn(price, "price");
+            }
             session.getSearch().clearFilters();
             session.getSearch().clearOrderBy();
             if (!product.equals("")) {
@@ -63,12 +69,12 @@ public class RootController {
             req.session().attribute("pricesort", price);
             model.put("alpha", alpha);
             model.put("pricesort", price);
-//
+
 //            Filter filter = new Filter();
 //            filter.LikeData(product);
 
             model.put("games", gameArrayList);
-            model.put("search",product);
+            model.put("search", product);
             model.put("template","templates/p_products.vtl");
             model.put("login_modal","templates/login_mod.vtl");
             model.put("admin",req.session().attribute("admin"));
