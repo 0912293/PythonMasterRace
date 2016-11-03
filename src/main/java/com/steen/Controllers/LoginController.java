@@ -61,6 +61,7 @@ public class LoginController {
             } else {
                 model.put("login_modal", "templates/login_mod.vtl");
                 model.put("template", "templates/blacklisted.vtl");
+                res.redirect("/");
             }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());

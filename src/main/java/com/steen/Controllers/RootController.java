@@ -16,7 +16,6 @@ import static spark.Spark.get;
 public class RootController {
     public RootController(final SessionModel session) {
 
-
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("admin", req.session().attribute("admin"));
