@@ -39,8 +39,6 @@ public class Search {
                 String imageURL = resultSet.getString("games_image");
                 Game game = new Game(gameName, gamePlatform, gamePrice, "'" + imageURL + "'");
                 games.add(game);
-
-
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

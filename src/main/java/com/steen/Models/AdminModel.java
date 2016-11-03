@@ -19,7 +19,7 @@ public class AdminModel {
     String year;
     String month;
     String day;
-    int address_id;
+    Integer address_id;
     String address_country;
     String address_street;
     String address_postalcode;
@@ -31,11 +31,27 @@ public class AdminModel {
     DateBuilder dbuilder = new DateBuilder();
     ResultSet rs;
 
-
-
     Connection connection = Main.connection;
-    //---------------------------------userlist--------------------
 
+    public void ResetOldContent() {
+        sql = null;
+        username = null;
+        name = null;
+        surname = null;
+        email = null;
+        year = null;
+        month = null;
+        day = null;
+        address_id = null;
+        address_country = null;
+        address_street = null;
+        address_postalcode = null;
+        address_number = null;
+        address_city = null;
+        birth_date = null;
+    }
+
+    //---------------------------------userlist--------------------
     private void userlist(){
         try {
             sql = "SELECT * FROM users;";
@@ -62,9 +78,7 @@ public class AdminModel {
         return users;
     }
 
-
     //-----------------------------------------check-----------
-
     public boolean check(){
         try {
             sql = "SELECT admin FROM users WHERE username = '"+ this.username +"';";
@@ -81,8 +95,8 @@ public class AdminModel {
         }
         return admin;
     }
-//----------------------------------delete-reset-blacklist-----
 
+//----------------------------------delete-reset-blacklist-----
     public void blacklistUser(){
         try {
             sql = "INSERT INTO blacklist (username,blacklisted) VALUES ('" + this.username + "',true);";
@@ -94,7 +108,6 @@ public class AdminModel {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     public void delete_user(){
@@ -115,8 +128,7 @@ public class AdminModel {
     public void reset(){
         if(!check()) {
             try {
-                sql = "UPDATE users SET password = '" +
-                        Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString() + "' WHERE username = '" + this.username + "';";
+                sql = "UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString() + "' WHERE username = '" + this.username + "';";
 
                 PreparedStatement myStmt = connection.prepareStatement(sql);
                 myStmt.executeUpdate();
@@ -128,9 +140,7 @@ public class AdminModel {
         }
     }
 
-
     //---------update user
-
     public void setData(String name, String surname, String email, String year, String month, String day, String country, String street, String postal, String number, String city){
         if(!check()) {
             this.name = name;
@@ -146,7 +156,6 @@ public class AdminModel {
             this.address_city = city;
             dbuilder.build(this.day, this.month, this.year);
             this.birth_date = dbuilder.getDate();
-
 
             updateAddress();
             updateUser();
@@ -188,10 +197,6 @@ public class AdminModel {
         }
     }
 
-
-
-
-
     //-----------------------------------------get user data
     public void searchUser(String user) {
         try {
@@ -201,7 +206,6 @@ public class AdminModel {
             myStmt.executeQuery(sql);
 
             rs = myStmt.executeQuery();
-
 
             while (rs.next()) {
                 username = rs.getString("username");
@@ -246,7 +250,6 @@ public class AdminModel {
         }
     }
 
-
     private void searchUserAddress() {
         try {
             sql = "SELECT * FROM address WHERE address_id = '" + address_id + "'";
@@ -275,45 +278,32 @@ public class AdminModel {
     }
 
     public String getData(Data data){
-        String result="";
         switch(data){
             case NAME:
-                result = name;
-                break;
+                return name;
             case SURNAME:
-                result = surname;
-                break;
+                return surname;
             case USERNAME:
-                result = username;
-                break;
+                return username;
             case EMAIL:
-                result = email;
-                break;
+                return email;
             case YEAR:
-                result = year;
-                break;
+                return year;
             case MONTH:
-                result = month;
-                break;
+                return month;
             case DAY:
-                result = day;
-                break;
+                return day;
             case COUNTRY:
-                result = address_country;
-                break;
+                return address_country;
             case STREET:
-                result = address_street;
-                break;
+                return address_street;
             case POSTAL:
-                result = address_postalcode;
-                break;
+                return address_postalcode;
             case NUMBER:
-                result = address_number;
-                break;
+                return address_number;
             case CITY:
-                result = address_city;
-                break;
+                return address_city;
         }
-        return result;
+        return null; //just in case :^)
     }
 }

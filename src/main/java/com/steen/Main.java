@@ -24,17 +24,14 @@ public class Main {
 //        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
         Spark.port(4567);
 
-        staticFileLocation("/public");              // sets folder for non java files
+        staticFileLocation("/public"); // sets folder for non java files
 
         new RootController(new SessionModel());
         new RegisterController(new RegisterModel());
         new AdminController(new AdminModel());
         new LoginController(new LoginModel());
 
-        //--------------------------------------------------------project
-
-
-
+// voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{
 //            List jsonList = getFormattedResult(sessionModel.getSearch().getResultset());
 //            String jsonstring = "[";

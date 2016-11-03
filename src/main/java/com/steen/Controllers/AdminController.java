@@ -16,6 +16,7 @@ import static spark.Spark.post;
 public class AdminController {
 
     public AdminController(final AdminModel adminModel) {
+
         //--------------------------------AdminModel--------
         get("/admin", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -57,7 +58,6 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
 //---------------------Blacklist user-------------------
-
         post("/blacklist_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template", "templates/admin.vtl");
@@ -82,18 +82,18 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-
         get("/getUserData",(req,res)->{
+            adminModel.ResetOldContent(); // oude info verwijderen
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
+            model.put("username", req.session().attribute("username"));
             model.put("admin", req.session().attribute("admin"));
-            model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
 
-            String Username = req.queryParams("user");
-            adminModel.searchUser(Username);
+            adminModel.searchUser(req.queryParams("user"));
+
             model.put("result",adminModel.getData(AdminModel.Data.USERNAME));
-
-            model.put("username",adminModel.getData(AdminModel.Data.USERNAME));
+            model.put("usern",adminModel.getData(AdminModel.Data.USERNAME)); //username != de gebruiker die is ingelogd
             model.put("name",adminModel.getData(AdminModel.Data.NAME));
             model.put("surname",adminModel.getData(AdminModel.Data.SURNAME));
             model.put("email",adminModel.getData(AdminModel.Data.EMAIL));

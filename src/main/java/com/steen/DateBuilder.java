@@ -12,6 +12,4 @@ public class DateBuilder {
     public String getDate(){
         return sbuilder.toString();
     }
-
-
 }
