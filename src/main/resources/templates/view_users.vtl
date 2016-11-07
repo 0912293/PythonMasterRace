@@ -1,23 +1,23 @@
 #if($admin)
-<table class="table">
-    <thead>
-    <tr>
-        <th>Username</th>
-        <th>Name</th>
-        <th>Surname</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    #foreach ($u in $users)
+    <table class="table">
+        <thead>
         <tr>
-            <td>$u.usernameName</td>
-            <td>$u.userName</td>
-            <td>$u.userSurname</td>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
         </tr>
-    #end
+        </thead>
+        <tbody>
 
-    </tbody>
-</table>
+        #foreach ($u in $users)
+            <tr>
+                <td>$u.usernameName</td>
+                <td>$u.userName</td>
+                <td>$u.userSurname</td>
+            </tr>
+        #end
+
+        </tbody>
+    </table>
 #else
 #end

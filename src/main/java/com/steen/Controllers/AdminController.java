@@ -93,7 +93,6 @@ public class AdminController {
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         });
 
-
         get("/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template","templates/admin.vtl");
@@ -131,5 +130,17 @@ public class AdminController {
             }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        get("/admin/chart", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+
+            model.put("template", "templates/admin_chart.html");
+            model.put("admin", req.session().attribute("admin"));
+            model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+
     }
 }

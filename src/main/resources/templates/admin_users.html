@@ -5,16 +5,18 @@
 </head>
 <body>
 <h1>Users</h1>
-<table class="table" id="usersTable">
-    <tr>
-        <th>Username</th>
-        <th>Name</th>
-        <th>Surname</th>
-        <th>Email</th>
-        <th>Birthdate</th>
-        <th>isAdmin</th>
-    </tr>
-</table>
+<div class='col-md-9'>
+    <table class="table" id="usersTable">
+        <tr>
+            <th>Username</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Birthdate</th>
+            <th>Admin</th>
+        </tr>
+    </table>
+</div>
 
 <script type="text/javascript">
     function getJson() {
@@ -27,7 +29,6 @@
                 var tr = [];
                 $.each(json, function (i, item) {
                     tr = $('<tr/>');
-//                    tr.append("<td>" + item.games_id + "</td>");
                     tr.append("<td>" + item.username + "</td>");
                     tr.append("<td>" + item.name + "</td>");
                     tr.append("<td>" + item.surname + "</td>");
