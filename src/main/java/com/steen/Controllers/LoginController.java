@@ -52,6 +52,7 @@ public class LoginController {
                     Password = null;
                     correctInfo = false;
                     req.session().attribute("correctinfo", correctInfo);
+                    req.session().attribute("username", null);
                     passCheck = null;
                     userCheck = null;
                 }

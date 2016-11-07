@@ -1,21 +1,14 @@
 <head>
-    <meta charset="UTF-8">
-    <title>Games</title>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 </head>
 <body>
-<table id="gamesTable">
-    <tr>
-        <!--<th>ID</th>-->
-        <th>Image</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Genre</th>
-        <th>Platform</th>
-        <th>Publisher</th>
-        <th>Stock</th>
-    </tr>
-</table>
+<!---products--->
+<h2 class="text-center">Producten</h2>
+<hr>
+<div id="ProductContainer" class="container">
+
+</div>
+<!------ End products ----->
 
 <script type="text/javascript">
     function getJson() {
@@ -32,20 +25,21 @@
 
     function filltable(data) {
         var json = data;
-        var tr = [];
+        var content = [];
+
         $.each(json, function (i, item) {
-            tr = $('<tr/>');
-            tr.append("<td><img src='" + item.games_image + "'/></td>");
-            tr.append("<td>" + item.games_name + "</td>");
-            tr.append("<td>" + item.games_price + "</td>");
-            tr.append("<td>" + item.games_genre + "</td>");
-            tr.append("<td>" + item.games_platform + "</td>");
-            tr.append("<td>" + item.games_publisher + "</td>");
-            tr.append("<td>" + item.games_stock + "</td>");
-            $('#gamesTable').append(tr);
+            console.log(item);
+
+            content = $("<div class='col-md-3 column productbox' id='productbox'>");
+            content.append("<div><img src='" + item.games_image + "'  class='img-responsive'>");
+            content.append("<div class='caption'>");
+            content.append("<h5 id='game_name'>" + item.games_name + "</h5>");
+            content.append("<p>Prijs: " + item.games_price + ",-</p>");
+            content.append("<p><a href='#' class='btn btn-success' role='button' id='button1'>Bekijken</a>    <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+ winkelmand</a></p>");
+            content.append("</div></div></div>");
+            $("#ProductContainer").append(content);
         })
     }
-
     $(function () {
         getJson()
     });
