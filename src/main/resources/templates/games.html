@@ -14,7 +14,6 @@
         <th>Platform</th>
         <th>Publisher</th>
         <th>Stock</th>
-        <th>Price</th>
     </tr>
 </table>
 
@@ -24,25 +23,27 @@
             type: 'GET',
             url: "/games.json",
             dataType: "json",
-            success: function(data) {
-                var json = data;
-                var tr = [];
-                $.each(json, function (i, item) {
-                    tr = $('<tr/>');
-                    tr.append("<td><img src='" + item.games_image + "'/></td>");
-                    tr.append("<td>" + item.games_name + "</td>");
-                    tr.append("<td>" + item.games_price + "</td>");
-                    tr.append("<td>" + item.games_genre + "</td>");
-                    tr.append("<td>" + item.games_platform + "</td>");
-                    tr.append("<td>" + item.games_publisher + "</td>");
-                    tr.append("<td>" + item.games_stock + "</td>");
-                    $('#gamesTable').append(tr);
-                })
-                },
+            success: filltable,
             error: function () {
                 console.log("FUK DEZE JSON")
             }
         });
+    }
+
+    function filltable(data) {
+        var json = data;
+        var tr = [];
+        $.each(json, function (i, item) {
+            tr = $('<tr/>');
+            tr.append("<td><img src='" + item.games_image + "'/></td>");
+            tr.append("<td>" + item.games_name + "</td>");
+            tr.append("<td>" + item.games_price + "</td>");
+            tr.append("<td>" + item.games_genre + "</td>");
+            tr.append("<td>" + item.games_platform + "</td>");
+            tr.append("<td>" + item.games_publisher + "</td>");
+            tr.append("<td>" + item.games_stock + "</td>");
+            $('#gamesTable').append(tr);
+        })
     }
 
     $(function () {

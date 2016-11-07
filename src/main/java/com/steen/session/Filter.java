@@ -48,7 +48,8 @@ public class Filter {
                 sb.append(" > ");
                 break;
         }
-        sb.append(value);
+        String safe_value = "'%" + value + "%'";
+        sb.append(safe_value);
         if (filters.contains(sb.toString())) return;
         filters.add(sb.toString());
     }
