@@ -1,17 +1,15 @@
 package com.steen;
 
-import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 import com.steen.Controllers.*;
 import com.steen.Models.AdminModel;
 import com.steen.Models.LoginModel;
+import com.steen.Models.ProductModel;
 import com.steen.Models.RegisterModel;
-import com.steen.Models.SessionModel;
 import spark.Spark;
 
 import java.sql.Connection;
-import java.util.*;
 
 public class Main {
     public static Connection connection = Connector.connect();
@@ -23,17 +21,17 @@ public class Main {
 
         staticFileLocation("/public"); // sets folder for non java files
 
-        SessionModel sessionModel = new SessionModel();
+        ProductModel productModel = new ProductModel();
 
-        new RootController(sessionModel);
+        new RootController(productModel);
         new RegisterController(new RegisterModel());
         new AdminController(new AdminModel());
         new LoginController(new LoginModel());
-        new ProductsController(sessionModel);
+        new ProductsController(productModel);
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{
-//            List jsonList = getFormattedResult(sessionModel.getSearch().getResultset());
+//            List jsonList = getFormattedResult(productModel.getSearch().getResultset());
 //            String jsonstring = "[";
 //            for (int i = 0; i < jsonList.size(); i++){
 //                jsonstring = jsonstring + jsonList.get(i) + ",";

@@ -1,6 +1,6 @@
 package com.steen.session;
 
-import com.steen.Models.SessionModel;
+import com.steen.Models.ProductModel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,15 +10,15 @@ import static com.steen.Main.connection;
 
 
 public class Search {
-    private SessionModel sessionModel;
+//    private ProductModel productModel;
     private ArrayList<Game> games = new ArrayList<>();
     private Filter filter;
     private OrderBy orderBy;
     private String sqlQuery;
     private String filteredQuery;
 
-    public Search(SessionModel sessionModel) {
-        this.sessionModel = sessionModel;
+    public Search() {
+//        this.productModel = productModel;
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
@@ -31,15 +31,15 @@ public class Search {
         try {
             PreparedStatement myStmt = connection.prepareStatement(filteredQuery);
             resultSet = myStmt.executeQuery(filteredQuery);
-            games.clear();
-            while (resultSet.next()) {
-                String gameName = resultSet.getString(2);
-                String gamePrice = resultSet.getString(3);
-                String gamePlatform = resultSet.getString(5);
-                String imageURL = resultSet.getString("games_image");
-                Game game = new Game(gameName, gamePlatform, gamePrice, "'" + imageURL + "'");
-                games.add(game);
-            }
+//            games.clear();
+//            while (resultSet.next()) {
+//                String gameName = resultSet.getString(2);
+//                String gamePrice = resultSet.getString(3);
+//                String gamePlatform = resultSet.getString(5);
+//                String imageURL = resultSet.getString("games_image");
+//                Game game = new Game(gameName, gamePlatform, gamePrice, "'" + imageURL + "'");
+//                games.add(game);
+//            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -84,9 +84,9 @@ public class Search {
         orderBy.orders.clear();
     }
 
-    public SessionModel getSessionModel() {
-        return sessionModel;
-    }
+//    public ProductModel getProductModel() {
+//        return productModel;
+//    }
 
     public ArrayList<Game> getGames() {
         getResultset();

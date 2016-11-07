@@ -1,6 +1,6 @@
 package com.steen.Controllers;
 
-import com.steen.Models.SessionModel;
+import com.steen.Models.ProductModel;
 import com.steen.Models.SubmitModel;
 import com.steen.session.Filter;
 import com.steen.session.Game;
@@ -15,7 +15,7 @@ import static com.steen.Main.p_layout;
 import static spark.Spark.get;
 
 public class RootController {
-    public RootController(final SessionModel session) {
+    public RootController(final ProductModel session) {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();

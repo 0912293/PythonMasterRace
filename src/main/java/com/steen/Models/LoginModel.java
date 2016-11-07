@@ -1,7 +1,6 @@
 package com.steen.Models;
 
 import com.steen.Cryptr;
-import com.steen.Main;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +8,7 @@ import java.sql.ResultSet;
 import static com.steen.Main.connection;
 
 public class LoginModel {
-    private SessionModel sessionModel;
+    private ProductModel productModel;
     private String username;
     private String password;
     private String sql;
