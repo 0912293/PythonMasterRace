@@ -2,6 +2,14 @@
 
 </head>
 <body>
+<form class="navbar-form navbar-left">
+    <div class="form-group">
+        <input id="search" name="search" class="form-control" type="text" placeholder="Search">
+        <input id="submitbutton" type="button" value="Submit" onclick="updateTable($('#search').val())">
+    </div>
+</form>
+
+
 <!---products--->
 <h2 class="text-center">Producten</h2>
 <hr>
@@ -10,11 +18,30 @@
 </div>
 <!------ End products ----->
 
+
 <script type="text/javascript">
-    function getJson() {
+    var input = document.querySelector('input[type= text][id = "search"]');
+
+    $(function () {
+        updateTable()
+    });
+
+    function updateTable(urlAppend) {
+        console.log(urlAppend);
+        var stdURL = "/games.json";
+        var productContainer = $('#ProductContainer');
+
+        if (urlAppend != null) {
+            getJson(stdURL+"?search="+urlAppend);
+        } else {
+            getJson(stdURL);
+        }
+    }
+
+    function getJson(url) {
         $.ajax({
             type: 'GET',
-            url: "/games.json",
+            url: url,
             dataType: "json",
             success: filltable,
             error: function () {
@@ -22,11 +49,11 @@
             }
         });
     }
-
     function filltable(data) {
         var json = data;
         var content = [];
-
+        var productContainer = $('#ProductContainer');
+        productContainer.empty();
         $.each(json, function (i, item) {
             console.log(item);
 
@@ -37,10 +64,8 @@
             content.append("<p>Prijs: " + item.games_price + ",-</p>");
             content.append("<p><a href='#' class='btn btn-success' role='button' id='button1'>Bekijken</a>    <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+ winkelmand</a></p>");
             content.append("</div></div></div>");
-            $("#ProductContainer").append(content);
+            productContainer.append(content);
         })
     }
-    $(function () {
-        getJson()
-    });
+
 </script>
