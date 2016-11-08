@@ -18,6 +18,9 @@ public class ProductsController {
             Map<String, Object> model = new HashMap<>();
             model.put("template", "templates/games.html");
             model.put("login_modal", "templates/login_mod.vtl");
+            model.put("username", request.session().attribute("username"));
+            model.put("correctinfo", request.session().attribute("correctinfo"));
+            model.put("admin", request.session().attribute("admin"));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
