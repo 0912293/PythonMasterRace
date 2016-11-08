@@ -87,7 +87,7 @@
         console.log(url);
         $.ajax({
             type: 'POST',
-            url: "/games.json",
+            url: url,
             dataType: "json",
             success: filltable,
             error: function () {
