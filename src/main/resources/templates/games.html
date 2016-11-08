@@ -1,44 +1,90 @@
-<head>
+<div class="container">
+    <div class="row">
+        <!----form begin--->
+        <form class="form-filter">
+            <div class="col-md-3"> <h2 class="text-center">Producten</h2></div>
+            <div class="form-group col-md-3">
+                <input id="search" name="search" class="form-control" type="text" placeholder="Search">
+                <input id="submitbutton" type="button" value="Submit" onclick="updateTable($('#search').val())">
+            </div>
+            <div class="form-group col-md-6">
 
-</head>
-<body>
-<form class="navbar-form navbar-left">
-    <div class="form-group">
-        <input id="search" name="search" class="form-control" type="text" placeholder="Search">
-        <input id="submitbutton" type="button" value="Submit" onclick="updateTable($('#search').val())">
+                <label class="col-md-3">Prijs</label>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="pricesort" id="PriceSort-2" value="2" checked="checked">
+                            Geen
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="pricesort" id="PriceSort-0" value="0" checked="checked">
+                            laag naar hoog
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="pricesort" id="PriceSort-1" value="1">hoog naar laag
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-----form end ---->
     </div>
-</form>
+    <hr>
+    <div id="ProductContainer" class="container">
+
+    </div>
+</div>
+
 
 
 <!---products--->
-<h2 class="text-center">Producten</h2>
-<hr>
-<div id="ProductContainer" class="container">
 
-</div>
+
 <!------ End products ----->
 
 
 <script type="text/javascript">
+    var option = "";
     var input = document.querySelector('input[type= text][id = "search"]');
 
     $(function () {
-        updateTable()
+        $('input[name="pricesort"]').change(function(){ radioClick() });
+        radioClick();
+        updateTable();
     });
 
-    function updateTable(urlAppend) {
-        console.log(urlAppend);
+    function radioClick(){
+        id = $('input[name="pricesort"]:checked').val();
+        if(id == "0") {
+            option = "games.games_price";
+        }
+        else if(id == "1"){
+            option = "games.games_price DESC";
+        }
+        else{
+            option = ""
+        }
+    }
+
+    function updateTable(searchAppend) {
         var stdURL = "/games.json";
         var productContainer = $('#ProductContainer');
-
-        if (urlAppend != null) {
-            getJson(stdURL+"?search="+urlAppend);
-        } else {
+        if(searchAppend != null){
+            getJson(stdURL + "?search=" + searchAppend + "&order=" + option );
+        }else if (option != null) {
+            getJson(stdURL + "?order=" + option);
+        }
+        else{
             getJson(stdURL);
         }
     }
 
     function getJson(url) {
+        console.log(url);
         $.ajax({
             type: 'GET',
             url: url,
@@ -55,7 +101,7 @@
         var productContainer = $('#ProductContainer');
         productContainer.empty();
         $.each(json, function (i, item) {
-            console.log(item);
+
 
             content = $("<div class='col-md-3 column productbox' id='productbox'>");
             content.append("<div><img src='" + item.games_image + "'  class='img-responsive'>");

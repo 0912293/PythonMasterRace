@@ -30,7 +30,7 @@ public class ProductsController {
             if (filter != null && !filter.equals("")) {
                 productModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
-            if (order != null && !filter.equals("")) {
+            if (order != null && !order.equals("")) {
                 productModel.getSearch().addOrderParam(order);
             }
 
