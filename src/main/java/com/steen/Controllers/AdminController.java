@@ -37,6 +37,7 @@ public class AdminController {
             model.put("username", req.session().attribute("username"));
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -51,6 +52,7 @@ public class AdminController {
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
             adminModel.delete_user();
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
@@ -61,6 +63,7 @@ public class AdminController {
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -69,6 +72,7 @@ public class AdminController {
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
 
             adminModel.setData(req.queryParams("name"), req.queryParams("sur"), req.queryParams("email"), req.queryParams("year"), req.queryParams("month"), req.queryParams("day"), req.queryParams("country"),
                     req.queryParams("street"), req.queryParams("postal"), req.queryParams("number"), req.queryParams("city"));
@@ -83,7 +87,20 @@ public class AdminController {
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("username", req.session().attribute("username"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
             adminModel.blacklistUser();
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+//---------------------UN-Blacklist user---------------------
+        post("/admin/blacklist_undo", (req, res) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template", "templates/admin.vtl");
+            model.put("admin", req.session().attribute("admin"));
+            model.put("correctinfo", req.queryParams("correctinfo"));
+            model.put("username", req.session().attribute("username"));
+            model.put("userblacklisted", adminModel.checkBlacklisted());
+            adminModel.undoBlackList();
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -134,6 +151,7 @@ public class AdminController {
                 model.put("month", adminModel.getData(AdminModel.Data.MONTH));
                 model.put("city", adminModel.getData(AdminModel.Data.CITY));
                 model.put("postal", adminModel.getData(AdminModel.Data.POSTAL));
+                model.put("userblacklisted", adminModel.checkBlacklisted());
                 try {
                     model.put("number", Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
                 } catch (NumberFormatException e) {
@@ -163,8 +181,7 @@ public class AdminController {
     }
     private Boolean isAdmin(Request req) {
         if (req.session().attribute("admin") != null) {
-            boolean isadmin = req.session().attribute("admin");
-            return isadmin;
+            return req.session().attribute("admin");
         }
         return false;
     }

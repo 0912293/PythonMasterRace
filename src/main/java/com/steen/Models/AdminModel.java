@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.steen.Models.LoginModel.checkBlacklist;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 
@@ -89,8 +90,8 @@ public class AdminModel {
         return users;
     }
 
-    //-----------------------------------------check-----------
-    public boolean check(){
+    //-----------------------------------------checkAdmin-----------
+    public boolean checkAdmin(){
         try {
             sql = "SELECT admin FROM users WHERE username = '"+ this.username +"';";
 
@@ -105,6 +106,10 @@ public class AdminModel {
             e.printStackTrace();
         }
         return admin;
+    }
+//----------------------------------checkBlacklisted-------------------
+    public boolean checkBlacklisted() {
+        return checkBlacklist(this.username);
     }
 //----------------------------------delete-resetPassword-blacklist-----
 
@@ -121,8 +126,21 @@ public class AdminModel {
         }
     }
 
+    public void undoBlackList(){
+        try {
+            sql = "DELETE FROM blacklist WHERE LOWER(username) = LOWER('" + this.username + "');";
+
+            PreparedStatement myStmt = connection.prepareStatement(sql);
+            myStmt.executeUpdate();
+            System.out.println("blacklisted user");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void delete_user(){
-        if(!check()) {
+        if(!checkAdmin()) {
             try {
                 sql = "DELETE FROM users WHERE username = '" + this.username + "';";
 
@@ -137,7 +155,7 @@ public class AdminModel {
     }
 
     public void resetPassword(){
-        if(!check()) {
+        if(!checkAdmin()) {
             try {
                 sql = "UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString() + "' WHERE username = '" + this.username + "';";
 
@@ -153,7 +171,7 @@ public class AdminModel {
 
     //---------update user
     public void setData(String name, String surname, String email, String year, String month, String day, String country, String street, String postal, String number, String city){
-        if(!check()) {
+        if(!checkAdmin()) {
             this.name = name;
             this.surname = surname;
             this.email = email;

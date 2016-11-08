@@ -5,6 +5,7 @@ import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Models.LoginModel.checkBlacklist;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -37,7 +38,7 @@ public class LoginController {
             loginModel.setCredentials(Username, Password);
 
             Boolean correctInfo = loginModel.hasCorrectLoginInfo();
-            Boolean blacklisted = loginModel.checkBlacklist();
+            Boolean blacklisted = checkBlacklist(Username);
             if (!blacklisted) {
                 if (correctInfo) {
                     req.session().attribute("admin", loginModel.isAdmin());

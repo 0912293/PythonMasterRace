@@ -21,7 +21,7 @@ public class LoginModel {
 
     public void setCredentials(String username, String password){
         this.username = username;
-        if(!checkBlacklist()) {
+        if(!checkBlacklist(this.username)) {
             this.password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
             this.sql = "SELECT users.admin" +
                     " FROM users" +
@@ -30,11 +30,12 @@ public class LoginModel {
         }
     }
 
-    public boolean checkBlacklist(){
+    public static boolean checkBlacklist(String username){
+        boolean blacklisted = false;
         try {
-            sql = "SELECT blacklisted FROM blacklist WHERE username = '"+ this.username +"';";
+            String sql = "SELECT blacklisted FROM blacklist WHERE LOWER(username) = LOWER('"+ username +"');";
             PreparedStatement myStmt = connection.prepareStatement(sql);
-            rs = myStmt.executeQuery(sql);
+            ResultSet rs = myStmt.executeQuery(sql);
             while(rs.next()){
                 blacklisted = rs.getBoolean("blacklisted");
             }
