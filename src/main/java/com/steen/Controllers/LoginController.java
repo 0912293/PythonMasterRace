@@ -76,6 +76,8 @@ public class LoginController {
             res.redirect("/"); // stuurt de gebruiker naar de home page, dus hierna word de http request voor home uitgevoerd in de client.
             return new ModelAndView(new HashMap<>(), p_layout);
         }, new VelocityTemplateEngine());
+
+
     }
 
     private static Boolean UserInputCheck(String input)
