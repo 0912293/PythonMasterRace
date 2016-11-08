@@ -1,7 +1,5 @@
 package com.steen.session;
 
-import com.steen.Models.ProductModel;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -11,21 +9,28 @@ import static com.steen.Main.connection;
 
 public class Search {
 //    private ProductModel productModel;
-    private ArrayList<Game> games = new ArrayList<>();
+    private ArrayList<Object> objects = new ArrayList<>();
     private Filter filter;
     private OrderBy orderBy;
     private String sqlQuery;
     private String filteredQuery;
 
-    public Search() {
+    public Search(String baseQuery) {
 //        this.productModel = productModel;
         this.filter = new Filter();
         this.orderBy = new OrderBy();
-        this.sqlQuery = "SELECT * FROM games";
-        getResultset();
+        this.sqlQuery = baseQuery;
+        getResultSet();
     }
 
-    public ResultSet getResultset() {
+    public Search() {
+        this.filter = new Filter();
+        this.orderBy = new OrderBy();
+        this.sqlQuery = "SELECT * FROM games";
+        getResultSet();
+    }
+
+    public ResultSet getResultSet() {
         updateQuery();
         ResultSet resultSet = null;
         try {
@@ -53,27 +58,27 @@ public class Search {
 
     public void addFilterParam(String param) {
         filter.addParameter(param);
-        getResultset();
+        getResultSet();
     }
 
     public void addFilterParam(String column, String value, Filter.Operator operator) {
         filter.addParameter(column, value, operator);
-        getResultset();
+        getResultSet();
     }
 
     public void removeFilterParam(String param) {
         filter.removeParameter(param);
-        getResultset();
+        getResultSet();
     }
 
     public void removeFilterParam(int index) {
         filter.removeParameter(index);
-        getResultset();
+        getResultSet();
     }
 
     public void addOrderParam(String column){
         orderBy.addParameter(column);
-        getResultset();
+        getResultSet();
     }
 
     public void clearFilters() {
@@ -88,9 +93,9 @@ public class Search {
 //        return productModel;
 //    }
 
-    public ArrayList<Game> getGames() {
-        getResultset();
-        return games;
+    public ArrayList<Object> getObjects() {
+        getResultSet();
+        return objects;
     }
 
     public Filter getFilter() {

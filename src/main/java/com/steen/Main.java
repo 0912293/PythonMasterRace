@@ -31,7 +31,7 @@ public class Main {
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{
-//            List jsonList = getFormattedResult(productModel.getSearch().getResultset());
+//            List jsonList = getFormattedResult(productModel.getSearch().getResultSet());
 //            String jsonstring = "[";
 //            for (int i = 0; i < jsonList.size(); i++){
 //                jsonstring = jsonstring + jsonList.get(i) + ",";

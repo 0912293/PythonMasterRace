@@ -5,12 +5,10 @@ import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 public class ProductsController {
@@ -22,7 +20,7 @@ public class ProductsController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/games.json", ((request, response) -> {
+        post("/games.json", ((request, response) -> {
             productModel.clearSession();
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
@@ -34,7 +32,7 @@ public class ProductsController {
                 productModel.getSearch().addOrderParam(order);
             }
 
-            return getFormattedResult(productModel.getSearch().getResultset());
+            return productModel.getJSON();
         }
         ));
 

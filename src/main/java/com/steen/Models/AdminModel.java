@@ -4,11 +4,17 @@ import com.steen.Cryptr;
 import com.steen.DateBuilder;
 import com.steen.Main;
 import com.steen.User;
+import com.steen.Util.SQLToJSON;
+import com.steen.session.Search;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.steen.Util.SQLToJSON.JsonListToString;
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 
 public class AdminModel {
     String sql;
@@ -28,6 +34,7 @@ public class AdminModel {
     String birth_date;
     Boolean admin;
     private ArrayList<User> users = new ArrayList<>();
+    private Search search = new Search("SELECT * FROM users");
     DateBuilder dbuilder = new DateBuilder();
     ResultSet rs;
 
@@ -324,5 +331,20 @@ public class AdminModel {
                 return address_city;
         }
         return null; //just in case :^)
+    }
+
+    public String getUsersJSON() {
+        List jsonList;
+        try {
+            jsonList = getFormattedResult(search.getResultSet());
+            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
+        } catch (Exception e) {
+            System.out.println("SQL >> Could not get JSON");
+        }
+        return null;
+    }
+
+    public Search getSearch() {
+        return search;
     }
 }

@@ -1,19 +1,16 @@
 package com.steen.Controllers;
 
 import com.steen.Models.AdminModel;
-import com.steen.User;
 import com.steen.Util.SQLToJSON;
+import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import spark.Request;
-import spark.Response;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.steen.Main.connection;
 import static com.steen.Main.p_layout;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
@@ -100,10 +97,18 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/admin/users.json", (request, response) -> {
-            List jsonList = getFormattedResult(connection.prepareStatement("SELECT * FROM users").executeQuery());
-//            String jsonstring = "{ 'products':[";
-            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
+        post("/admin/users.json", (request, response) -> {
+            String filter = request.queryParams("search");
+            String order = request.queryParams("order");
+
+            if (filter != null && !filter.equals("")) {
+                adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
+            }
+            if (order != null && !filter.equals("")) {
+                adminModel.getSearch().addOrderParam(order);
+            }
+
+            return adminModel.getUsersJSON();
         });
 
         get("/admin/getUserData",(req,res)->{

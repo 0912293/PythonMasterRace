@@ -13,12 +13,12 @@
 <script type="text/javascript">
     function getJson() {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: "/games.json",
             dataType: "json",
             success: filltable,
             error: function () {
-                console.log("FUK DEZE JSON")
+                console.log("Incorrect or missing JSON")
             }
         });
     }
