@@ -17,20 +17,25 @@ import static com.steen.Main.connection;
 import static com.steen.Main.p_layout;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class AdminController {
 
     public AdminController(final AdminModel adminModel) {
+        before("/admin/*", (req,res) -> {
+            if (!isAdmin(req)) {
+                halt("401 - not an admin");
+            }
+        });
+
+        before("/admin", (req,res) -> {
+            if (!isAdmin(req))
+                halt("401 - not an admin");
+        });
 
         //--------------------------------AdminModel--------
         get("/admin", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             model.put("template", "templates/admin.vtl");
             model.put("username", req.session().attribute("username"));
             model.put("admin", req.session().attribute("admin"));
@@ -44,12 +49,8 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/delete_user", (req, res) -> {
+        post("/admin/delete_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
@@ -57,12 +58,8 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/reset_pass", (req, res) -> {
+        post("/admin/reset_pass", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             adminModel.resetPassword();
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
@@ -70,12 +67,8 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/update_user", (req, res) -> {
+        post("/admin/update_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
@@ -87,12 +80,8 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
 //---------------------Blacklist user-------------------
-        post("/blacklist_user", (req, res) -> {
+        post("/admin/blacklist_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
@@ -104,14 +93,6 @@ public class AdminController {
 //--------------Admin user list----------------------------
         get("/admin/users", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
-//            ArrayList<User> userArrayList = adminModel.getUsers();
-
-//            model.put("users", userArrayList);
-
             model.put("template", "templates/admin_users.html");
             model.put("admin", req.session().attribute("admin"));
             model.put("username", req.session().attribute("username"));
@@ -120,22 +101,13 @@ public class AdminController {
         }, new VelocityTemplateEngine());
 
         get("/admin/users.json", (request, response) -> {
-
-            if (isAdmin(request)) {
-                response.redirect("/admin_forbidden");
-                return "Forbidden: your not an admin";
-            }
             List jsonList = getFormattedResult(connection.prepareStatement("SELECT * FROM users").executeQuery());
 //            String jsonstring = "{ 'products':[";
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         });
 
-        get("/getUserData",(req,res)->{
+        get("/admin/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
-            if (isAdmin(req)) {
-                res.redirect("/admin_forbidden");
-                return new ModelAndView(model, p_layout);
-            }
             model.put("template", "templates/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
@@ -185,6 +157,10 @@ public class AdminController {
 
     }
     private Boolean isAdmin(Request req) {
-        return (req.session().attribute("admin") == null) ? true: false;
+        if (req.session().attribute("admin") != null) {
+            boolean isadmin = req.session().attribute("admin");
+            return isadmin;
+        }
+        return false;
     }
 }
