@@ -100,10 +100,9 @@
         var json = data;
         var content = [];
         var productContainer = $('#ProductContainer');
+
         productContainer.empty();
         $.each(json, function (i, item) {
-
-
             content = $("<div class='col-md-3 column productbox' id='productbox'>");
             content.append("<div><img src='" + item.games_image + "'  class='img-responsive'>");
             content.append("<div class='caption'>");

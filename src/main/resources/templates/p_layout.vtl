@@ -59,10 +59,10 @@
       <ul class="nav navbar-nav navbar-right">
           #if($correctinfo)
               #if($admin)
-                <li style="cursor: default"><a>Welcome $username ;]</a></li>
+                <li style="cursor: default"><a href="/user/$username">Welcome $username ;]</a></li>
                 <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
               #else
-                  <li style="cursor: default"><a>Welcome $username</a></li>
+                  <li style="cursor: default"><a href="/user/$username">Welcome $username</a></li>
               #end
             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
           #else
