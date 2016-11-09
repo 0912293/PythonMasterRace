@@ -20,10 +20,10 @@ public class RootController {
     public RootController(final ProductModel session) {
 
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            model.put("admin", req.session().attribute("admin"));
+            Map<String, Object> model = new HashMap<>();
             model.put("login_modal", "templates/login_mod.vtl");
             model.put("template", "templates/p_home.vtl");
+            model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
             model.put("username", req.session().attribute("username"));
             return new ModelAndView(model, p_layout);

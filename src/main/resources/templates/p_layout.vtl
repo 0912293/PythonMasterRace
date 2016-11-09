@@ -53,21 +53,21 @@
       </div>
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-          <li><a href="/games">Products</a> </li>
+          <li><a href="/games">Producten</a> </li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
           #if($correctinfo)
               #if($admin)
-                <li style="cursor: default"><a href="/user/$username">Welcome $username ;]</a></li>
-                <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Admin</a></li>
+                  <li style="cursor: default"><a href="/user/$username">Ingelogd als <strong>$username</strong></a></li>
+                <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Administrator</a></li>
               #else
-                  <li style="cursor: default"><a href="/user/$username">Welcome $username</a></li>
+                  <li style="cursor: default"><a href="/user/$username">Ingelogd als $username</a></li>
               #end
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
           #else
-            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a style="cursor:pointer" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+            <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Registreren</a></li>
+            <li><a style="cursor:pointer" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
           #end
       </ul>
     </div>
