@@ -75,8 +75,7 @@ public class RegisterController {
             registerModel.setParameters(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
             if(nullCheck){
                 registerModel.ParseReg();
-                model.put("template","templates/p_after_reg.vtl");
-
+                res.redirect("/");
             }
             else{
                 model.put("template", "templates/p_reg.vtl");

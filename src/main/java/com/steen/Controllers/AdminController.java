@@ -41,11 +41,11 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/admin_forbidden", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("template", "templates/admin_forbidden.vtl");
-            return new ModelAndView(model, p_layout);
-        }, new VelocityTemplateEngine());
+//        get("/admin_forbidden", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("template", "templates/admin_forbidden.vtl");
+//            return new ModelAndView(model, p_layout);
+//        }, new VelocityTemplateEngine());
 
         post("/admin/delete_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -121,7 +121,7 @@ public class AdminController {
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
-            if (order != null && !filter.equals("")) {
+            if (order != null && !order.equals("")) {
                 adminModel.getSearch().addOrderParam(order);
             }
 
