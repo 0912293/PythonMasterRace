@@ -15,17 +15,6 @@ import java.util.Map;
 public class LoginController {
     public LoginController(final LoginModel loginModel) {
 
-        get("/p_log", (req, res) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            model.put("admin", req.session().attribute("admin"));
-            model.put("username", req.session().attribute("username"));
-            model.put("pass", req.session().attribute("pass"));
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/p_login.vtl");
-            return new ModelAndView(model, p_layout);
-        }, new VelocityTemplateEngine());
-
-
         post("/login", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             String Username = req.queryParams("username");
@@ -51,8 +40,7 @@ public class LoginController {
                 } else {
                     Username = null;
                     Password = null;
-                    correctInfo = false;
-                    req.session().attribute("correctinfo", correctInfo);
+                    req.session().attribute("correctinfo", false);
                     req.session().attribute("username", null);
                     passCheck = null;
                     userCheck = null;

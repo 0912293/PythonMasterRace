@@ -1,10 +1,10 @@
 #if($admin)
     #if($result)
-<h1>User: $result</h1>
+<h1>Gebruiker: $result</h1>
 <div class ="col-md-6">
 <form name="edit_form"  action="/admin/update_user" method="post">
     <div class="form-group row">
-        <label for="user" class="col-xs-2 col-form-label">Username</label>
+        <label for="user" class="col-xs-2 col-form-label">Gebruikersnaam</label>
         <div class="col-xs-10">
             <input class="form-control" name="user" type="text" id="usern"
                    required="required" value=$user>
@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="name" class="col-xs-2 col-form-label">Name</label>
+        <label for="name" class="col-xs-2 col-form-label">Naam</label>
         <div class="col-xs-3">
             <input class="form-control" type="text" name="name" id="name" value=$name
                    required="required">
@@ -31,7 +31,7 @@
     </div>
 
     <div class="form-group row">
-        <label for="bday" class="col-xs-2 col-form-label">Birth date</label>
+        <label for="bday" class="col-xs-2 col-form-label">Geboortedatum</label>
         <div class="col-xs-2">
             <input class="form-control" type="number" name="day" id="day" value=$day min="1" max="31"
                    required="required">
@@ -47,9 +47,9 @@
     </div>
 
     <div class="form-group row">
-        <label for="street" class="col-xs-2 col-form-label">Address</label>
+        <label for="street" class="col-xs-2 col-form-label">Adres</label>
         <div class="col-xs-5">
-            <input class="form-control" type="text" name="street" id="street" value=$street placeholder="Ex.: Wijnhaven"
+            <input class="form-control" type="text" name="street" id="street" value=$street placeholder="Ex.: Wijnhaven
                    required="required">
         </div>
         <div class="col-xs-2">
@@ -73,23 +73,23 @@
                    required="required">
         </div>
     </div>
-    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-    <a href="/admin"><button type="button" class="btn btn-default btn-lg">Cancel</button></a>
+    <button type="submit" class="btn btn-primary btn-lg">Toepassen</button>
+    <a href="/admin"><button type="button" class="btn btn-default btn-lg">Terug</button></a>
 </form></div>
 <div class="col-md-2 offset-md-8">
 <form action="/admin/reset_pass" method="post">
-    <button class="btn btn-danger" >Reset password</button>
+    <button class="btn btn-danger" >Wachtwoord resetten</button>
 </form> <br>
 <form action="/admin/delete_user" method="post">
-    <button class="btn btn-danger" >Delete user</button>
+    <button class="btn btn-danger" >Gebruiker verwijderen</button>
 </form> <br>
 #if ($userblacklisted)
 <form action="/admin/blacklist_undo" method="post">
-    <button class="btn btn-warning">Undo Blacklist</button>
+    <button class="btn btn-warning">Uit blacklist verwijderen</button>
 </form>
 #else
 <form action="/admin/blacklist_user" method="post">
-    <button class="btn btn-danger" >Blacklist user</button>
+    <button class="btn btn-danger" >Op blacklist zetten</button>
 </form>
 #end
 </div>
@@ -100,7 +100,7 @@
     <form action="/admin/getUserData">
         <div class="form-group row">
             <div class="col-xs-2">
-                <label for="user">Find user</label>
+                <label for="user">Gebruiker zoeken</label>
             </div>
             <div class="col-xs-2">
                 <input id="user" name="user" type="text">
@@ -108,19 +108,19 @@
         </div>
         <div class="form-group row">
             <div class="col-xs-10">
-                <button type="submit" class="btn btn-primary btn-lg">Search</button>
+                <button type="submit" class="btn btn-primary btn-lg">Zoeken</button>
             </div>
         </div>
     </form>
-    <label><a href="/admin/users">View all users</a></label>
+    <label><a href="/admin/users">Alle gebruikers</a></label>
 </div>
     #end
 <div class="col-md-2">
     <h3>Nav</h3>
-    <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Charts</a></p>
-    <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Edit Users</a></p>
-    <p><a href="/admin"><span class="glyphicon glyphicon-plus-sign"></span> Add Products</a></p>
+    <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
+    <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Gebruikers aanpassen</a></p>
+    <p><a href="/admin"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
 </div>
 #else
-<h1>You do not have the required permissions to view this page</h1>
+<h1>u heeft niet de benodigde bevoegdheden voor deze actie</h1>
 #end

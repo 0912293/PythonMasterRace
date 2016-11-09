@@ -7,13 +7,19 @@ import com.steen.Models.AdminModel;
 import com.steen.Models.LoginModel;
 import com.steen.Models.ProductModel;
 import com.steen.Models.RegisterModel;
+import org.apache.commons.collections.map.HashedMap;
 import spark.Spark;
 
 import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class Main {
     public static Connection connection = Connector.connect();
     public static final String p_layout = "templates/p_layout.vtl";
+    public static Map<Integer, Map<String, Object>> sessions = new HashMap<>();
+
 
     public static void main(String[] args) {
 //        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)

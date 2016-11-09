@@ -1,8 +1,8 @@
-<h1>Sign Up</h1>
-<form name="reg_form" action="/regist" method="post">
+<h1>Registreren</h1>
+<form name="reg_form" action="/regist" method="post" onsubmit="alert('Uw profiel is geregistreerd, u kunt nu inloggen door op Log In te klikken')">
 
 <div class="form-group row">
-    <label for="username" class="col-xs-2 col-form-label">Username</label>
+    <label for="username" class="col-xs-2 col-form-label">Gebruikersnaam</label>
     <div class="col-xs-10">
         <input class="form-control" name="username" type="text" id="username"
         required="required" placeholder="Ex.: Bob">
@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="pass" class="col-xs-2 col-form-label">Password</label>
+    <label for="pass" class="col-xs-2 col-form-label">Wachtwoord</label>
     <div class="col-xs-10">
         <input class="form-control" name="pass" type="password" id="pass"
                required="required" placeholder="Ex.: password123">
@@ -26,20 +26,20 @@
 </div>
 
 <div class="form-group row">
-    <label for="name" class="col-xs-2 col-form-label">Name</label>
+    <label for="name" class="col-xs-2 col-form-label">Naam</label>
     <div class="col-xs-3">
-        <input class="form-control" type="text" name="name" id="name" placeholder="Name"
+        <input class="form-control" type="text" name="name" id="name" placeholder="Voornaam"
                required="required">
     </div>
     <div class="col-xs-3">
-        <input class="form-control" type="text" name="sur" id="sur" placeholder="Surname"
+        <input class="form-control" type="text" name="sur" id="sur" placeholder="Achternaam"
                required="required">
     </div>
 </div>
 
 
 <div class="form-group row">
-    <label for="bday" class="col-xs-2 col-form-label">Birth date</label>
+    <label for="bday" class="col-xs-2 col-form-label">Geboortedatum</label>
     <div class="col-xs-2">
         <input class="form-control" type="number" name="day" id="day" placeholder="DD" min="1" max="31"
                required="required">
@@ -55,7 +55,7 @@
 </div>
 
 <div class="form-group row">
-    <label for="street" class="col-xs-2 col-form-label">Address</label>
+    <label for="street" class="col-xs-2 col-form-label">Adres</label>
     <div class="col-xs-5">
         <input class="form-control" type="text" name="street" id="street" placeholder="Ex.: Wijnhaven"
                required="required">
@@ -82,5 +82,6 @@
     </div>
 </div>
 
-<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+<button type="submit" class="btn btn-primary btn-lg">Toepassen</button>
+<a href="/"><button type="button" class="btn btn-default btn-lg">Terug</button></a>
 </form>
