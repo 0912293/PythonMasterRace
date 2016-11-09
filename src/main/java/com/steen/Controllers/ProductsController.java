@@ -2,6 +2,7 @@ package com.steen.Controllers;
 
 import com.steen.Models.ProductModel;
 import com.steen.session.Filter;
+import com.steen.session.Search;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
@@ -40,7 +41,24 @@ public class ProductsController {
         }
         ));
 
+        get("/games/bekijken", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            model.put("login_modal", "templates/login_mod.vtl");
+            model.put("template", "templates/games_bekijk.html");
+
+            model.put("username", request.session().attribute("username"));
+            model.put("correctinfo", request.session().attribute("correctinfo"));
+            model.put("admin", request.session().attribute("admin"));
+
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        post("/games/bekijken.json", ((request, response) -> {
+            String id = request.queryParams("id");
+            productModel.setSearch(new Search("SELECT * FROM games WHERE games_id= " + id + ";"));
+            return productModel.getJSON();
+        }
+        ));
     }
-
-
 }

@@ -41,5 +41,4 @@ public class ProductModel {
         }
         return null;
     }
-
 }
