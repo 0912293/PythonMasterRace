@@ -102,7 +102,7 @@
         productContainer.empty();
         $.each(json, function (i, item) {
             content = $("<div class='col-md-3 column productbox' id='productbox'>");
-            content.append("<div><img src='" + item.games_image + "'  class='img-responsive'>");
+            content.append("<div><img id='GamesPageImg' src='" + item.games_image + "'  class='img-responsive'>");
             content.append("<div class='caption'>");
             content.append("<h5 id='game_name'>" + item.games_name + "</h5>");
             content.append("<p>Prijs: " + item.games_price + ",-</p>");
