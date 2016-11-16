@@ -22,8 +22,8 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
-//        Spark.port(4567);
+//        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
+        Spark.port(4567);
 
         staticFileLocation("/public"); // sets folder for non java files
 
