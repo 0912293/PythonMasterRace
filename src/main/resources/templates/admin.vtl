@@ -1,7 +1,7 @@
 #if($admin)
     #if($result)
 <h1>Gebruiker: $result</h1>
-<div class ="col-md-6">
+<div class ="col-md-8">
 <form name="edit_form"  action="/admin/update_user" method="post">
     <div class="form-group row">
         <label for="user" class="col-xs-2 col-form-label">Gebruikersnaam</label>
@@ -74,7 +74,7 @@
         </div>
     </div>
     <button type="submit" class="btn btn-primary btn-lg">Toepassen</button>
-    <a href="/admin"><button type="button" class="btn btn-default btn-lg">Terug</button></a>
+    <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
 </form></div>
 <div class="col-md-2 offset-md-8">
 <form action="/admin/reset_pass" method="post">
