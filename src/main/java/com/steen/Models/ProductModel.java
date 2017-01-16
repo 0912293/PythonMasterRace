@@ -34,7 +34,19 @@ public class ProductModel {
     public String getJSON() {
         List jsonList;
         try {
+            System.out.print(search.getFilteredQuery());
             jsonList = getFormattedResult(search.getResultSet());
+            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
+        } catch (Exception e) {
+            System.out.println("SQL >> Could not get JSON");
+        }
+        return null;
+    }
+
+    public String getJSON(String query) {
+        List jsonList;
+        try {
+            jsonList = getFormattedResult(Search.getResultSet(query));
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
             System.out.println("SQL >> Could not get JSON");
