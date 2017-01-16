@@ -11,12 +11,7 @@
 
                 <label class="col-md-3">Prijs</label>
                 <div class="col-md-3">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="pricesort" id="PriceSort-2" value="2" checked="checked">
-                            Geen
-                        </label>
-                    </div>
+                </div>
                     <div class="radio">
                         <label>
                             <input type="radio" name="pricesort" id="PriceSort-0" value="0" checked="checked">
@@ -26,6 +21,39 @@
                     <div class="radio">
                         <label>
                             <input type="radio" name="pricesort" id="PriceSort-1" value="1">hoog naar laag
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="pricesort" id="PriceSort-2" value="2" checked="checked">
+                            Geen
+                        </label>
+                    </div>
+                </div>
+            <div class="form-group col-md-6">
+
+                <label class="col-md-3">Prijs</label>
+                <div class="col-md-3">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="platformsort" id="Platformsort-1" value="0" checked="checked">
+                            Geen
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="platformsort" id="Platformsort-2" value="1" checked="checked">
+                            Playstation
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="platformsort" id="Platformsort-3" value="2">Xbox
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="platformsort" id="Platformsort-4" value="3">PC
                         </label>
                     </div>
                 </div>
@@ -52,6 +80,8 @@
     $(function () {
         $('input[name="pricesort"]').change(function(){ radioClick() });
         radioClick();
+        $('input[name="platformsort"]').change(function () { platformClick()});
+        platformClick();
         updateTable();
     });
 
@@ -67,13 +97,33 @@
             option = ""
         }
     }
+    function platformClick(){
+        id = $('input[name="platformsort"]:checked').val();
+        if(id == "1") {
+            platform = "Playstation";
+        }
+        else if(id == "2"){
+            platform = "Xbox";
+        }
+        else if(id == "3"){
+            platform = "PC"
+        }
+        else{
+            option = ""
+        }
+    }
+
 
     function updateTable(searchAppend) {
         var stdURL = "/games.json";
         var productContainer = $('#ProductContainer');
         if(searchAppend != null){
             getJson(stdURL + "?search=" + searchAppend + "&order=" + option );
-        }else if (option != null) {
+        }
+        else if (platform != null){
+            getJson(stdURL + "?search=" + platform + "&order=" + option);
+        }
+        else if (option != null) {
             getJson(stdURL + "?order=" + option);
         }
         else{
