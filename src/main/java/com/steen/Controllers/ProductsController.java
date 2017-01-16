@@ -60,5 +60,7 @@ public class ProductsController {
             return productModel.getJSON();
         }
         ));
+
+
     }
 }

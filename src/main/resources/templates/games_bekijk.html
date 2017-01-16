@@ -1,7 +1,11 @@
 <div class="col-lg-12">
     <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
     <div id="ProductContent" class="jumbotron">
-        <input id="addtowishList" type="button" value="addto" onclick="">
+
+        <form method = "POST" action ="/wishlist">
+            <input id="addtowishList" type="button" value="addto" onclick="">
+            <button type ="submit"/>>
+        </form>
     </div>
 </div>
 
@@ -58,6 +62,7 @@
             content.append("</div><center><p id='ProductOmschrijving'>Omschrijving</p></center>");
             content.append("</div>");
             content.append("<p><a class='btn btn-primary btn-lg' href='#' role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</a></p>");
+            content.append("<p><a class='btn btn-primary btn-lg' href='#' role='button'>Add to wishlist</a></p>");
             productContent.append(content);
         })
     }
