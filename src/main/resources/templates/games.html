@@ -77,8 +77,8 @@
     }
 
     function checkSort() {
-        optObj = $('#sortoption').find(":selected");
-        opt = optObj.val();
+        var optObj = $('#sortoption').find(":selected");
+        var opt = optObj.val();
         if (opt == "None") {
             sortOption = null;
         } else if (opt == "P_ASC") {
@@ -94,8 +94,8 @@
     }
 
     function checkFilter() {
-        optObj = $('#filteroption').find(":selected");
-        opt = optObj.val();
+        var optObj = $('#filteroption').find(":selected");
+        var opt = optObj.val();
         if (opt == "None") {
             filterOption = null;
         } else if (optObj.parent().attr('label') == "Genre") {
@@ -108,14 +108,14 @@
 
     function updateDropdowns() {
         checkSort();
-        getJson("/api/product/filtering.json?selector=0", fillDropdownsOuter(0));
-        getJson("/api/product/filtering.json?selector=1", fillDropdownsOuter(1));
+        var dict = { 'selector': 0};
+        getJson("/api/product/filtering.json", dict, fillDropdownsOuter(0));
+        dict = { 'selector': 1};
+        getJson("/api/product/filtering.json", dict, fillDropdownsOuter(1));
     }
 
     function fillDropdownsOuter(selector) {
-        function fillDropdowns(data) {
-            var json = data;
-            var content = [];
+        function fillDropdowns(json) {
             var dropdown = $('#filteroption');
             var group = null;
             if (selector == 0) {
@@ -137,19 +137,18 @@
     }
 
     function updateTable(searchAppend) {
-        if (searchAppend === undefined)
-            searchAppend = null;
         var stdURL = "/api/product/games.json";
-        var productContainer = $('#ProductContainer');
-        var url = stdURL + "?search=" + searchAppend + "&order=" + sortOption + "&filter=" + filterOption;
-        getJson(url, filltable);
+        var searchDict = {
+            'search': (searchAppend !== undefined) ? searchAppend : null,
+            'order': sortOption,
+            'filter': filterOption
+        };
+        getJson(stdURL, searchDict, filltable);
     }
 
-    function filltable(data) {
-        var json = data;
+    function filltable(json) {
         var content = [];
         var productContainer = $('#ProductContainer');
-
         console.log(json);
 
         productContainer.empty();
@@ -165,11 +164,12 @@
         })
     }
 
-    function getJson(url, callback) {
+    function getJson(url, dict, callback) {
         console.log(url);
         $.ajax({
             type: 'GET',
             url: url,
+            data: dict,
             dataType: "json",
             success: function (data) {
                 callback(data)

@@ -14,9 +14,10 @@
         var stdURL = "/api/product/view.json";
         var searchAppend = getCurretUrlParam("id");
 
-        if(searchAppend != null){
-            getJson(stdURL + "?id=" + searchAppend);
-        }
+        var searchDict = {
+            'search': (searchAppend != null || searchDict !== undefined) ? searchAppend : null
+        };
+        getJson(stdURL, searchDict);
     }
 
     function getCurretUrlParam(param) {
@@ -30,11 +31,12 @@
             return null;
         }
 
-    function getJson(url) {
+    function getJson(url, dict) {
         console.log(url);
         $.ajax({
             type: 'POST',
             url: url,
+            data: dict
             dataType: "json",
             success: filldata,
             error: function () {
