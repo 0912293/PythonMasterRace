@@ -3,10 +3,7 @@ package com.steen;
 import static spark.Spark.*;
 
 import com.steen.Controllers.*;
-import com.steen.Models.AdminModel;
-import com.steen.Models.LoginModel;
-import com.steen.Models.ProductModel;
-import com.steen.Models.RegisterModel;
+import com.steen.Models.*;
 import org.apache.commons.collections.map.HashedMap;
 import spark.Spark;
 
@@ -34,6 +31,7 @@ public class Main {
         new AdminController(new AdminModel());
         new LoginController(new LoginModel());
         new ProductsController(productModel);
+        new WishListController(new WishlistModel());
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{
