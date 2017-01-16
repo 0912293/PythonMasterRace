@@ -114,7 +114,7 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/admin/users.json", (request, response) -> {
+        post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
 

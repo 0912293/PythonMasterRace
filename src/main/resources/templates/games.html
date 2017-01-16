@@ -108,8 +108,8 @@
 
     function updateDropdowns() {
         checkSort();
-        getJson("/games_options.json?selector=0", fillDropdownsOuter(0));
-        getJson("/games_options.json?selector=1", fillDropdownsOuter(1));
+        getJson("/api/product/filtering.json?selector=0", fillDropdownsOuter(0));
+        getJson("/api/product/filtering.json?selector=1", fillDropdownsOuter(1));
     }
 
     function fillDropdownsOuter(selector) {
@@ -139,7 +139,7 @@
     function updateTable(searchAppend) {
         if (searchAppend === undefined)
             searchAppend = null;
-        var stdURL = "/games.json";
+        var stdURL = "/api/product/games.json";
         var productContainer = $('#ProductContainer');
         var url = stdURL + "?search=" + searchAppend + "&order=" + sortOption + "&filter=" + filterOption;
         getJson(url, filltable);

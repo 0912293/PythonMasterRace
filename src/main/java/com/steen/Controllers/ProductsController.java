@@ -25,7 +25,7 @@ public class ProductsController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/games.json", ((request, response) -> {
+        get("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
             String search = request.queryParams("search");
             String order = request.queryParams("order");
@@ -46,7 +46,7 @@ public class ProductsController {
         }
         ));
 
-        get("/games_options.json", ((request, response) -> {
+        get("/api/product/filtering.json", ((request, response) -> {
             productModel.clearSession();
             String query = "";
             String selector = request.queryParams("selector");
@@ -73,7 +73,7 @@ public class ProductsController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/games/bekijken.json", ((request, response) -> {
+        post("/api/product/view.json", ((request, response) -> {
             String id = request.queryParams("id");
             productModel.setSearch(new Search("SELECT * FROM games WHERE games_id= " + id + ";"));
             return productModel.getJSON();
