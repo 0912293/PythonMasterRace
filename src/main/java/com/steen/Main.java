@@ -31,7 +31,7 @@ public class Main {
         new AdminController(new AdminModel());
         new LoginController(new LoginModel());
         new ProductsController(productModel);
-        new WishListController(new WishlistModel());
+        new WishlistController(new WishlistModel());
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{
