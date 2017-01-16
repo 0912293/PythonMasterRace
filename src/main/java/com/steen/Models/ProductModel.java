@@ -34,7 +34,6 @@ public class ProductModel {
     public String getJSON() {
         List jsonList;
         try {
-            System.out.print(search.getFilteredQuery());
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
