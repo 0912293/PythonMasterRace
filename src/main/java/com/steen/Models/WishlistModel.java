@@ -15,10 +15,13 @@ public class WishlistModel {
 
     private String getquery;
     private String insertquery;
-
-    public WishlistModel(){
-
-        getResult();
+    private String username;
+    private String item;
+    public WishlistModel(String username, String item){
+        this.username = username;
+        this.item = item;
+        insertItem();
+        //getResult();
     }
 
     public ResultSet getResult(){
@@ -35,9 +38,10 @@ public class WishlistModel {
     }
 
     public void insertItem(){
+        updateInsert();
         try{
             Statement myStmt = connection.createStatement();
-            myStmt.execute(insertquery);
+            myStmt.execute(this.insertquery);
 
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -48,6 +52,9 @@ public class WishlistModel {
 
     public void updateInsert(){
 
+        this.insertquery = "INSERT INTO wishlist " +
+                "VALUES(" + this.username + "," +
+                "" + this.item + ");";
     }
 
     public void updateGet(){
