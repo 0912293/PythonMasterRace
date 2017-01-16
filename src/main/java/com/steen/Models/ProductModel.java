@@ -41,4 +41,15 @@ public class ProductModel {
         }
         return null;
     }
+
+    public String getJSON(String query) {
+        List jsonList;
+        try {
+            jsonList = getFormattedResult(Search.getResultSet(query));
+            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
+        } catch (Exception e) {
+            System.out.println("SQL >> Could not get JSON");
+        }
+        return null;
+    }
 }

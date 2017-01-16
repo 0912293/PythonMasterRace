@@ -25,21 +25,40 @@ public class ProductsController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/games.json", ((request, response) -> {
+        get("/games.json", ((request, response) -> {
             productModel.clearSession();
-            String filter = request.queryParams("search");
+            String search = request.queryParams("search");
             String order = request.queryParams("order");
+            String filter = request.queryParams("filter");
 
-            if (filter != null && !filter.equals("")) {
-                productModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
+
+            if (search != null && !search.equals("null") && !search.equals("")) {
+                productModel.getSearch().addFilterParam("games_name", search, Filter.Operator.LIKE);
             }
-            if (order != null && !order.equals("")) {
+            if (order != null && !order.equals("null") && !order.equals("")) {
                 productModel.getSearch().addOrderParam(order);
+            }
+            if (filter != null && !filter.equals("null") && !filter.equals("")) {
+                productModel.getSearch().addFilterParam(filter);
             }
 
             return productModel.getJSON();
         }
         ));
+
+        get("/games_options.json", ((request, response) -> {
+            productModel.clearSession();
+            String query = "";
+            String selector = request.queryParams("selector");
+            if (selector.equals("0")) {
+                query = "SELECT DISTINCT games_genre FROM games";
+            } else if (selector.equals("1")) {
+                query = "SELECT DISTINCT games_platform FROM games";
+            } else {
+                // RIP
+            }
+            return productModel.getJSON(query);
+        }));
 
         get("/games/bekijken", (request, response) -> {
             Map<String, Object> model = new HashMap<>();

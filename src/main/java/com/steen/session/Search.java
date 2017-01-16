@@ -52,8 +52,31 @@ public class Search {
         return resultSet;
     }
 
+    public static ResultSet getResultSet(String query) {
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement myStmt = connection.prepareStatement(query);
+            resultSet = myStmt.executeQuery(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     private void updateQuery() {
-        filteredQuery = sqlQuery + " " + filter.getWhereStatement(true) +  " " + orderBy.getOrderByStatement();
+        filteredQuery = sqlQuery;
+        if (hasFilter()) {
+            filteredQuery += " " + filter.getWhereStatement(true);
+        }
+        if (orderBy.orders.size() > 0) {
+            filteredQuery += " " + orderBy.getOrderByStatement();
+        }
+    }
+
+    public String getFilteredQuery() {
+        updateQuery();
+        return filteredQuery;
     }
 
     public void addFilterParam(String param) {
