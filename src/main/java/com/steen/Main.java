@@ -19,7 +19,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-//        Spark.port(80); //BIJ DEPLOYEN NAAR SERVER <-- DEZE PORT GEBRUIKEN EN JAR UITVOEREN ALS ROOT. ( $cd builds $sudo java -cp Blabla.jar com.steen.Main)
         Spark.port(4567);
 
         staticFileLocation("/public"); // sets folder for non java files
@@ -37,17 +36,5 @@ public class Main {
         new RegisterController(models);
         new LoginController(models);
         new ProductsController(models);
-
-// voorbeeld voor maken van een json  file
-//        get("/games", (req, res) ->{
-//            List jsonList = getFormattedResult(productModel.getSearch().getResultSet());
-//            String jsonstring = "[";
-//            for (int i = 0; i < jsonList.size(); i++){
-//                jsonstring = jsonstring + jsonList.get(i) + ",";
-//
-//            }
-//            jsonstring = jsonstring + "]";
-//            return jsonstring;
-//        });
     }
 }
