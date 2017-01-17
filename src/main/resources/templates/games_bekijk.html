@@ -5,13 +5,13 @@
         <div class="row">
             <img id='ProductImage' src=''>
         </div>
-        <div id='ButtonBlock'class="row">
-            <div id='ProductOmschrijving'>Omschrijving</div>
-            <div class="col-md-4">
-                <a id='BuyButton' class='btn btn-primary' href='#' role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</a>
+        <div style="display:flex;justify-content:center;align-items:center;">
+            <div class="coll-md-1">
+                <button type='button' id='BuyButton' class='btn btn-primary' href='#'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</button>
+
             </div>
-            <div class="col-md-2">
-                <a id='WishButton' class="btn btn-success" href='#' role='button'><span class='glyphicon glyphicon-star' aria-hidden='true'/>+Wishlist</a>
+            <div class="col-md-1">
+                <button type='button' id='WishButton' class='btn btn-success' href='#'><span class='glyphicon glyphicon-star' aria-hidden='true'/>+Wishlist</button>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
 
     function updateData() {
         var stdURL = "/api/product/view.json";
-        var searchAppend = getCurretUrlParam("id");
+        var searchAppend = getCurrentUrlParam("id");
         console.log(searchAppend);
 
         var searchDict = {
@@ -33,7 +33,7 @@
         getJson(stdURL, searchDict);
     }
 
-    function getCurretUrlParam(param) {
+    function getCurrentUrlParam(param) {
             var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
             if (results==null){
                 return null;
@@ -62,8 +62,8 @@
         $.each(json, function (i, item) {
             $("#ProductName").html(item.games_name);
             $("#ProductImage").attr('src', item.games_image);
-            //$('#ProductOmschrijving').html(...); Had to be implemented yet.
-            //$('#BuyButton').attr('href', ...); Had to be implemented yet
+            //$('#BuyButton').attr('href', ...); TODO: Had to be implemented yet
+            //$('#WishButton').attr('href', ...); TODO: Has to be implemented yet
         })
     }
 </script>
