@@ -16,13 +16,13 @@ public class WishlistModel {
     private String getquery;
     private String insertquery;
 
-
     public WishlistModel(){
 
     }
 
-    public ResultSet getResult(){
+    public ResultSet getResult(String username){
         ResultSet result = null;
+        updateGet(username);
         try {
             PreparedStatement myStmt = connection.prepareStatement(getquery);
             result = myStmt.executeQuery();
@@ -47,7 +47,7 @@ public class WishlistModel {
 
     }
 
-    public void updateInsert(String username, int id){
+    private void updateInsert(String username, int id){
 
         this.insertquery = "INSERT INTO wishlist (username, games_id)" +
                 "VALUES('" + username + "'," +
@@ -56,8 +56,10 @@ public class WishlistModel {
         System.out.print(this.insertquery);
     }
 
-    public void updateGet(){
-
+    private void updateGet(String username){
+        this.getquery = "SELECT games_name, games_platform FROM games g, wishlist w" +
+                "WHERE username = '" + username + "'" +
+                "AND w.games_id = g.games_id ;";
     }
 }
 
