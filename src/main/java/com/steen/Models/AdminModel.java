@@ -377,7 +377,7 @@ public class AdminModel implements Model {
     public String getJSON(String query) {
         List jsonList;
         try {
-            jsonList = getFormattedResult(Search.getResultset(query));
+            jsonList = getFormattedResult(Search.getResultSet(query));
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
             System.out.println("SQL >> Could not get JSON");
