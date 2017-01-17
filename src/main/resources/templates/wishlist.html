@@ -1,10 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class='col-md-9'>
+    <table class="table" id="wishlistTaable">
+        <tr>
+            <th>Username</th>
 
-</body>
-</html>
+        </tr>
+    </table>
+    <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
+</div>
+
+<script type="text/javascript">
+    window.onload = updatetable;
+
+
+    function getJson(url) {
+        console.log("Check3");
+        console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: "json",
+            success: filldata,
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+    function updatetable(){
+        console.log("Check2");
+        var stdURL = "/api/wishlist.json";
+        getJson(stdURL);
+    }
+
+    function filldata(data){
+        console.log("Check4");
+        var json = data
+        var content = [];
+        var productcontent = $('#ProductContent')
+        productcontent.empty();
+        $.each(json, function (i, item) {
+            tr = $('<tr/>');
+            tr.append("<td>" + item.username + "</td>");
+            tr.append("<td>" + item.name + "</td>");
+            tr.append("<td>" + item.surname + "</td>");
+            tr.append("<td>" + item.email + "</td>");
+            tr.append("<td>" + item.birth_date + "</td>");
+            tr.append("<td>" + item.admin + "</td>");
+            $('table').append(tr);
+        })
+    }
+
+</script>

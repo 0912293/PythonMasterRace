@@ -19,6 +19,7 @@ public class WishlistController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
 
         get("/wishlist", (request, response) -> {
+            System.out.println("Java Check2");
             Map<String, Object> model = new HashMap<>();
             model.put("login_modal", "templates/login_mod.vtl");
             model.put("wishlist", "templates/wishlist.html");
@@ -32,7 +33,7 @@ public class WishlistController {
 
         post("/wishlist", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-
+            System.out.println("Java Check");
 
             String username = request.session().attribute("username");
             int id;
