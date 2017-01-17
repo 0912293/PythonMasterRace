@@ -2,17 +2,17 @@
     <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
     <div id="ProductContent" class="jumbotron">
         <h1 id='ProductName' class='text-center'>Undefined</h1>
-        <div class='row'>
-            <center><img id='ProductImage' src='' class='img-responsive'></center>
-            <div class='col-lg-2 col-lg-offset-4 col-md-offset-4 col-md-2 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3'/>
-            <div class='col-lg-2 col-md-6 col-sm-6'>
-                <center><p id='ProductOmschrijving'>Omschrijving</p></center>
+        <div class="row">
+            <img id='ProductImage' src=''>
+        </div>
+        <div style="display:flex;justify-content:center;align-items:center;">
+            <div class="coll-md-1">
+                <button type='button' id='BuyButton' class='btn btn-primary' href='#'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</button>
+
             </div>
-            <p>
-                <a id='BuyButton' class='btn btn-primary btn-lg' href='#' role='button'>
-                    <span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu
-                </a>
-            </p>
+            <div class="col-md-1">
+                <button type='button' id='WishButton' class='btn btn-success' href='#'><span class='glyphicon glyphicon-star' aria-hidden='true'/>+Wishlist</button>
+            </div>
         </div>
     </div>
 </div>
@@ -24,7 +24,7 @@
 
     function updateData() {
         var stdURL = "/api/product/view.json";
-        var searchAppend = getCurretUrlParam("id");
+        var searchAppend = getCurrentUrlParam("id");
         console.log(searchAppend);
 
         var searchDict = {
@@ -33,7 +33,7 @@
         getJson(stdURL, searchDict);
     }
 
-    function getCurretUrlParam(param) {
+    function getCurrentUrlParam(param) {
             var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
             if (results==null){
                 return null;
@@ -62,8 +62,8 @@
         $.each(json, function (i, item) {
             $("#ProductName").html(item.games_name);
             $("#ProductImage").attr('src', item.games_image);
-            //$('#ProductOmschrijving').html(...); Had to be implemented yet.
-            //$('#BuyButton').attr('href', ...); Had to be implemented yet
+            //$('#BuyButton').attr('href', ...); TODO: Had to be implemented yet
+            //$('#WishButton').attr('href', ...); TODO: Has to be implemented yet
         })
     }
 </script>
