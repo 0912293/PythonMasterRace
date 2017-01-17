@@ -28,6 +28,9 @@ public class WishlistController {
 
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
+            String username = request.session().attribute("username");
+
+            wishlistModel.insertItem(username, 1);
             System.out.println("Hello");
 
             return null;

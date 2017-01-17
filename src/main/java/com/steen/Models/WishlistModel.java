@@ -49,9 +49,11 @@ public class WishlistModel {
 
     public void updateInsert(String username, int id){
 
-        this.insertquery = "INSERT INTO wishlist " +
-                "VALUES(" + username + "," +
+        this.insertquery = "INSERT INTO wishlist (username, games_id)" +
+                "VALUES('" + username + "'," +
                 "" + id + ");";
+
+        System.out.print(this.insertquery);
     }
 
     public void updateGet(){
