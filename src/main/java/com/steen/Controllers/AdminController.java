@@ -1,6 +1,7 @@
 package com.steen.Controllers;
 
 import com.steen.Models.AdminModel;
+import com.steen.Models.Model;
 import com.steen.Util.SQLToJSON;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
@@ -17,8 +18,9 @@ import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 public class AdminController {
+    public AdminController(final HashMap<String, Model> models) {
+        AdminModel adminModel = (AdminModel) models.get("admin");
 
-    public AdminController(final AdminModel adminModel) {
         before("/admin/*", (req,res) -> {
             if (!isAdmin(req)) {
                 halt("401 - not an admin");

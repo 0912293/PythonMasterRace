@@ -3,10 +3,7 @@ package com.steen;
 import static spark.Spark.*;
 
 import com.steen.Controllers.*;
-import com.steen.Models.AdminModel;
-import com.steen.Models.LoginModel;
-import com.steen.Models.ProductModel;
-import com.steen.Models.RegisterModel;
+import com.steen.Models.*;
 import org.apache.commons.collections.map.HashedMap;
 import spark.Spark;
 
@@ -27,13 +24,19 @@ public class Main {
 
         staticFileLocation("/public"); // sets folder for non java files
 
-        ProductModel productModel = new ProductModel();
+        HashMap<String, Model> models = new HashMap<>();
+        models.put("api", new ApiModel());
+        models.put("admin", new AdminModel());
+        models.put("register", new RegisterModel());
+        models.put("login", new LoginModel());
+        models.put("product", new ProductModel());
 
-        new RootController(productModel);
-        new RegisterController(new RegisterModel());
-        new AdminController(new AdminModel());
-        new LoginController(new LoginModel());
-        new ProductsController(productModel);
+        new RootController(models);
+        new ApiController(models);
+        new AdminController(models);
+        new RegisterController(models);
+        new LoginController(models);
+        new ProductsController(models);
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{

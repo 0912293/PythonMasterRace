@@ -5,33 +5,38 @@
             <div class="col-md-3"> <h2 class="text-center">Producten</h2></div>
             <div class="form-group col-md-3">
                 <input id="search" name="search" class="form-control" type="text" placeholder="Search">
-                <input id="submitbutton" type="button" value="Submit" onclick="updateTable($('#search').val())">
+                <input id="submitbutton" type="submit" value="Submit">
             </div>
             <div class="form-group col-md-6">
 
-                <label class="col-md-3">Prijs</label>
+                <label class="col-md-3">Sorteren op</label>
                 <div class="col-md-3">
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="pricesort" id="PriceSort-2" value="2" checked="checked">
-                            Geen
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="pricesort" id="PriceSort-0" value="0" checked="checked">
-                            laag naar hoog
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="pricesort" id="PriceSort-1" value="1">hoog naar laag
-                        </label>
-                    </div>
+                    <select id="sortoption">
+                        <option value="None">Niet sorteren</option>
+                        <optgroup label="Prijs">
+                            <option value="P_ASC">Laag naar hoog</option>
+                            <option value="P_DESC">Hoog naar laag</option>
+                        </optgroup>
+                        <optgroup label="Naam">
+                            <option value="N_ASC">A/Z</option>
+                            <option value="N_DESC">Z/A</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <label class="col-md-3">Filteren op</label>
+                <div class="col-md-3">
+                    <select id="filteroption">
+                        <option value="None">Niet filteren</option>
+                        <optgroup label="Genre">
+                        </optgroup>
+                        <optgroup label="Platform">
+                        </optgroup>
+                    </select>
                 </div>
             </div>
         </form>
-        <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
+        <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span>Terug</button></a>
         <!-----form end ---->
     </div>
     <hr>
@@ -46,56 +51,102 @@
 <!------ End products ----->
 
 <script type="text/javascript">
-    var option = "";
+    var sortOption = null;
+    var filterOption = null;
     var input = document.querySelector('input[type= text][id = "search"]');
+    var tableJSON = null;
 
     $(function () {
-        $('input[name="pricesort"]').change(function(){ radioClick() });
-        radioClick();
+        $('.form-filter').on("submit", function(e) {
+            e.preventDefault();
+            updateTable($('#search').val())
+        });
+        $('#sortoption').change(function(){ checkSort() });
+        $('#filteroption').change(function () { checkFilter() });
+        updateDropdowns();
+        checkSort();
         updateTable();
     });
 
-    function radioClick(){
-        id = $('input[name="pricesort"]:checked').val();
-        if(id == "0") {
-            option = "games.games_price";
+    function checkKeyAndRun(event) {
+        if (e.keyCode == 13) {
+            updateTable($('#search').val());
+            return false;
         }
-        else if(id == "1"){
-            option = "games.games_price DESC";
+        return false;
+    }
+
+    function checkSort() {
+        var optObj = $('#sortoption').find(":selected");
+        var opt = optObj.val();
+        if (opt == "None") {
+            sortOption = null;
+        } else if (opt == "P_ASC") {
+            sortOption = "games.games_price";
+        } else if (opt == "P_DESC") {
+            sortOption = "games.games_price DESC";
+        } else if (opt == "N_ASC") {
+            sortOption = "games.games_name";
+        } else if (opt == "N_DESC") {
+            sortOption = "games.games_name DESC";
         }
-        else{
-            option = ""
+        updateTable()
+    }
+
+    function checkFilter() {
+        var optObj = $('#filteroption').find(":selected");
+        var opt = optObj.val();
+        if (opt == "None") {
+            filterOption = null;
+        } else if (optObj.parent().attr('label') == "Genre") {
+            filterOption = "games.games_genre=" + "'" + opt + "'";
+        } else if (optObj.parent().attr('label') == "Platform") {
+            filterOption = "games.games_platform=" + "'" + opt + "'";
         }
+        updateTable();
+    }
+
+    function updateDropdowns() {
+        checkSort();
+        var dict = { 'selector': 0};
+        getJson("/api/product/filtering.json", dict, fillDropdownsOuter(0));
+        dict = { 'selector': 1};
+        getJson("/api/product/filtering.json", dict, fillDropdownsOuter(1));
+    }
+
+    function fillDropdownsOuter(selector) {
+        function fillDropdowns(json) {
+            var dropdown = $('#filteroption');
+            var group = null;
+            if (selector == 0) {
+                group = dropdown.find("optgroup[label='Genre']")
+            } else if (selector == 1) {
+                group = dropdown.find("optgroup[label='Platform']")
+            }
+            group.empty();
+            console.log(json);
+            $.each(json, function (i, item) {
+                if (selector == 0) {
+                    group.append("<option>" + item.games_genre + "</option>")
+                } else if (selector == 1) {
+                    group.append("<option>" + item.games_platform + "</option>")
+                }
+            })
+        }
+        return fillDropdowns
     }
 
     function updateTable(searchAppend) {
-        var stdURL = "/games.json";
-        var productContainer = $('#ProductContainer');
-        if(searchAppend != null){
-            getJson(stdURL + "?search=" + searchAppend + "&order=" + option );
-        }else if (option != null) {
-            getJson(stdURL + "?order=" + option);
-        }
-        else{
-            getJson(stdURL);
-        }
+        var stdURL = "/api/product/games.json";
+        var searchDict = {
+            'search': (searchAppend !== undefined) ? searchAppend : null,
+            'order': sortOption,
+            'filter': filterOption
+        };
+        getJson(stdURL, searchDict, filltable);
     }
 
-    function getJson(url) {
-        console.log(url);
-        $.ajax({
-            type: 'POST',
-            url: url,
-            dataType: "json",
-            success: filltable,
-            error: function () {
-                console.log("Incorrect or missing JSON")
-            }
-        });
-    }
-
-    function filltable(data) {
-        var json = data;
+    function filltable(json) {
         var content = [];
         var productContainer = $('#ProductContainer');
 
@@ -105,10 +156,26 @@
             content.append("<div><img id='GamesPageImg' src='" + item.games_image + "'  class='img-responsive'>");
             content.append("<div class='caption'>");
             content.append("<h5 id='game_name'>" + item.games_name + "</h5>");
-            content.append("<p>Prijs: " + item.games_price + ",-</p>");
+            content.append("<p>Prijs: " + item.games_price + "</p>");
             content.append("<p><a href='/games/bekijken?id="+ item.games_id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>    <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+ winkelmand</a></p>");
             content.append("</div></div></div>");
             productContainer.append(content);
         })
+    }
+
+    function getJson(url, dict, callback) {
+        console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: dict,
+            dataType: "json",
+            success: function (data) {
+                callback(data)
+            },
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
     }
 </script>

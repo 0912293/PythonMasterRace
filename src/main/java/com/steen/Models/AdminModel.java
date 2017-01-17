@@ -17,29 +17,29 @@ import static com.steen.Models.LoginModel.checkBlacklist;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 
-public class AdminModel {
-    String sql;
-    String username = "";
-    String name;
-    String surname;
-    String email;
-    String year;
-    String month;
-    String day;
-    Integer address_id;
-    String address_country;
-    String address_street;
-    String address_postalcode;
-    String address_number;
-    String address_city;
-    String birth_date;
-    Boolean admin;
+public class AdminModel implements Model {
+    private String sql;
+    private String username = "";
+    private String name;
+    private String surname;
+    private String email;
+    private String year;
+    private String month;
+    private String day;
+    private Integer address_id;
+    private String address_country;
+    private String address_street;
+    private String address_postalcode;
+    private String address_number;
+    private String address_city;
+    private String birth_date;
+    private Boolean admin;
     private ArrayList<User> users = new ArrayList<>();
     private Search search = new Search("SELECT * FROM users");
-    DateBuilder dbuilder = new DateBuilder();
-    ResultSet rs;
+    private DateBuilder dbuilder = new DateBuilder();
+    private ResultSet rs;
 
-    Connection connection = Main.connection;
+    private Connection connection = Main.connection;
 
     public AdminModel() {
         clear();
@@ -352,7 +352,7 @@ public class AdminModel {
     }
 
     public String getUsersJSON() {
-        List jsonList;
+        List<org.json.JSONObject> jsonList;
         try {
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);

@@ -52,7 +52,7 @@ public class Search {
         return resultSet;
     }
 
-    public static ResultSet getResultset(String query) {
+    public static ResultSet getResultSet(String query) {
         ResultSet resultSet = null;
         try {
             PreparedStatement myStmt = connection.prepareStatement(query);
@@ -65,7 +65,18 @@ public class Search {
     }
 
     private void updateQuery() {
-        filteredQuery = sqlQuery + " " + filter.getWhereStatement(true) +  " " + orderBy.getOrderByStatement();
+        filteredQuery = sqlQuery;
+        if (hasFilter()) {
+            filteredQuery += " " + filter.getWhereStatement(true);
+        }
+        if (orderBy.orders.size() > 0) {
+            filteredQuery += " " + orderBy.getOrderByStatement();
+        }
+    }
+
+    public String getFilteredQuery() {
+        updateQuery();
+        return filteredQuery;
     }
 
     public void addFilterParam(String param) {
