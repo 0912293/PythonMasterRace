@@ -66,7 +66,7 @@
               #else
                   <li style="cursor: default"><a href="/user/$username">Ingelogd als $username</a></li>
               #end
-            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
+            <li><a onclick="logmeout('/logout')" "><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
           #else
             <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Registreren</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
@@ -85,4 +85,24 @@
 
     </div>
   </body>
+<script type="text/javascript">
+    var currentURL = window.location.href
+    function logmeout(url) {
+        var dict = {
+            'url' : location.pathname
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: dict,
+            success: function () {
+                window.location = location.href
+            },
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+        return false;
+    }
+</script>
 </html>
