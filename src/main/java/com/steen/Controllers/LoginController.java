@@ -26,6 +26,10 @@ public class LoginController {
             req.session().attribute("pass", Password);
             Boolean passCheck = UserInputCheck(Password);
 
+            String href = req.queryParams("url");
+            System.out.println(href);
+            System.out.println(Username);
+            System.out.println(Password);
             loginModel.setCredentials(Username, Password);
 
             Boolean correctInfo = loginModel.hasCorrectLoginInfo();
@@ -47,23 +51,21 @@ public class LoginController {
                     passCheck = null;
                     userCheck = null;
                 }
-                model.put("login_modal", "templates/login_mod.vtl");
-                model.put("template", "templates/p_home.vtl");
-                res.redirect("/");
+                res.redirect(href);
             } else {
-                model.put("login_modal", "templates/login_mod.vtl");
-                model.put("template", "templates/blacklisted.vtl");
-                res.redirect("/");
+                res.redirect(href);
             }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/logout", (req, res) -> {
+        post("/logout", (req, res) -> {
             req.session().attribute("username", "");
             req.session().attribute("pass", "");
             req.session().attribute("admin", false);
             req.session().attribute("correctinfo", false);
-            res.redirect("/"); // stuurt de gebruiker naar de home page, dus hierna word de http request voor home uitgevoerd in de client.
+
+            String href = req.queryParams("url");
+            res.redirect(href);
             return new ModelAndView(new HashMap<>(), p_layout);
         }, new VelocityTemplateEngine());
 
