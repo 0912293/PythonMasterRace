@@ -168,7 +168,7 @@
     function getJson(url, callback) {
         console.log(url);
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             url: url,
             dataType: "json",
             success: function (data) {
