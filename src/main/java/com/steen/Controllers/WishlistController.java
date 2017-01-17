@@ -17,7 +17,7 @@ public class WishlistController {
     public WishlistController(final HashMap<String, Model> models) {
 
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
-
+        //hello
         get("/wishlist", (request, response) -> {
             System.out.println("Java Check2");
             Map<String, Object> model = new HashMap<>();
