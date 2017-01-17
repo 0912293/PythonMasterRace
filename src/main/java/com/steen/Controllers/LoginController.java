@@ -27,15 +27,13 @@ public class LoginController {
             Boolean passCheck = UserInputCheck(Password);
 
             String href = req.queryParams("url");
-            System.out.println(href);
-            System.out.println(Username);
-            System.out.println(Password);
             loginModel.setCredentials(Username, Password);
 
             Boolean correctInfo = loginModel.hasCorrectLoginInfo();
             Boolean blacklisted = checkBlacklist(Username);
             if (!blacklisted) {
                 if (correctInfo) {
+                    req.session().attribute("username", Username);
                     req.session().attribute("admin", loginModel.isAdmin());
                     req.session().attribute("correctinfo", true);
                     model.put("correctinfo", true);
@@ -44,10 +42,11 @@ public class LoginController {
                     model.put("userCheck", userCheck);
                     model.put("passCheck", passCheck);
                 } else {
+                    req.session().removeAttribute("username");
+                    req.session().removeAttribute("admin");
+                    req.session().removeAttribute("correctinfo");
                     Username = null;
                     Password = null;
-                    req.session().attribute("correctinfo", false);
-                    req.session().attribute("username", null);
                     passCheck = null;
                     userCheck = null;
                 }
@@ -59,10 +58,9 @@ public class LoginController {
         }, new VelocityTemplateEngine());
 
         post("/logout", (req, res) -> {
-            req.session().attribute("username", "");
-            req.session().attribute("pass", "");
-            req.session().attribute("admin", false);
-            req.session().attribute("correctinfo", false);
+            req.session().removeAttribute("username");
+            req.session().removeAttribute("admin");
+            req.session().removeAttribute("correctinfo");
 
             String href = req.queryParams("url");
             res.redirect(href);

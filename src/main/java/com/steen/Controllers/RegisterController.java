@@ -29,22 +29,24 @@ public class RegisterController {
 
         get("/p_reg", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("username", req.session().attribute("username"));
-            model.put("pass", req.session().attribute("pass"));
-            model.put("name", req.session().attribute("name"));
-            model.put("sur", req.session().attribute("sur"));
-            model.put("country", req.session().attribute("country"));
-            model.put("city", req.session().attribute("city"));
-            model.put("number", req.session().attribute("number"));
-            model.put("street", req.session().attribute("street"));
-            model.put("postal", req.session().attribute("postal"));
-            model.put("day", req.session().attribute("day"));
-            model.put("month", req.session().attribute("month"));
-            model.put("year", req.session().attribute("year"));
-            model.put("email", req.session().attribute("email"));
-
+            if (req.session().attribute("correctinfo") == null) {
+                model.put("username", req.session().attribute("username"));
+                model.put("pass", req.session().attribute("pass"));
+                model.put("name", req.session().attribute("name"));
+                model.put("sur", req.session().attribute("sur"));
+                model.put("country", req.session().attribute("country"));
+                model.put("city", req.session().attribute("city"));
+                model.put("number", req.session().attribute("number"));
+                model.put("street", req.session().attribute("street"));
+                model.put("postal", req.session().attribute("postal"));
+                model.put("day", req.session().attribute("day"));
+                model.put("month", req.session().attribute("month"));
+                model.put("year", req.session().attribute("year"));
+                model.put("email", req.session().attribute("email"));
+            } else {
+                res.redirect("/");
+            }
             model.put("template", "templates/p_reg.vtl");
-
             model.put("login_modal", "templates/login_mod.vtl");
             return strictVelocityEngine().render(new ModelAndView(model, p_layout));
         });
