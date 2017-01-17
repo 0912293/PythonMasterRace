@@ -1,10 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-</body>
-</html>
+<h1>Wenslijst games</h1>
+<div class='col-md-9'>
+    <table class="table" id="wishlistTable">
+        <tr>
+            <th>Naam</th>
+            <th>Prijs</th>
+            <th>Console</th>
+            <th>Delete</th>
+        </tr>
+    </table>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        console.log("Check1")
+        updateData();
+    });
+
+
+
+    function updateData() {
+        var stdURL = "/api/wishlist.json";
+//        var searchAppend = getCurrentUrlParam("id");
+//
+//        if(searchAppend != null){
+        getJson(stdURL);// + "?id=" + searchAppend);
+
+    }
+
+    function getJson(url) {
+        //console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: "json",
+            success: filltable,
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+    function filltable(data) {
+        var json = data;
+        var tr = [];
+        $.each(json, function (i, item) {
+            tr = $('<tr/>');
+            tr.append("<input type='hidden' id='" + item.games_id + "' value='" + item.games_id + "'/>");
+            tr.append("<td>" + item.games_name + "</td>");
+            tr.append("<td>" + item.games_price + "</td>");
+            tr.append("<td>" + item.games_platform+ "</td>");
+            tr.append("<td><input type = 'checkbox' id = 'chk_" + item.games_id + "'/></td>");
+            $('table').append(tr);
+        })
+    }
+</script>
