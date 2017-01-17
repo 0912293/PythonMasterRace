@@ -10,6 +10,7 @@
             <th>Delete</th>
         </tr>
     </table>
+    <input id="deleteButton" type="button" onclick="deleterows()">
 </div>
 
 
@@ -23,9 +24,6 @@
 
     function updateData() {
         var stdURL = "/api/wishlist.json";
-//        var searchAppend = getCurrentUrlParam("id");
-//
-//        if(searchAppend != null){
         getJson(stdURL);// + "?id=" + searchAppend);
 
     }
@@ -43,6 +41,12 @@
         });
     }
 
+    function deleterows() {
+        $('[id = chk]:checked').each(function () {
+            alert("You checked this box")
+        })
+    }
+
     function filltable(data) {
         var json = data;
         var tr = [];
@@ -52,7 +56,7 @@
             tr.append("<td>" + item.games_name + "</td>");
             tr.append("<td>" + item.games_price + "</td>");
             tr.append("<td>" + item.games_platform+ "</td>");
-            tr.append("<td><input type = 'checkbox' id = 'chk_" + item.games_id + "'/></td>");
+            tr.append("<td><input type = 'checkbox' id = 'chk'" + item.games_id + "'/></td>");
             $('table').append(tr);
         })
     }
