@@ -116,6 +116,35 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+        post("/admin/users.json", (request, response) -> {
+            String filter = request.queryParams("search");
+            String order = request.queryParams("order");
+
+            if (filter != null && !filter.equals("")) {
+                adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
+            }
+            if (order != null && !order.equals("")) {
+                adminModel.getSearch().addOrderParam(order);
+            }
+
+            return adminModel.getUsersJSON();
+        });
+
+        post("/api/admin/chart1.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart1JSON();
+        });
+
+        post("/api/admin/chart2.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart2JSON();
+        });
+
+        post("/api/admin/chart3.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart3JSON();
+        });
+
         get("/admin/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template", "templates/admin.vtl");

@@ -1,8 +1,148 @@
 <h1>Charts</h1>
 
-<div class="col-md-2">
-    <h3>Nav</h3>
-    <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
-    <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Gebruikers aanpassen</a></p>
-    <p><a href="/admin"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
+<div class="row">
+    <div class="col-md-8" id="testChart" style="width:400; height:300">test</div>
+
+    <div class="col-md-2">
+        <h3>Nav</h3>
+        <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
+        <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Gebruikers aanpassen</a></p>
+        <p><a href="/admin"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-md-8" id="testChart2" style="width:400; height:300">test2</div>
+</div>
+
+<div class="row">
+    <div class="col-md-8" id="testChart3" style="width:400; height:300">test3</div>
+</div>
+
+
+<script type="text/javascript">
+
+    function getJsonChart1() {
+        var url = "/api/admin/chart1.json"
+        console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: "json",
+            success: function (data) {
+                drawChart(data);
+            },
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+    function getJsonChart2() {
+        var url = "/api/admin/chart2.json"
+        console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: "json",
+            success: function (data2) {
+                drawChart2(data2);
+            },
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+     function getJsonChart3() {
+        var url = "/api/admin/chart3.json"
+        console.log(url);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: "json",
+            success: function (data3) {
+                drawChart3(data3);
+            },
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+
+    var options = {
+      'legend':'left',
+      'title':'Stock per platform',
+      'is3D':true,
+      'width':400,
+      'height':300
+    }
+    var options2 = {
+      'legend':'left',
+      'title':'Games per platform',
+      'is3D':false,
+      'width':400,
+      'height':300
+    }
+    var options3 = {
+      'legend':'left',
+      'title':'Amount of users per type',
+      'is3D':false,
+      'width':400,
+      'height':300
+    }
+
+      google.charts.load('current', {packages: ['corechart']});
+      google.charts.setOnLoadCallback(getJsonChart1);
+      google.charts.setOnLoadCallback(getJsonChart2);
+      google.charts.setOnLoadCallback(getJsonChart3);
+
+    function drawChart(json) {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Name');
+      data.addColumn('number', 'Orders');
+      $.each(json, function (i, item) {
+
+          data.addRows([
+            [item.games_platform, parseInt(item.stock)]
+          ]);
+      })
+      var chart = new google.visualization.ColumnChart(document.getElementById('testChart'));
+      chart.draw(data, options);
+      }
+
+      function drawChart2(jsn) {
+      var data2 = new google.visualization.DataTable();
+      data2.addColumn('string', 'Name');
+      data2.addColumn('number', 'Amount');
+      $.each(jsn, function (i, item) {
+          data2.addRows([
+            [item.games_platform, parseInt(item.game_count)]
+          ]);
+      })
+      var chart2 = new google.visualization.PieChart(document.getElementById('testChart2'));     //google.visualization. CHART TYPE()
+      chart2.draw(data2, options2);
+    }
+
+    function drawChart3(jsn) {
+      var data3 = new google.visualization.DataTable();
+      var usertype = '';
+      data3.addColumn('string', 'Name');
+      data3.addColumn('number', 'Amount');
+      $.each(jsn, function (i, item) {
+            if(parseInt(item.admin) == 1){
+                    usertype = 'admins'
+                }
+            else{
+                    usertype = 'users'
+                }
+          data3.addRows([
+            [usertype, parseInt(item.ucount)]
+          ]);
+      })
+      var chart3 = new google.visualization.PieChart(document.getElementById('testChart3'));     //google.visualization. CHART TYPE()
+      chart3.draw(data3, options3);
+    }
+
+    </script>
