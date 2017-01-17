@@ -24,14 +24,16 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        // "/wishlist?username=...?gameid=..."
         post("/wishlist", ((request, response) -> {
-            Map<String, Object> model = new HashMap<>();
-            String username = request.session().attribute("username");
-            System.out.println("Hello");
-            wishlistModel.insertItem(username, 1);
 
-            return new ModelAndView(model, p_layout);
+            String filter = request.queryParams("search");
+            String order = request.queryParams("order");
+            String username = request.session().attribute("username");
+
+            wishlistModel.insertItem(username, 1);
+            System.out.println("Hello");
+
+            return null;
         }
         ));
     }
