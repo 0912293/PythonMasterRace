@@ -1,6 +1,7 @@
 package com.steen.Controllers;
 
 import com.steen.Models.LoginModel;
+import com.steen.Models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
@@ -13,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginController {
-    public LoginController(final LoginModel loginModel) {
+    public LoginController(final HashMap<String, Model> models) {
+        LoginModel loginModel = (LoginModel) models.get("login");
 
         post("/login", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();

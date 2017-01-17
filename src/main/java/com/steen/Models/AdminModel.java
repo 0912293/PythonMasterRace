@@ -17,7 +17,7 @@ import static com.steen.Models.LoginModel.checkBlacklist;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 
-public class AdminModel {
+public class AdminModel implements Model {
     String sql;
     String username = "";
     String name;
