@@ -1,6 +1,7 @@
 package com.steen.Controllers;
 
 import com.steen.DateBuilder;
+import com.steen.Models.Model;
 import com.steen.Models.RegisterModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
@@ -23,7 +24,8 @@ import static spark.Spark.post;
 
 public class RegisterController {
 
-    public RegisterController(final RegisterModel registerModel) {
+    public RegisterController(final HashMap<String, Model> models) {
+        RegisterModel registerModel = (RegisterModel) models.get("register");
 
         get("/p_reg", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

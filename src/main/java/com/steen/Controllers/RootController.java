@@ -1,5 +1,6 @@
 package com.steen.Controllers;
 
+import com.steen.Models.Model;
 import com.steen.Models.ProductModel;
 import com.steen.Models.SubmitModel;
 import com.steen.session.Filter;
@@ -17,7 +18,7 @@ import static spark.Spark.before;
 import static spark.Spark.get;
 
 public class RootController {
-    public RootController(final ProductModel session) {
+    public RootController(final HashMap<String, Model> models) {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
