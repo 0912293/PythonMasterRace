@@ -1,6 +1,7 @@
 package com.steen.Controllers;
 
 import com.steen.Models.AdminModel;
+import com.steen.Models.Model;
 import com.steen.Util.SQLToJSON;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
@@ -17,8 +18,9 @@ import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 public class AdminController {
+    public AdminController(final HashMap<String, Model> models) {
+        AdminModel adminModel = (AdminModel) models.get("admin");
 
-    public AdminController(final AdminModel adminModel) {
         before("/admin/*", (req,res) -> {
             if (!isAdmin(req)) {
                 halt("401 - not an admin");
@@ -113,20 +115,6 @@ public class AdminController {
             model.put("correctinfo", req.session().attribute("correctinfo"));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
-
-        post("/api/admin/users.json", (request, response) -> {
-            String filter = request.queryParams("search");
-            String order = request.queryParams("order");
-
-            if (filter != null && !filter.equals("")) {
-                adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
-            }
-            if (order != null && !order.equals("")) {
-                adminModel.getSearch().addOrderParam(order);
-            }
-
-            return adminModel.getUsersJSON();
-        });
 
         get("/admin/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
