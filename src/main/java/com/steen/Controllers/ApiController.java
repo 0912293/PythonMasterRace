@@ -28,7 +28,7 @@ public class ApiController {
                 adminModel.getSearch().addOrderParam(order);
             }
 
-            return adminModel.getUsersJSON();
+            return apiModel.getJSON(adminModel.getSearch());
         });
 
         post("/api/product/view.json", ((request, response) -> {
