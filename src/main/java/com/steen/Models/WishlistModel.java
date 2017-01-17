@@ -10,7 +10,7 @@ import java.sql.Statement;
 /**
  * Created by jesse on 16-1-2017.
  */
-public class WishlistModel {
+public class WishlistModel implements Model {
     Connection connection = Main.connection;
 
     private String getquery;
@@ -20,19 +20,18 @@ public class WishlistModel {
 
     }
 
-    public ResultSet getResult(String username){
-        ResultSet result = null;
-        updateGet(username);
-        try {
-            PreparedStatement myStmt = connection.prepareStatement(getquery);
-            result = myStmt.executeQuery();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-
-        return result;
-    }
+//    public ResultSet getResult(String username){
+//        ResultSet result = null;
+//        try {
+//            PreparedStatement myStmt = connection.prepareStatement(getQuery(username));
+//            result = myStmt.executeQuery();
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//            e.printStackTrace();
+//        }
+//
+//        return result;
+//    }
 
     public void insertItem(String username, int id){
         updateInsert(username, id);
@@ -56,8 +55,8 @@ public class WishlistModel {
         System.out.print(this.insertquery);
     }
 
-    private void updateGet(String username){
-        this.getquery = "SELECT games_name, games_platform FROM games g, wishlist w" +
+    public static String getQuery(String username){
+        return "SELECT games_name, games_platform FROM games g, wishlist w" +
                 "WHERE username = '" + username + "'" +
                 "AND w.games_id = g.games_id ;";
     }
