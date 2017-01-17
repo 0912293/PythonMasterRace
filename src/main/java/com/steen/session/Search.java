@@ -52,6 +52,18 @@ public class Search {
         return resultSet;
     }
 
+    public static ResultSet getResultset(String query) {
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement myStmt = connection.prepareStatement(query);
+            resultSet = myStmt.executeQuery(query);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
+
     private void updateQuery() {
         filteredQuery = sqlQuery + " " + filter.getWhereStatement(true) +  " " + orderBy.getOrderByStatement();
     }

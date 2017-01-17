@@ -362,6 +362,29 @@ public class AdminModel {
         return null;
     }
 
+    public String getChart1JSON(){
+        return getJSON("SELECT games_platform, SUM(games_stock) AS stock FROM games GROUP BY games_platform");
+    }
+
+    public String getChart2JSON(){
+        return getJSON("SELECT games_platform, COUNT(games_id) AS game_count FROM games GROUP BY games_platform");
+    }
+
+    public String getChart3JSON(){
+        return getJSON("SELECT admin as user, COUNT(username) as ucount FROM users GROUP BY admin");
+    }
+
+    public String getJSON(String query) {
+        List jsonList;
+        try {
+            jsonList = getFormattedResult(Search.getResultset(query));
+            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
+        } catch (Exception e) {
+            System.out.println("SQL >> Could not get JSON");
+        }
+        return null;
+    }
+
     public Search getSearch() {
         return search;
     }
