@@ -23,7 +23,7 @@
     function getJson() {
         $.ajax({
             type: 'POST',
-            url: "/admin/users.json",
+            url: "/api/admin/users.json",
             dataType: "json",
             success: filltable,
             error: function () {

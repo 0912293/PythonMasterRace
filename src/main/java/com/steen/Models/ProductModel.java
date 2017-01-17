@@ -10,7 +10,7 @@ import java.util.List;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 
-public class ProductModel {
+public class ProductModel implements Model {
     Connection connection = Main.connection;
     private Search search;
 //    private Cart cart;
@@ -29,16 +29,5 @@ public class ProductModel {
 
     public void setSearch(Search search) {
         this.search = search;
-    }
-
-    public String getJSON() {
-        List jsonList;
-        try {
-            jsonList = getFormattedResult(search.getResultSet());
-            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
-        } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
-        }
-        return null;
     }
 }

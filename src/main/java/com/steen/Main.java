@@ -24,14 +24,19 @@ public class Main {
 
         staticFileLocation("/public"); // sets folder for non java files
 
-        ProductModel productModel = new ProductModel();
+        HashMap<String, Model> models = new HashMap<>();
+        models.put("api", new ApiModel());
+        models.put("admin", new AdminModel());
+        models.put("register", new RegisterModel());
+        models.put("login", new LoginModel());
+        models.put("product", new ProductModel());
 
-        new RootController(productModel);
-        new RegisterController(new RegisterModel());
-        new AdminController(new AdminModel());
-        new LoginController(new LoginModel());
-        new ProductsController(productModel);
-        new WishlistController(new WishlistModel());
+        new RootController(models);
+        new ApiController(models);
+        new AdminController(models);
+        new RegisterController(models);
+        new LoginController(models);
+        new ProductsController(models);
 
 // voorbeeld voor maken van een json  file
 //        get("/games", (req, res) ->{

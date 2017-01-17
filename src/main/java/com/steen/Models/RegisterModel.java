@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class RegisterModel {
+public class RegisterModel implements Model {
     String username;
     String password;
     String name;
