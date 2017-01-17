@@ -1,11 +1,10 @@
 <div class="col-lg-12">
     <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
+    <form action="WishlistController.java" method="post"><input id="btn-wish" type="submit" value=Addtowishlist onclick="/wishlist"></form>
     <div id="ProductContent" class="jumbotron">
+        <div class="form-group col-md-3">
 
-        <form method = "POST" action ="/wishlist">
-            <input id="addtowishList" type="button" value="addto" onclick="">
-            <button type ="submit"/>>
-        </form>
+        </div>
     </div>
 </div>
 
@@ -16,14 +15,14 @@
 
     function updateData() {
         var stdURL = "/games/bekijken.json";
-        var searchAppend = getCurretUrlParam("id");
+        var searchAppend = getCurrentUrlParam("id");
 
         if(searchAppend != null){
             getJson(stdURL + "?id=" + searchAppend);
         }
     }
 
-    function getCurretUrlParam(param) {
+    function getCurrentUrlParam(param) {
             var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
             if (results==null){
                 return null;
@@ -62,8 +61,17 @@
             content.append("</div><center><p id='ProductOmschrijving'>Omschrijving</p></center>");
             content.append("</div>");
             content.append("<p><a class='btn btn-primary btn-lg' href='#' role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</a></p>");
-            content.append("<p><a class='btn btn-primary btn-lg' href='#' role='button'>Add to wishlist</a></p>");
             productContent.append(content);
         })
+    }
+
+    function passtoController(url){
+        $.ajax({
+            type: 'GET',
+            url: url,
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
     }
 </script>

@@ -2,19 +2,13 @@ package com.steen.Controllers;
 
 import com.steen.Models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
-import org.apache.velocity.VelocityContext;
 import spark.ModelAndView;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static com.steen.Main.p_layout;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-/**
- * Created by jesse on 16-1-2017.
- */
 public class WishlistController {
 
     public WishlistController(WishlistModel wishlistModel) {
@@ -25,18 +19,21 @@ public class WishlistController {
             model.put("username", request.session().attribute("username"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
-            String item = "hello";
 
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-//        post("/wishlist", (request, response) -> {
-//
-//
-//                return new ModelAndView(model, p_layout))
-//            }, new VelocityTemplateEngine());
+        post("/wishlist", ((request, response) -> {
+
+            String filter = request.queryParams("search");
+            String order = request.queryParams("order");
+            System.out.println("Hello");
+
+            return null;
+        }
+        ));
     }
 
-
 }
+

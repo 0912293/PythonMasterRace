@@ -34,8 +34,8 @@ public class WishlistModel {
         return result;
     }
 
-    public void insertItem(String username, String item){
-        updateInsert(username, item);
+    public void insertItem(String username, int id){
+        updateInsert(username, id);
         try{
             Statement myStmt = connection.createStatement();
             myStmt.execute(this.insertquery);
@@ -47,11 +47,11 @@ public class WishlistModel {
 
     }
 
-    public void updateInsert(String username, String item){
+    public void updateInsert(String username, int id){
 
         this.insertquery = "INSERT INTO wishlist " +
                 "VALUES(" + username + "," +
-                "" + item + ");";
+                "" + id + ");";
     }
 
     public void updateGet(){
