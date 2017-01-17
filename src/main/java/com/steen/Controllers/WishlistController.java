@@ -1,5 +1,7 @@
 package com.steen.Controllers;
 
+import com.steen.Models.Model;
+import com.steen.Models.ProductModel;
 import com.steen.Models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
@@ -11,7 +13,11 @@ import static spark.Spark.post;
 
 public class WishlistController {
 
-    public WishlistController(WishlistModel wishlistModel) {
+
+    public WishlistController(final HashMap<String, Model> models) {
+
+        WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
+
         get("/wishlist", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("login_modal", "templates/login_mod.vtl");
@@ -24,18 +30,23 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/wishlist", ((request, response) -> {
+        post("/wishlist", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
 
-            String filter = request.queryParams("search");
-            String order = request.queryParams("order");
+
             String username = request.session().attribute("username");
-
-            wishlistModel.insertItem(username, 1);
-            System.out.println("Hello");
-
-            return null;
-        }
-        ));
+            int id;
+            try {
+                if (username == null || username.equals("")){
+                    throw new Exception();
+                }
+                id = Integer.parseInt(request.queryParams("id"));
+                wishlistModel.insertItem(username, id);
+                return "Item has been added to your wishlist.";
+            } catch (Exception e) {
+                return "Please, check that you are logged in.";
+            }
+        });
     }
 
 }

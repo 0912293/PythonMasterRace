@@ -1,8 +1,5 @@
 package com.steen.Controllers;
-import com.steen.Models.AdminModel;
-import com.steen.Models.ApiModel;
-import com.steen.Models.Model;
-import com.steen.Models.ProductModel;
+import com.steen.Models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
 import spark.Spark;
@@ -16,7 +13,7 @@ public class ApiController {
         ApiModel apiModel = (ApiModel) models.get("api");
         AdminModel adminModel = (AdminModel) models.get("admin");
         ProductModel productModel = (ProductModel) models.get("product");
-
+        WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
@@ -71,5 +68,12 @@ public class ApiController {
             return apiModel.getJSON(productModel.getSearch());
         }
         ));
+
+        post("/api/wishlist", (request, response) -> {
+
+            String username = request.session().attribute("username");
+            return apiModel.getJSON(WishlistModel.getQuery(username));
+        }
+        );
     }
 }
