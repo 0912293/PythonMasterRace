@@ -17,7 +17,7 @@ public class ApiController {
         AdminModel adminModel = (AdminModel) models.get("admin");
         ProductModel productModel = (ProductModel) models.get("product");
 
-        get("/api/admin/users.json", (request, response) -> {
+        post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
 
@@ -31,13 +31,13 @@ public class ApiController {
             return adminModel.getUsersJSON();
         });
 
-        get("/api/product/view.json", ((request, response) -> {
+        post("/api/product/view.json", ((request, response) -> {
             String id = request.queryParams("id");
             productModel.setSearch(new Search("SELECT * FROM games WHERE games_id= " + id + ";"));
             return apiModel.getJSON(productModel.getSearch());
         }));
 
-        get("/api/product/filtering.json", ((request, response) -> {
+        post("/api/product/filtering.json", ((request, response) -> {
             productModel.clearSession();
             String query = "";
             String selector = request.queryParams("selector");
@@ -51,7 +51,7 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
-        get("/api/product/games.json", ((request, response) -> {
+        post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
             String search = request.queryParams("search");
             String order = request.queryParams("order");
