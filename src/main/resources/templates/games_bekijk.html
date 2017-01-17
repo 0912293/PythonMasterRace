@@ -13,9 +13,10 @@
     function updateData() {
         var stdURL = "/api/product/view.json";
         var searchAppend = getCurretUrlParam("id");
+        console.log(searchAppend);
 
         var searchDict = {
-            'search': (searchAppend != null || searchDict !== undefined) ? searchAppend : null
+            'id': (searchAppend != null || searchDict !== undefined) ? searchAppend : null
         };
         getJson(stdURL, searchDict);
     }
