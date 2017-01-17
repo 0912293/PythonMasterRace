@@ -1,5 +1,6 @@
 package com.steen.Controllers;
 
+import com.steen.Models.Model;
 import com.steen.Models.ProductModel;
 import com.steen.session.Filter;
 import com.steen.session.Search;
@@ -13,7 +14,8 @@ import static com.steen.Main.p_layout;
 import static spark.Spark.*;
 
 public class ProductsController {
-    public ProductsController(ProductModel productModel) {
+    public ProductsController(final HashMap<String, Model> models) {
+        ProductModel productModel = (ProductModel) models.get("product");
 
         get("/games", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -24,41 +26,6 @@ public class ProductsController {
             model.put("admin", request.session().attribute("admin"));
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
-
-        get("/api/product/games.json", ((request, response) -> {
-            productModel.clearSession();
-            String search = request.queryParams("search");
-            String order = request.queryParams("order");
-            String filter = request.queryParams("filter");
-
-
-            if (search != null && !search.equals("null") && !search.equals("")) {
-                productModel.getSearch().addFilterParam("games_name", search, Filter.Operator.LIKE);
-            }
-            if (order != null && !order.equals("null") && !order.equals("")) {
-                productModel.getSearch().addOrderParam(order);
-            }
-            if (filter != null && !filter.equals("null") && !filter.equals("")) {
-                productModel.getSearch().addFilterParam(filter);
-            }
-
-            return productModel.getJSON();
-        }
-        ));
-
-        get("/api/product/filtering.json", ((request, response) -> {
-            productModel.clearSession();
-            String query = "";
-            String selector = request.queryParams("selector");
-            if (selector.equals("0")) {
-                query = "SELECT DISTINCT games_genre FROM games";
-            } else if (selector.equals("1")) {
-                query = "SELECT DISTINCT games_platform FROM games";
-            } else {
-                // RIP
-            }
-            return productModel.getJSON(query);
-        }));
 
         get("/games/bekijken", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -72,12 +39,5 @@ public class ProductsController {
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
-
-        post("/api/product/view.json", ((request, response) -> {
-            String id = request.queryParams("id");
-            productModel.setSearch(new Search("SELECT * FROM games WHERE games_id= " + id + ";"));
-            return productModel.getJSON();
-        }
-        ));
     }
 }

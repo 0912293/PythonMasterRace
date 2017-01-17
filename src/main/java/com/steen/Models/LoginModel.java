@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 
 import static com.steen.Main.connection;
 
-public class LoginModel {
+public class LoginModel implements Model {
     private ProductModel productModel;
     private String username;
     private String password;
