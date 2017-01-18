@@ -12,6 +12,7 @@
     </table>
     <ul id="deleteList"></ul>
     <input id="deleteButton" type="button" onclick="deleterows()">
+    <input id="deleteButton1" type="button" onclick="deleteSQL()">
 </div>
 
 
@@ -44,23 +45,30 @@
 
     function deleterows() {
         var table = $('table');
+        var dict = [];
+        var i = 0;
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
             $(this).closest('tr').remove();
-            deleteSQL()
-
-            $('[id = deleteList]').append($(this).val());
-            alert("You checked this box")
-        })
-        deleteSQL()
+            //$('[id = deleteList]').append($(this).val());
+            alert("You checked this box");
+            var key = i.toString();
+            dict[key] = ($(this).val());
+            i++
+        });
+        deleteSQL(dict)
     }
-    function deleteSQL() {
+    function deleteSQL(dict) {
+        var dict = dict;
         $.ajax({
             type: "POST",
             url: "/wishlist/delete",
-            data: data,
-            success: success,
-            dataType: dataType
+            data: {
+                "myDict" : dict
+            },
+            success: function (data) {
+                alert(data)
+            }
         });
     }
 
