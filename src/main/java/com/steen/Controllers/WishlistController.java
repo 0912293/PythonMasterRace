@@ -53,6 +53,7 @@ public class WishlistController {
         post("/wishlist/delete", (request, response) -> {
             String username = request.session().attribute("username");
             List<String> toDelete = new ArrayList<String>();
+            List<Integer> deleteID = new ArrayList<Integer>();
             Integer i = 0;
             String key = i.toString();
             while(request.queryParams(key) != null){
@@ -63,8 +64,11 @@ public class WishlistController {
             }
             for (String a: toDelete
                  ) {
+                deleteID.add(Integer.parseInt(a));
                 System.out.println(a);
             }
+            WishlistModel.deleteQuery(username, deleteID);
+
             return null;
         });
     }

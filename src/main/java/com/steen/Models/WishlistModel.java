@@ -65,9 +65,9 @@ public class WishlistModel implements Model {
 
     public static String deleteQuery(String username, List<Integer> list) {
         String result = "";
-
+        String allItems;
         for (int item: list) {
-            result += "DELETE FROM wishlist WHERE username = '" + username + "' AND wishlist.games_id = " + item + ";";
+            result += "DELETE FROM wishlist WHERE username = '" + username + "' AND wishlist.games_id in(" + item + ";";
         }
 
         return result;
