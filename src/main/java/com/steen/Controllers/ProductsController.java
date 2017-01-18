@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static spark.Spark.*;
 
 public class ProductsController {
@@ -19,8 +20,8 @@ public class ProductsController {
 
         get("/games", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("template", "templates/games.html");
-            model.put("login_modal", "templates/login_mod.vtl");
+            model.put("template", sfp + "html/games.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
             model.put("username", request.session().attribute("username"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
@@ -30,8 +31,8 @@ public class ProductsController {
         get("/games/bekijken", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
 
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/games_bekijk.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/games_bekijk.html");
 
             model.put("username", request.session().attribute("username"));
             model.put("correctinfo", request.session().attribute("correctinfo"));

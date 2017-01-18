@@ -5,9 +5,10 @@
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="/js/common.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <style>
         body{padding-top:70px;}
 
@@ -17,26 +18,17 @@
             max-width:100px;
             max-height:100px;
         }
-
-        #ProductImage{
-            min-height:200px;
-            max-height:300px;
-            width:auto;
-            display:block;
-            margin:auto;
-        }
-
         .productbox {
             background-color:#ffffff;
         	padding:10px;
-        	margin-bottom:20px;
+        	margin-bottom:10px;
         }
         #game_name{
             min-width:200px;
             min-height:30px;
             max-width:200px;
             max-height:30px;
-            margin-bottom: 18px;
+            margin-bottom: 40px;
         }
 
         .producttitle {
@@ -70,12 +62,12 @@
       <ul class="nav navbar-nav navbar-right">
           #if($correctinfo)
               #if($admin)
-                  <li style="cursor: default"><a href="/user/me">Ingelogd als <strong>$username</strong></a></li>
+                  <li style="cursor: default"><a href="/user/$username">Ingelogd als <strong>$username</strong></a></li>
                 <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Administrator</a></li>
               #else
-                  <li style="cursor: default"><a href="/user/me">Ingelogd als $username</a></li>
+                  <li style="cursor: default"><a href="/user/$username">Ingelogd als $username</a></li>
               #end
-            <li><a onclick="logmeout('/logout')" "><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
+            <li><a onclick="logout()" "><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
           #else
             <li><a href="/p_reg"><span class="glyphicon glyphicon-user"></span> Registreren</a></li>
             <li><a style="cursor:pointer" data-toggle="modal" data-target="#login_modal"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
@@ -94,24 +86,4 @@
 
     </div>
   </body>
-<script type="text/javascript">
-    var currentURL = window.location.href
-    function logmeout(url) {
-        var dict = {
-            'url' : location.pathname
-        }
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: dict,
-            success: function () {
-                window.location = location.href
-            },
-            error: function () {
-                console.log("Incorrect or missing JSON")
-            }
-        });
-        return false;
-    }
-</script>
 </html>

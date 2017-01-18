@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
@@ -35,7 +36,7 @@ public class AdminController {
         //--------------------------------AdminModel--------
         get("/admin", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("username", req.session().attribute("username"));
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
@@ -45,13 +46,13 @@ public class AdminController {
 
 //        get("/admin_forbidden", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
-//            model.put("template", "templates/admin_forbidden.vtl");
+//            model.put("template", "html/admin_forbidden.vtl");
 //            return new ModelAndView(model, p_layout);
 //        }, new VelocityTemplateEngine());
 
         post("/admin/delete_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
@@ -62,7 +63,7 @@ public class AdminController {
         post("/admin/reset_pass", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
             adminModel.resetPassword();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
@@ -71,7 +72,7 @@ public class AdminController {
 
         post("/admin/update_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
@@ -85,7 +86,7 @@ public class AdminController {
 //---------------------Blacklist user-------------------
         post("/admin/blacklist_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("username", req.session().attribute("username"));
@@ -97,7 +98,7 @@ public class AdminController {
 //---------------------UN-Blacklist user---------------------
         post("/admin/blacklist_undo", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("username", req.session().attribute("username"));
@@ -109,7 +110,7 @@ public class AdminController {
 //--------------Admin user list----------------------------
         get("/admin/users", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin_users.html");
+            model.put("template", sfp + "html/admin_users.html");
             model.put("admin", req.session().attribute("admin"));
             model.put("username", req.session().attribute("username"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
@@ -147,7 +148,7 @@ public class AdminController {
 
         get("/admin/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/admin.vtl");
+            model.put("template", sfp + "html/admin.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
             model.put("username", req.session().attribute("username"));
@@ -187,7 +188,7 @@ public class AdminController {
         get("/admin/chart", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
 
-            model.put("template", "templates/admin_chart.html");
+            model.put("template", sfp + "html/admin_chart.html");
             model.put("admin", req.session().attribute("admin"));
             model.put("username", req.session().attribute("username"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
