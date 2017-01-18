@@ -19,7 +19,7 @@ import static com.steen.Util.SQLToJSON.getFormattedResult;
 
 public class AdminModel implements Model {
     private String sql;
-    private String username = "";
+    public String username = "";
     private String name;
     private String surname;
     private String email;
@@ -44,24 +44,6 @@ public class AdminModel implements Model {
     public AdminModel() {
         clear();
     }
-
-    //    public void ResetOldContent() {
-//        sql = null;
-//        username = null;
-//        name = null;
-//        surname = null;
-//        email = null;
-//        year = null;
-//        month = null;
-//        day = null;
-//        address_id = null;
-//        address_country = null;
-//        address_street = null;
-//        address_postalcode = null;
-//        address_number = null;
-//        address_city = null;
-//        birth_date = null;
-//    }
 
     //---------------------------------userlist--------------------
     private void userlist(){
