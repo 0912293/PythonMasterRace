@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static spark.Spark.before;
 import static spark.Spark.get;
 
@@ -22,8 +23,8 @@ public class RootController {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/p_home.vtl");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/p_home.vtl");
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.session().attribute("correctinfo"));
             model.put("username", req.session().attribute("username"));
@@ -78,8 +79,8 @@ public class RootController {
 //
 //            model.put("games", gameArrayList);
 //            model.put("search", product);
-//            model.put("template","templates/p_products.vtl");
-//            model.put("login_modal","templates/login_mod.vtl");
+//            model.put("template","html/p_products.vtl");
+//            model.put("login_modal","html/login_mod.vtl");
 //            model.put("admin",req.session().attribute("admin"));
 //            model.put("filtered", session.getSearch().hasFilter());
 //            model.put("username", req.session().attribute("username"));

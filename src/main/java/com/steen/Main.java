@@ -14,7 +14,9 @@ import java.util.Objects;
 
 public class Main {
     public static Connection connection = Connector.connect();
-    public static final String p_layout = "templates/p_layout.vtl";
+    public static final String staticFilePath = "public/";
+    public static final String sfp = staticFilePath;
+    public static final String p_layout = sfp + "html/p_layout.vtl";
     public static Map<Integer, Map<String, Object>> sessions = new HashMap<>();
 
 

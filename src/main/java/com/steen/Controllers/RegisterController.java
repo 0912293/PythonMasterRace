@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static com.steen.Util.ViewUtil.strictVelocityEngine;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -46,8 +47,8 @@ public class RegisterController {
             } else {
                 res.redirect("/");
             }
-            model.put("template", "templates/p_reg.vtl");
-            model.put("login_modal", "templates/login_mod.vtl");
+            model.put("template", sfp + "html/p_reg.vtl");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
             return strictVelocityEngine().render(new ModelAndView(model, p_layout));
         });
 
@@ -75,14 +76,14 @@ public class RegisterController {
 
             dbuilder.build(day,month,year);
 
-            model.put("login_modal","templates/login_mod.vtl");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
             registerModel.setParameters(Username,Password,name,surname,country,city,street,postal,number,dbuilder.getDate(),email);
             if(nullCheck){
                 registerModel.ParseReg();
                 res.redirect("/");
             }
             else{
-                model.put("template", "templates/p_reg.vtl");
+                model.put("template", sfp + "html/p_reg.vtl");
             }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
