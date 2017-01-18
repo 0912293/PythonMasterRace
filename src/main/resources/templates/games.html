@@ -1,48 +1,54 @@
 <div class="container">
     <div class="row">
+        <div class="col-md-2"><h2>Producten</h2></div>
         <!----form begin--->
         <form class="form-filter">
-            <div class="col-md-3"> <h2 class="text-center">Producten</h2></div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-3 col-md-offset-1">
                 <input id="search" name="search" class="form-control" type="text" placeholder="Search">
                 <input id="submitbutton" type="submit" value="Submit">
             </div>
             <div class="form-group col-md-6">
-
-                <label class="col-md-3">Sorteren op</label>
-                <div class="col-md-3">
-                    <select id="sortoption">
-                        <option value="None">Niet sorteren</option>
-                        <optgroup label="Prijs">
-                            <option value="P_ASC">Laag naar hoog</option>
-                            <option value="P_DESC">Hoog naar laag</option>
-                        </optgroup>
-                        <optgroup label="Naam">
-                            <option value="N_ASC">A/Z</option>
-                            <option value="N_DESC">Z/A</option>
-                        </optgroup>
-                    </select>
+                <div class="row">
+                    <label class="col-md-3 text-center">Sorteren op</label>
+                    <div class="col-md-3">
+                        <select id="sortoption">
+                            <option value="None">Niet sorteren</option>
+                            <optgroup label="Prijs">
+                                <option value="P_ASC">Laag naar hoog</option>
+                                <option value="P_DESC">Hoog naar laag</option>
+                            </optgroup>
+                            <optgroup label="Naam">
+                                <option value="N_ASC">A/Z</option>
+                                <option value="N_DESC">Z/A</option>
+                            </optgroup>
+                        </select>
+                    </div>
                 </div>
-
-                <label class="col-md-3">Filteren op</label>
-                <div class="col-md-3">
-                    <select id="filteroption">
-                        <option value="None">Niet filteren</option>
-                        <optgroup label="Genre">
-                        </optgroup>
-                        <optgroup label="Platform">
-                        </optgroup>
-                    </select>
+                <div class="row">
+                    <label class="col-md-3 text-center">Filteren op</label>
+                    <div class="col-md-3">
+                        <select id="filteroption">
+                            <option value="None">Niet filteren</option>
+                            <optgroup label="Genre">
+                            </optgroup>
+                            <optgroup label="Platform">
+                            </optgroup>
+                        </select>
+                    </div>
                 </div>
             </div>
         </form>
-        <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span>Terug</button></a>
         <!-----form end ---->
     </div>
-    <hr>
-    <div id="ProductContainer" class="container">
 
-    </div>
+<div class="row">
+    <div class="col-md-1"><a href="/"><button type="button" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span>Home</button></a></div>
+</div>
+
+<hr>
+<div id="ProductContainer" class="container">
+
+</div>
 </div>
 
 <!---products--->

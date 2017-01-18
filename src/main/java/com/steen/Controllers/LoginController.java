@@ -5,6 +5,8 @@ import com.steen.Models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
+import com.steen.User;
+
 import static com.steen.Main.p_layout;
 import static com.steen.Models.LoginModel.checkBlacklist;
 import static spark.Spark.get;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginController {
+    public User user = new User();
     public LoginController(final HashMap<String, Model> models) {
         LoginModel loginModel = (LoginModel) models.get("login");
 
@@ -21,6 +24,7 @@ public class LoginController {
             Map<String, Object> model = new HashMap<String, Object>();
             String Username = req.queryParams("username");
             req.session().attribute("username", Username);
+            user.setUserName(Username);
             Boolean userCheck = UserInputCheck(Username);
             String Password = req.queryParams("pass");
             req.session().attribute("pass", Password);

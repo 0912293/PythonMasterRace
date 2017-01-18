@@ -29,14 +29,14 @@
         .productbox {
             background-color:#ffffff;
         	padding:10px;
-        	margin-bottom:10px;
+        	margin-bottom:20px;
         }
         #game_name{
             min-width:200px;
             min-height:30px;
             max-width:200px;
             max-height:30px;
-            margin-bottom: 40px;
+            margin-bottom: 18px;
         }
 
         .producttitle {
@@ -70,10 +70,10 @@
       <ul class="nav navbar-nav navbar-right">
           #if($correctinfo)
               #if($admin)
-                  <li style="cursor: default"><a href="/user/$username">Ingelogd als <strong>$username</strong></a></li>
+                  <li style="cursor: default"><a href="/user/me">Ingelogd als <strong>$username</strong></a></li>
                 <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Administrator</a></li>
               #else
-                  <li style="cursor: default"><a href="/user/$username">Ingelogd als $username</a></li>
+                  <li style="cursor: default"><a href="/user/me">Ingelogd als $username</a></li>
               #end
             <li><a onclick="logmeout('/logout')" "><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
           #else

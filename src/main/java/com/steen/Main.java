@@ -29,6 +29,7 @@ public class Main {
         models.put("register", new RegisterModel());
         models.put("login", new LoginModel());
         models.put("product", new ProductModel());
+        models.put("user", new UserModel());
 
         new RootController(models);
         new ApiController(models);
@@ -36,5 +37,7 @@ public class Main {
         new RegisterController(models);
         new LoginController(models);
         new ProductsController(models);
+        new UserController(models);
+
     }
 }
