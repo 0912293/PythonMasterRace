@@ -52,59 +52,77 @@ public class LoginModelTest {
             this.Model.setCredentials(Username,Password);
             Assert.assertEquals(this.Model.getUsername(), Username);
             Assert.assertEquals(this.Model.getPassword(), EncryptedPassword);
-        }
-        catch(Exception e){
+        } catch(Exception e){
             Assert.fail(e.getMessage());
         }
     }
 
     @Test
     public void checkBlacklist() throws Exception {
-        //Case 1: False
-        String NotBlacklistedUsername = "UnitTest";
-        Assert.assertFalse(this.Model.checkBlacklist(NotBlacklistedUsername));
+        try {
+            //Case 1: False
+            String NotBlacklistedUsername = "UnitTest";
+            Assert.assertFalse(this.Model.checkBlacklist(NotBlacklistedUsername));
 
-        //Case 2: True
-        String BlacklistedUsername = "UnitTestBlacklisted";
-        Assert.assertTrue(this.Model.checkBlacklist(BlacklistedUsername));
-
+            //Case 2: True
+            String BlacklistedUsername = "UnitTestBlacklisted";
+            Assert.assertTrue(this.Model.checkBlacklist(BlacklistedUsername));
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
     public void getUsername() throws Exception {
-        Assert.assertEquals(this.Model.getUsername(), "UnitTest");
+        try {
+            Assert.assertEquals(this.Model.getUsername(), "UnitTest");
+        } catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
     public void getPassword() throws Exception {
-        Assert.assertEquals(this.Model.getPassword(), Cryptr.getInstance("1234", Cryptr.Type.MD5).getEncryptedString());
+        try {
+            Assert.assertEquals(this.Model.getPassword(), Cryptr.getInstance("1234", Cryptr.Type.MD5).getEncryptedString());
+        }catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Test
     public void hasCorrectLoginInfo() throws Exception {
-        //Case 1: User does not exist; Field remains false.
-        this.Model.correctLoginInfo = false; //setting to default value. (In setup it turns automaticcally true, which defeats the purpose of this test.
-        this.Model.setCredentials("UnitTestDoesNotExist rolf lol", "894328490");
-        Assert.assertFalse(this.Model.hasCorrectLoginInfo());
+        try {
+            //Case 1: User does not exist; Field remains false.
+            this.Model.correctLoginInfo = false; //setting to default value. (In setup it turns automaticcally true, which defeats the purpose of this test.
+            this.Model.setCredentials("UnitTestDoesNotExist rolf lol", "894328490");
+            Assert.assertFalse(this.Model.hasCorrectLoginInfo());
 
-        //Case 2: User does exists; Field turns true.
-        this.Model.correctLoginInfo = false; //setting to default value. (In setup it turns automaticcally true, which defeats the purpose of this test.
-        this.Model.setCredentials("UnitTest", "1234");
-        Assert.assertTrue(this.Model.hasCorrectLoginInfo());
+            //Case 2: User does exists; Field turns true.
+            this.Model.correctLoginInfo = false; //setting to default value. (In setup it turns automaticcally true, which defeats the purpose of this test.
+            this.Model.setCredentials("UnitTest", "1234");
+            Assert.assertTrue(this.Model.hasCorrectLoginInfo());
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
 
     }
 
     @Test
     public void isAdmin() throws Exception {
-        //Case 1: false
-        this.Model.admin = false;
-        this.Model.setCredentials("UnitTest", "1234");
-        Assert.assertFalse(this.Model.isAdmin());
+        try {
+            //Case 1: false
+            this.Model.admin = false;
+            this.Model.setCredentials("UnitTest", "1234");
+            Assert.assertFalse(this.Model.isAdmin());
 
-        //Case 2: true
-        this.Model.admin = false;
-        this.Model.setCredentials("UnitTestAdmin", "1234");
-        Assert.assertTrue(this.Model.isAdmin());
+            //Case 2: true
+            this.Model.admin = false;
+            this.Model.setCredentials("UnitTestAdmin", "1234");
+            Assert.assertTrue(this.Model.isAdmin());
+        }catch(Exception e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     @Deployment
