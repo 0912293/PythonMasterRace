@@ -48,6 +48,12 @@ public class WishlistController {
                 return "Please, check that you are logged in.";
             }
         });
+
+        post("/wishlist/delete", (request, response) -> {
+            String username = request.session().attribute("username");
+            //WishlistModel.deleteQuery(username, )
+            return null;
+        });
     }
 
 }

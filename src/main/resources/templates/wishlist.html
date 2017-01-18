@@ -42,9 +42,15 @@
     }
 
     function deleterows() {
+        var table = $('table');
         $('[id = chk]:checked').each(function () {
+            console.log($(this).val());
             alert("You checked this box")
         })
+    }
+    
+    function deleteSQL() {
+
     }
 
     function filltable(data) {
@@ -56,7 +62,7 @@
             tr.append("<td>" + item.games_name + "</td>");
             tr.append("<td>" + item.games_price + "</td>");
             tr.append("<td>" + item.games_platform+ "</td>");
-            tr.append("<td><input type = 'checkbox' id = 'chk'" + item.games_id + "'/></td>");
+            tr.append("<td><input type = 'checkbox'  value='"+ item.games_id + "' id = 'chk'" + item.games_id + "'/></td>");
             $('table').append(tr);
         })
     }
