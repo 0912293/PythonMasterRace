@@ -1,4 +1,4 @@
-google.charts.load('current', {packages: ['corechart']});
+google.charts.load('current', {packages: ['corechart'], callback: DrawCharts});
 
 var options = {
     'legend':'left',
@@ -23,6 +23,12 @@ var options3 = {
     'width':400,
     'height':300
 };
+
+function DrawCharts() {
+    retrieveJSON("/api/admin/chart1.json", {}, drawChart);
+    retrieveJSON("/api/admin/chart2.json", {}, drawChart2);
+    retrieveJSON("/api/admin/chart3.json", {}, drawChart3);
+}
 
 function drawChart(json) {
     var data = new google.visualization.DataTable();
@@ -69,7 +75,3 @@ function drawChart3(jsn) {
     var chart3 = new google.visualization.PieChart(document.getElementById('testChart3'));     //google.visualization. CHART TYPE()
     chart3.draw(data3, options3);
 }
-
-google.charts.setOnLoadCallback(retrieveJSON("/api/admin/chart1.json", {}, drawChart));
-google.charts.setOnLoadCallback(retrieveJSON("/api/admin/chart2.json", {}, drawChart2));
-google.charts.setOnLoadCallback(retrieveJSON("/api/admin/chart3.json", {}, drawChart3));

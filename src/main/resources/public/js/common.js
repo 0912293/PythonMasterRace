@@ -21,13 +21,17 @@ function reload() {
     window.location = window.location.href
 }
 
-function checkKeyAndRun(key, expectedKeyCode, func) {
-    if (key.keyCode == expectedKeyCode) {
-        func($('#search').val());
+function getKeyChecker(expectedKeyCode, func) {
+    function checkKeyAndRun(event) {
+        if (key.keyCode == expectedKeyCode) {
+            func($('#search').val());
+            return false;
+        }
         return false;
     }
-    return false;
+    return checkKeyAndRun;
 }
+
 
 function retrieveJSON(url, dict, callback) {
     $.ajax({
