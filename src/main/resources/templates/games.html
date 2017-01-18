@@ -153,24 +153,28 @@
     }
 
     function filltable(json) {
-        var content = [];
         var productContainer = $('#ProductContainer');
 
         productContainer.empty();
         $.each(json, function (i, item) {
-            content = $("<div class='col-md-3 column productbox' id='productbox'>");
-            content.append("<div><img id='GamesPageImg' src='" + item.games_image + "'  class='img-responsive'>");
-            content.append("<div class='caption'>");
-            content.append("<h5 id='game_name'>" + item.games_name + "</h5>");
-            content.append("<p>Prijs: " + item.games_price + "</p>");
-            content.append("<p><a href='/games/bekijken?id="+ item.games_id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>    <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+ winkelmand</a></p>");
-            content.append("</div></div></div>");
-            productContainer.append(content);
+            productContainer.append(ConstructProductbox(item.games_name, item.games_price, item.games_image, item.games_id));
         })
     }
 
+    function ConstructProductbox(name, price, image, id) {
+        var content;
+        content = $("<div class='col-md-3 column productbox' id='productbox'>");
+        content.append("<div><img id='GamesPageImg' src='" + image + "'  class='img-responsive'>");
+        content.append("<div class='caption'>");
+        content.append("<h5 id='game_name'>" + name + "</h5>");
+        content.append("<p>Prijs: &euro;" + price + "</p>");
+        content.append("<p><a href='/games/bekijken?id="+ id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>   <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+winkelmand</a></p>");
+        content.append("</div></div></div>");
+
+        return content;
+    }
+
     function getJson(url, dict, callback) {
-        console.log(url);
         $.ajax({
             type: 'POST',
             url: url,

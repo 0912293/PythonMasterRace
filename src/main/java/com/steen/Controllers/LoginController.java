@@ -30,12 +30,14 @@ public class LoginController {
             req.session().attribute("pass", Password);
             Boolean passCheck = UserInputCheck(Password);
 
+            String href = req.queryParams("url");
             loginModel.setCredentials(Username, Password);
 
             Boolean correctInfo = loginModel.hasCorrectLoginInfo();
             Boolean blacklisted = checkBlacklist(Username);
             if (!blacklisted) {
                 if (correctInfo) {
+                    req.session().attribute("username", Username);
                     req.session().attribute("admin", loginModel.isAdmin());
                     req.session().attribute("correctinfo", true);
                     model.put("correctinfo", true);
@@ -44,30 +46,28 @@ public class LoginController {
                     model.put("userCheck", userCheck);
                     model.put("passCheck", passCheck);
                 } else {
+                    req.session().removeAttribute("username");
+                    req.session().removeAttribute("admin");
+                    req.session().removeAttribute("correctinfo");
                     Username = null;
                     Password = null;
-                    req.session().attribute("correctinfo", false);
-                    req.session().attribute("username", null);
                     passCheck = null;
                     userCheck = null;
                 }
-                model.put("login_modal", "templates/login_mod.vtl");
-                model.put("template", "templates/p_home.vtl");
-                res.redirect("/");
+                res.redirect(href);
             } else {
-                model.put("login_modal", "templates/login_mod.vtl");
-                model.put("template", "templates/blacklisted.vtl");
-                res.redirect("/");
+                res.redirect(href);
             }
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        get("/logout", (req, res) -> {
-            req.session().attribute("username", "");
-            req.session().attribute("pass", "");
-            req.session().attribute("admin", false);
-            req.session().attribute("correctinfo", false);
-            res.redirect("/"); // stuurt de gebruiker naar de home page, dus hierna word de http request voor home uitgevoerd in de client.
+        post("/logout", (req, res) -> {
+            req.session().removeAttribute("username");
+            req.session().removeAttribute("admin");
+            req.session().removeAttribute("correctinfo");
+
+            String href = req.queryParams("url");
+            res.redirect(href);
             return new ModelAndView(new HashMap<>(), p_layout);
         }, new VelocityTemplateEngine());
 
