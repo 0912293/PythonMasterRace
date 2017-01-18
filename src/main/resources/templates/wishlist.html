@@ -46,12 +46,14 @@
         var table = $('table');
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
+            $(this).closest('tr').remove();
+            deleteSQL()
+
             $('[id = deleteList]').append($(this).val());
             alert("You checked this box")
         })
         deleteSQL()
     }
-    
     function deleteSQL() {
         $.ajax({
             type: "POST",
