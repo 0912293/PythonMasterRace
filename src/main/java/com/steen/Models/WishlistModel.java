@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +17,8 @@ public class WishlistModel implements Model {
 
     private String getquery;
     private String insertquery;
-
+    private String deletequery;
+    private ArrayList<String> deletelist = new ArrayList<>();
     public WishlistModel() {
 
     }
@@ -47,6 +49,22 @@ public class WishlistModel implements Model {
 
     }
 
+    public void deleteItem(String username, ArrayList<Integer> list){
+        updateDelete(username, list);
+
+
+        try{
+            Statement myStmt = connection.createStatement();
+            for (String item : deletelist) {
+                myStmt.execute(item);
+
+            }
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void updateInsert(String username, int id) {
 
         this.insertquery = "INSERT INTO wishlist (username, games_id)" +
@@ -63,14 +81,16 @@ public class WishlistModel implements Model {
 
     }
 
-    public static String deleteQuery(String username, List<Integer> list) {
+    private void updateDelete(String username, ArrayList<Integer> list) {
         String result = "";
-
+        ArrayList<String> sql_list = new ArrayList<>();
         for (int item: list) {
-            result += "DELETE FROM wishlist WHERE username = '" + username + "' AND wishlist.games_id = " + item + ";";
+            result = "DELETE FROM wishlist WHERE username = '" + username + "' AND wishlist.games_id = " + item + ";";
+            sql_list.add(result);
+
         }
 
-        return result;
+        this.deletelist = sql_list;
 
     }
 }

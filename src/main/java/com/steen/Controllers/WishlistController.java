@@ -61,10 +61,15 @@ public class WishlistController {
                 key = i.toString();
 
             }
-            for (String a: toDelete
-                 ) {
+            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            for (String a: toDelete){
+
+                int b =Integer.parseInt(a);
+                toDelete2.add(b);
                 System.out.println(a);
             }
+
+            wishlistModel.deleteItem(username, toDelete2);
             return null;
         });
     }
