@@ -45,10 +45,11 @@
         var table = $('table');
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
-            alert("You checked this box")
+            $(this).closest('tr').remove();
+            deleteSQL()
+
         })
     }
-    
     function deleteSQL() {
 
     }
