@@ -71,17 +71,24 @@ public class UserController {
             String username = request.session().attribute("username");
             String oldpass = request.queryParams("opass");
             String newpass = request.queryParams("npass");
+            String newpass2 = request.queryParams("npass2");
+            String result = "test";
             userModel.setOldpass(oldpass);
             userModel.setNewpass(newpass);
+            userModel.setNewpass2(newpass2);
             userModel.setUsername(username);
             userModel.GetPassword();
-            model.put("login_modal", sfp + "html/login_mod.vtl");
-            model.put("template", sfp + "html/user.html");
+            if(userModel.UpdatePassword()){
+                result = "Password changed";
+            }else{
+                result = "Failed to change password";
+            } 
+
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
 
-            return new ModelAndView(model, p_layout);
-        }, new VelocityTemplateEngine());
+            return result;
+        });
     }
 }
