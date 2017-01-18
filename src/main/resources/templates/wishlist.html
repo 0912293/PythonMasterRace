@@ -45,7 +45,7 @@
 
     function deleterows() {
         var table = $('table');
-        var dict = [];
+        var dict = {};
         var i = 0;
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
@@ -53,6 +53,8 @@
             //$('[id = deleteList]').append($(this).val());
             alert("You checked this box");
             var key = i.toString();
+            console.log("The key = " + key);
+            console.log("The value = " + $(this).val());
             dict[key] = ($(this).val());
             i++
         });
@@ -63,9 +65,7 @@
         $.ajax({
             type: "POST",
             url: "/wishlist/delete",
-            data: {
-                "myDict" : dict
-            },
+            data: dict,
             success: function (data) {
                 alert(data)
             }
