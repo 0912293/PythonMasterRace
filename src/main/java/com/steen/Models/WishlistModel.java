@@ -70,8 +70,6 @@ public class WishlistModel implements Model {
         this.insertquery = "INSERT INTO wishlist (username, games_id)" +
                 "VALUES('" + username + "'," +
                 "" + id + ");";
-
-        System.out.print(this.insertquery);
     }
 
     public static String getQuery(String username) {

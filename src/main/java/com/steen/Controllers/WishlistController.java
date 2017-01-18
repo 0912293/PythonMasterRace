@@ -1,7 +1,6 @@
 package com.steen.Controllers;
 
 import com.steen.Models.Model;
-import com.steen.Models.ProductModel;
 import com.steen.Models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
@@ -9,6 +8,7 @@ import spark.ModelAndView;
 import java.util.*;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -20,10 +20,9 @@ public class WishlistController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         //hello
         get("/wishlist", (request, response) -> {
-            System.out.println("Java Check2");
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/wishlist.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/wishlist.html");
             model.put("username", request.session().attribute("username"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
@@ -34,7 +33,6 @@ public class WishlistController {
 
         post("/wishlist", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            System.out.println("Java Check");
 
             String username = request.session().attribute("username");
             int id;
@@ -66,7 +64,6 @@ public class WishlistController {
 
                 int b =Integer.parseInt(a);
                 toDelete2.add(b);
-                System.out.println(a);
             }
 
             wishlistModel.deleteItem(username, toDelete2);
