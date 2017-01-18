@@ -17,10 +17,8 @@ public class UserModel implements Model {
     Connection connection = Main.connection;
 
     public void setUsername(String Username) { this.username = Username;}
-    public void setOldpass(String Oldpass) { this.oldpass = Cryptr.getInstance(Oldpass, Cryptr.Type.MD5).getEncryptedString();
-        System.out.println(oldpass);}
-    public void setNewpass(String Newpass) { this.newpass = Cryptr.getInstance(Newpass, Cryptr.Type.MD5).getEncryptedString();
-        System.out.println(newpass);}
+    public void setOldpass(String Oldpass) { this.oldpass = Cryptr.getInstance(Oldpass, Cryptr.Type.MD5).getEncryptedString();}
+    public void setNewpass(String Newpass) { this.newpass = Cryptr.getInstance(Newpass, Cryptr.Type.MD5).getEncryptedString();}
 
     public void GetPassword(){
         ResultSet rs;
@@ -36,7 +34,6 @@ public class UserModel implements Model {
 
             while (rs.next()) {
                 password = rs.getString("password");
-                System.out.println(password);
             }
 
         } catch (Exception e) {

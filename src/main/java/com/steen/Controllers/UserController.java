@@ -5,12 +5,11 @@ import com.steen.Models.UserModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
-import com.steen.User;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -21,19 +20,23 @@ public class UserController {
 
         get("/user/me",(request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/user.html");
-            model.put("admin", request.session().attribute("admin"));
-            model.put("correctinfo", request.session().attribute("correctinfo"));
-            model.put("username", request.session().attribute("username"));
+            if (request.session().attribute("correctinfo") == null) {
+                response.redirect("/");
+            } else {
+                model.put("admin", request.session().attribute("admin"));
+                model.put("correctinfo", request.session().attribute("correctinfo"));
+                model.put("username", request.session().attribute("username"));
+            }
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/user.html");
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
         get("/user/orders",(request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/user.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/user.html");
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
@@ -43,8 +46,8 @@ public class UserController {
 
         get("/user/favorieten",(request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/user.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/user.html");
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
@@ -54,8 +57,8 @@ public class UserController {
 
         get("/user/wenslijst",(request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/user.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/user.html");
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
@@ -70,18 +73,10 @@ public class UserController {
             String newpass = request.queryParams("npass");
             userModel.setOldpass(oldpass);
             userModel.setNewpass(newpass);
-            System.out.println(oldpass);
-            System.out.println(newpass);
-            System.out.println(username);
             userModel.setUsername(username);
             userModel.GetPassword();
-            if(userModel.UpdatePassword()){
-                System.out.println("changed");
-            }else{
-                System.out.println("wrong password");
-            }
-            model.put("login_modal", "templates/login_mod.vtl");
-            model.put("template", "templates/user.html");
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/user.html");
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));

@@ -1,3 +1,10 @@
+$(function () {
+    $('.form-login').on("submit", function(e) {
+        e.preventDefault();
+        login();
+    });
+});
+
 function logout() {
     var dict = {
         'url' : location.pathname
@@ -7,13 +14,12 @@ function logout() {
 }
 
 function login() {
-    console.log("I'm in");
     var dict = {
         'url' : location.pathname,
         'username' : $('#username').val(),
         'pass' : $('#pass').val()
     };
-    post("login", dict, reload);
+    post("/login", dict, reload);
     return false;
 }
 

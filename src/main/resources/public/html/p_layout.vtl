@@ -62,10 +62,10 @@
       <ul class="nav navbar-nav navbar-right">
           #if($correctinfo)
               #if($admin)
-                  <li style="cursor: default"><a href="/user/$username">Ingelogd als <strong>$username</strong></a></li>
+                  <li style="cursor: default"><a href="/user/me">Ingelogd als <strong>$username</strong></a></li>
                 <li><a href="/admin"><span class="glyphicon glyphicon-wrench"></span> Administrator</a></li>
               #else
-                  <li style="cursor: default"><a href="/user/$username">Ingelogd als $username</a></li>
+                  <li style="cursor: default"><a href="/user/me">Ingelogd als $username</a></li>
               #end
             <li><a onclick="logout()" "><span class="glyphicon glyphicon-log-out"></span> Log Uit</a></li>
           #else
