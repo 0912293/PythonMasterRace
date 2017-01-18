@@ -10,6 +10,7 @@
             <th>Delete</th>
         </tr>
     </table>
+    <ul id="deleteList"></ul>
     <input id="deleteButton" type="button" onclick="deleterows()">
 </div>
 
@@ -45,12 +46,20 @@
         var table = $('table');
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
+            $('[id = deleteList]').append($(this).val());
             alert("You checked this box")
         })
+        deleteSQL()
     }
     
     function deleteSQL() {
-
+        $.ajax({
+            type: "POST",
+            url: "/wishlist/delete",
+            data: data,
+            success: success,
+            dataType: dataType
+        });
     }
 
     function filltable(data) {

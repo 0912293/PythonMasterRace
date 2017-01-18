@@ -6,6 +6,7 @@ import com.steen.Models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import static com.steen.Main.p_layout;
 import static spark.Spark.get;
@@ -51,7 +52,9 @@ public class WishlistController {
 
         post("/wishlist/delete", (request, response) -> {
             String username = request.session().attribute("username");
-            //WishlistModel.deleteQuery(username, )
+            List<String> deleteRows = request.params("deleteList");
+
+            WishlistModel.deleteQuery(username, )
             return null;
         });
     }
