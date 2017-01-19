@@ -70,7 +70,6 @@ public class ApiController {
         ));
 
         post("/api/wishlist.json", (request, response) -> {
-
             String username = request.session().attribute("username");
             return apiModel.getJSON(WishlistModel.getQuery(username));
         }

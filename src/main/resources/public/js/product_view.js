@@ -27,7 +27,7 @@ function addToWishlist() {
     var dict = {
         "id": getCurrentUrlParam("id")
     };
-    post('/wishlist', dict, function (data) {
+    post('/wishlist/add', dict, function (data) {
         if (data !== undefined)
             alert(data)
     });

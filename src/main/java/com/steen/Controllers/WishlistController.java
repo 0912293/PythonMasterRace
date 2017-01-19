@@ -5,6 +5,7 @@ import com.steen.Models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 import static com.steen.Main.p_layout;
@@ -18,7 +19,6 @@ public class WishlistController {
     public WishlistController(final HashMap<String, Model> models) {
 
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
-        //hello
         get("/wishlist", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("login_modal", sfp + "html/login_mod.vtl");
@@ -31,17 +31,28 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/wishlist", (request, response) -> {
+        post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-
+            ResultSet resultSet;
             String username = request.session().attribute("username");
-            int id;
+            int id = Integer.parseInt(request.queryParams("id"));
+            int wishlistID;
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
                 }
-                id = Integer.parseInt(request.queryParams("id"));
-                wishlistModel.insertItem(username, id);
+                String query = wishlistModel.getUserWishlist(username);
+                resultSet = wishlistModel.selectExecutor(query);
+                if(resultSet.next()){
+                    wishlistID = resultSet.getInt(1);
+                    wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                }
+                else{
+                    wishlistModel.executeUpdate(wishlistModel.addUserWishlist(username));
+                    resultSet = wishlistModel.selectExecutor(query);
+                    wishlistID = resultSet.getInt(1);
+                    wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                }
                 return "Item has been added to your wishlist.";
             } catch (Exception e) {
                 return "Please, check that you are logged in.";
