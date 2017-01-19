@@ -1,13 +1,13 @@
-package com.steen.Models;
+package com.steen.models;
 
-import com.steen.Util.SQLToJSON;
 import com.steen.session.Search;
 
-import java.util.HashMap;
 import java.util.List;
 
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import com.steen.util.SQLToJSON;
+
 
 public class ApiModel implements Model {
     public String getJSON(Search search) {

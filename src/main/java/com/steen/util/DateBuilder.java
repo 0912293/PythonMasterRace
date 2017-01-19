@@ -1,4 +1,4 @@
-package com.steen;
+package com.steen.util;
 
 public class DateBuilder {
 

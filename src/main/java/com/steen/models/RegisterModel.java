@@ -1,4 +1,4 @@
-package com.steen.Models;
+package com.steen.models;
 
 import com.steen.Cryptr;
 import com.steen.Main;

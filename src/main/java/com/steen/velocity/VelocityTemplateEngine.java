@@ -28,7 +28,7 @@ import spark.ModelAndView;
         import spark.TemplateEngine;
 
 /**
- * Template Engine based on Apache Velocity.
+ * Template Engine based on Apache velocity.
  */
 public class VelocityTemplateEngine extends TemplateEngine {
 

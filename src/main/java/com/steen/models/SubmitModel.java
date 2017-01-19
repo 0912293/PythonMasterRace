@@ -1,8 +1,5 @@
-package com.steen.Models;
+package com.steen.models;
 
-/**
- * Created by Jamal on 3-11-2016.
- */
 public class SubmitModel implements Model {
 
     public static String SelectQueryColumn(String desc, String column) {
