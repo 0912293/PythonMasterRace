@@ -32,6 +32,8 @@ public class Main {
         models.put("login", new LoginModel());
         models.put("product", new ProductModel());
         models.put("user", new UserModel());
+        models.put("wishlist", new WishlistModel());
+
 
         new RootController(models);
         new ApiController(models);
@@ -40,6 +42,8 @@ public class Main {
         new LoginController(models);
         new ProductsController(models);
         new UserController(models);
+        new WishlistController(models);
+
 
     }
 }
