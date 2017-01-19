@@ -2,15 +2,14 @@ package com.steen;
 
 import static spark.Spark.*;
 
-import com.steen.Controllers.*;
-import com.steen.Models.*;
-import org.apache.commons.collections.map.HashedMap;
+import com.steen.controllers.*;
+import com.steen.db.Connector;
+import com.steen.models.*;
 import spark.Spark;
 
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class Main {
     public static Connection connection = Connector.connect();

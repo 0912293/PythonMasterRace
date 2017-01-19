@@ -1,9 +1,7 @@
-package com.steen.Controllers;
+package com.steen.controllers;
 
-import com.steen.Models.Model;
-import com.steen.Models.ProductModel;
-import com.steen.session.Filter;
-import com.steen.session.Search;
+import com.steen.models.Model;
+import com.steen.models.ProductModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 

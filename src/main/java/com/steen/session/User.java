@@ -1,9 +1,9 @@
-package com.steen;
+package com.steen.session;
 
 public class User {
-    public String usernameName;
-    public String userName;
-    public String userSurname;
+    private String usernameName;
+    private String userName;
+    private String userSurname;
 
     public User(){
 

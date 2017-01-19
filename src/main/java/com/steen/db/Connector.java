@@ -1,4 +1,4 @@
-package com.steen;
+package com.steen.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

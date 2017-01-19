@@ -1,4 +1,4 @@
-package com.steen.Util;
+package com.steen.util;
 
 import java.sql.*;
 import java.util.ArrayList;

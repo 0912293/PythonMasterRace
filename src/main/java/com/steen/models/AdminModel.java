@@ -1,10 +1,10 @@
-package com.steen.Models;
+package com.steen.models;
 
 import com.steen.Cryptr;
-import com.steen.DateBuilder;
+import com.steen.util.DateBuilder;
 import com.steen.Main;
-import com.steen.User;
-import com.steen.Util.SQLToJSON;
+import com.steen.session.User;
+import com.steen.util.SQLToJSON;
 import com.steen.session.Search;
 
 import java.sql.Connection;
@@ -13,9 +13,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.steen.Models.LoginModel.checkBlacklist;
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
+import static com.steen.models.LoginModel.checkBlacklist;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import static com.steen.util.SQLToJSON.getFormattedResult;
 
 public class AdminModel implements Model {
     private String sql;

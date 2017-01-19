@@ -1,21 +1,17 @@
-package com.steen.Controllers;
+package com.steen.controllers;
 
-import com.steen.Models.AdminModel;
-import com.steen.Models.Model;
-import com.steen.Util.SQLToJSON;
+import com.steen.models.AdminModel;
+import com.steen.models.Model;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import spark.Request;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
 import static spark.Spark.*;
 
 public class AdminController {

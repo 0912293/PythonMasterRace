@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Blabla:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Blabla_jar</output-path>
-    <root id="archive" name="Blabla.jar">
+  <artifact type="jar" build-on-make="true" name="SteenWebshop:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SteenWebshop_jar</output-path>
+    <root id="archive" name="SteenWebshop.jar">
       <element id="module-output" name="Blabla" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-http/9.3.2.v20150730/jetty-http-9.3.2.v20150730.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/eclipse/jetty/websocket/websocket-servlet/9.3.2.v20150730/websocket-servlet-9.3.2.v20150730.jar" path-in-jar="/" />
