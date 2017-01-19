@@ -31,7 +31,7 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/wishlist", (request, response) -> {
+        post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
 
             String username = request.session().attribute("username");
@@ -50,7 +50,7 @@ public class WishlistController {
 
         post("/wishlist/delete", (request, response) -> {
             String username = request.session().attribute("username");
-            List<String> toDelete = new ArrayList<String>();
+            List<String> toDelete = new ArrayList<>();
             Integer i = 0;
             String key = i.toString();
             while(request.queryParams(key) != null){
@@ -59,7 +59,7 @@ public class WishlistController {
                 key = i.toString();
 
             }
-            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            ArrayList<Integer> toDelete2 = new ArrayList<>();
             for (String a: toDelete){
 
                 int b =Integer.parseInt(a);
