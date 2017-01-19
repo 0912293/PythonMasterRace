@@ -1,17 +1,11 @@
-package com.steen.Controllers;
+package com.steen.controllers;
 
-import com.steen.Models.Model;
-import com.steen.Models.ProductModel;
-import com.steen.Models.SubmitModel;
-import com.steen.session.Filter;
-import com.steen.session.Game;
+import com.steen.models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;

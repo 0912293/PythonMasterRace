@@ -1,14 +1,14 @@
-package com.steen.Controllers;
+package com.steen.controllers;
 
-import com.steen.Models.LoginModel;
-import com.steen.Models.Model;
+import com.steen.models.LoginModel;
+import com.steen.models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
-import com.steen.User;
+import com.steen.session.User;
 
 import static com.steen.Main.p_layout;
-import static com.steen.Models.LoginModel.checkBlacklist;
+import static com.steen.models.LoginModel.checkBlacklist;
 import static spark.Spark.get;
 import static spark.Spark.post;
 

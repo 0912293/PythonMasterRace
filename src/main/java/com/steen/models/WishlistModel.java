@@ -1,13 +1,10 @@
-package com.steen.Models;
+package com.steen.models;
 
 import com.steen.Main;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by jesse on 16-1-2017.

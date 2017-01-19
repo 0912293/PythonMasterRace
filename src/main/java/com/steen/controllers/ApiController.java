@@ -1,8 +1,8 @@
-package com.steen.Controllers;
-import com.steen.Models.*;
+package com.steen.controllers;
+import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
-import spark.Spark;
+
 import java.util.HashMap;
 
 import static spark.Spark.get;

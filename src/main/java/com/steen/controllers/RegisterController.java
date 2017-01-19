@@ -1,11 +1,10 @@
-package com.steen.Controllers;
+package com.steen.controllers;
 
-import com.steen.DateBuilder;
-import com.steen.Models.Model;
-import com.steen.Models.RegisterModel;
+import com.steen.util.DateBuilder;
+import com.steen.models.Model;
+import com.steen.models.RegisterModel;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
-import spark.Route;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
-import static com.steen.Util.ViewUtil.strictVelocityEngine;
+import static com.steen.util.ViewUtil.strictVelocityEngine;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
