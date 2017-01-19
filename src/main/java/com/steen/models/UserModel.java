@@ -12,6 +12,7 @@ public class UserModel implements Model {
     String oldpass;
     String newpass;
     String username;
+    String newpass2;
 
     String sql;
     Connection connection = Main.connection;
@@ -19,6 +20,7 @@ public class UserModel implements Model {
     public void setUsername(String Username) { this.username = Username;}
     public void setOldpass(String Oldpass) { this.oldpass = Cryptr.getInstance(Oldpass, Cryptr.Type.MD5).getEncryptedString();}
     public void setNewpass(String Newpass) { this.newpass = Cryptr.getInstance(Newpass, Cryptr.Type.MD5).getEncryptedString();}
+    public void setNewpass2(String Newpass2) { this.newpass2 = Cryptr.getInstance(Newpass2, Cryptr.Type.MD5).getEncryptedString();}
 
     public void GetPassword(){
         ResultSet rs;
@@ -44,21 +46,25 @@ public class UserModel implements Model {
 
     public boolean UpdatePassword(){
         PreparedStatement myStmt;
-        if(password.equals(oldpass)) {
-            try {
-                sql = "UPDATE users SET users.password = ? WHERE users.username = ?;";
+        if(newpass.equals(newpass2)) {
+            if (password.equals(oldpass)) {
+                try {
+                    sql = "UPDATE users SET users.password = ? WHERE users.username = ?;";
 
-                myStmt = connection.prepareStatement(sql);
-                myStmt.setString(1, newpass);
-                myStmt.setString(2, this.username);
+                    myStmt = connection.prepareStatement(sql);
+                    myStmt.setString(1, newpass);
+                    myStmt.setString(2, this.username);
 
-                myStmt.executeUpdate();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
+                    myStmt.executeUpdate();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
+                }
+                return true;
+            } else {
+                return false;
             }
-            return true;
-        }else {
+        }else{
             return false;
         }
     }

@@ -1,48 +1,52 @@
 <div class="container">
+    <h2>Producten</h2><hr>
     <div class="row">
         <!----form begin--->
         <form class="form-filter">
-            <div class="col-md-3"> <h2 class="text-center">Producten</h2></div>
-            <div class="form-group col-md-3">
-                <input id="search" name="search" class="form-control" type="text" placeholder="Search">
-                <input id="submitbutton" type="submit" value="Submit">
-            </div>
-            <div class="form-group col-md-6">
 
-                <label class="col-md-3">Sorteren op</label>
-                <div class="col-md-3">
-                    <select id="sortoption">
-                        <option value="None">Niet sorteren</option>
-                        <optgroup label="Prijs">
-                            <option value="P_ASC">Laag naar hoog</option>
-                            <option value="P_DESC">Hoog naar laag</option>
-                        </optgroup>
-                        <optgroup label="Naam">
-                            <option value="N_ASC">A/Z</option>
-                            <option value="N_DESC">Z/A</option>
-                        </optgroup>
-                    </select>
+                <div class="form-group col-md-2 col-md-offset-3">
+                    <input id="search" name="search" class="form-control" type="text" placeholder="Search">
                 </div>
-
-                <label class="col-md-3">Filteren op</label>
-                <div class="col-md-3">
-                    <select id="filteroption">
-                        <option value="None">Niet filteren</option>
-                        <optgroup label="Genre">
-                        </optgroup>
-                        <optgroup label="Platform">
-                        </optgroup>
-                    </select>
+                <div class="col-xs-12 col-md-2">
+                    <input class="btn btn-default btn-block" id="submitbutton" type="submit" value="Submit"><br>
                 </div>
-            </div>
+                <div class="form-group col-md-8 col-md-offset-3 col-xs-12">
+                    <div class="row">
+                        <label class="col-md-3 col-xs-2">Sorteren op</label>
+                        <div class="col-md-4 col-xs-10">
+                            <select data-style="btn-primary" id="sortoption">
+                                <option value="None">Niet sorteren</option>
+                                <optgroup label="Prijs">
+                                    <option value="P_ASC">Laag naar hoog</option>
+                                    <option value="P_DESC">Hoog naar laag</option>
+                                </optgroup>
+                                <optgroup label="Naam">
+                                    <option value="N_ASC">A/Z</option>
+                                    <option value="N_DESC">Z/A</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-md-3 col-xs-2">Filteren op</label>
+                        <div class="col-md-4 col-xs-10">
+                            <select id="filteroption">
+                                <option value="None">Niet filteren</option>
+                                <optgroup label="Genre">
+                                </optgroup>
+                                <optgroup label="Platform">
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                </div>
         </form>
-        <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span>Terug</button></a>
         <!-----form end ---->
     </div>
     <hr>
-    <div id="ProductContainer" class="container">
-
-    </div>
+    <!--<div class="col-xs-5 col-md-12">-->
+        <div id="ProductContainer" class="container"></div>
+    <!--</div>-->
 </div>
 
 <!---products--->
