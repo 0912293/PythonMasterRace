@@ -33,6 +33,10 @@ public class AdminModelTest {
     public void setUp() throws Exception {
         this.connection = Connector.connect();
         this.Model = new AdminModel();
+        this.Model.username = "UnitTestDummyUser";
+        this.Model.name = "dummy";
+        this.Model.surname = "dummy";
+        this.Model.email = "dummy";
     }
 
     @After
@@ -75,12 +79,13 @@ public class AdminModelTest {
         try {
             //Case 1: Not blacklisted --> False
             this.Model.username = "UnitTest";
-            Assert.assertFalse(this.Model.checkAdmin());
+            Assert.assertFalse(this.Model.checkBlacklisted());
             //Case 2: Blacklisted --> True
             this.Model.username = "UnitTestBlacklisted";
-            Assert.assertTrue(this.Model.checkAdmin());
+            Assert.assertTrue(this.Model.checkBlacklisted());
 
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             Assert.fail(e.getMessage());
         }
     }
@@ -88,7 +93,13 @@ public class AdminModelTest {
     @Test
     public void blacklistUser() throws Exception {
         try {
-
+            this.Model.username = "UnitTestBlacklisted";
+            if(this.Model.checkBlacklisted()){
+                System.out.println("Already Blacklisted.\nFirst unblacklisting before blacklisting...");
+                this.Model.undoBlackList();
+            }
+            this.Model.blacklistUser();
+            Assert.assertTrue(this.Model.checkBlacklisted());
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
@@ -97,6 +108,13 @@ public class AdminModelTest {
     @Test
     public void undoBlackList() throws Exception {
         try {
+            this.Model.username = "UnitTestBlacklisted";
+            if(!this.Model.checkBlacklisted()) { // mind the !
+                System.out.println("Not blacklisted. First blacklisting before undoing blacklist.");
+                this.Model.blacklistUser();
+            }
+            this.Model.undoBlackList();
+            Assert.assertFalse(this.Model.checkBlacklisted());
 
         } catch(Exception e) {
             Assert.fail(e.getMessage());
@@ -104,18 +122,55 @@ public class AdminModelTest {
     }
 
     @Test
-    public void delete_user() throws Exception {
+    public void CreatingAndDeletingUsers() throws Exception {
+        //
         try {
+            this.Model.username = "UnitTestDummyUser";
+            this.Model.name = "dummy";
+            this.Model.surname = "dummy";
+            this.Model.email = "dummy";
+
+            //stage 1: Creating user
+            boolean found = false;
+            this.Model.insertDummyUser();
+            ArrayList<User> userlist = this.Model.getUsers();
+            for(User user : userlist) {
+                if(user.usernameName.equals(this.Model.username)) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+
+            //Stage 2: Deleting user
+            found = false;
+            this.Model.delete_user();
+            userlist = this.Model.getUsers();
+            for(User user : userlist) {
+                if(user.usernameName == this.Model.username) {
+                    found = true;
+                }
+            }
+            Assert.assertFalse(found);
 
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             Assert.fail(e.getMessage());
         }
     }
 
     @Test
     public void resetPassword() throws Exception {
+        // not testable in a good manner. There is not a method to retrieve the user password, so it can't
+        // be checked if it has changed. This test only catches exceptions.
         try {
+            this.Model.username = "UnitTestDummyUser";
+            this.Model.name = "dummy";
+            this.Model.surname = "dummy";
+            this.Model.email = "dummy";
 
+            this.Model.insertDummyUser();
+            this.Model.resetPassword();
+            this.Model.delete_user();
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }

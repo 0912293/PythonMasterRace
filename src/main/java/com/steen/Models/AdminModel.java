@@ -20,19 +20,19 @@ import static com.steen.Util.SQLToJSON.getFormattedResult;
 public class AdminModel implements Model {
     private String sql;
     public String username = "";
-    private String name;
-    private String surname;
-    private String email;
-    private String year;
-    private String month;
-    private String day;
+    public String name;
+    public String surname;
+    public String email;
+    public String year;
+    public String month;
+    public String day;
     private Integer address_id;
     private String address_country;
     private String address_street;
     private String address_postalcode;
     private String address_number;
     private String address_city;
-    private String birth_date;
+    public String birth_date;
     private Boolean admin;
     private ArrayList<User> users = new ArrayList<>();
     private Search search = new Search("SELECT * FROM users");
@@ -118,6 +118,19 @@ public class AdminModel implements Model {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void insertDummyUser(){ // only for unit testing purposes
+        try {
+                sql = "INSERT INTO users (username, name, surname, email, birth_date) VALUES ('"+ this.username +"', '" + this.name + "','" + this.surname + "', '" + this.email + "', '1996-07-05');";
+
+                PreparedStatement myStmt = connection.prepareStatement(sql);
+                myStmt.executeUpdate();
+                System.out.println("Inserted dummy user");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
         }
     }
 
