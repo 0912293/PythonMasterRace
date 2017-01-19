@@ -46,7 +46,8 @@ function retrieveJSON(url, dict, callback) {
         data: dict,
         dataType: "json",
         success: function (data) {
-            callback(data)
+            if (callback !== undefined)
+                callback(data)
         },
         error: function () {
             console.log("Incorrect or missing JSON")
@@ -60,7 +61,8 @@ function post(url, dict, callback) {
         url: url,
         data: dict,
         success: function (data) {
-            callback(data)
+            if (callback !== undefined)
+                callback(data)
         },
         error: function () {
             console.log("Incorrect or missing JSON")
@@ -73,7 +75,8 @@ function get(url, callback) {
         type: 'GET',
         url: url,
         success: function (data) {
-            callback(data)
+            if (callback !== undefined)
+                callback(data)
         },
         error: function () {
             console.log("Incorrect or missing JSON")
