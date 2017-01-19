@@ -2,11 +2,17 @@ package com.steen.controllers;
 
 import com.steen.models.CartModel;
 import com.steen.models.Model;
+import com.steen.velocity.VelocityTemplateEngine;
+import spark.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
+import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class CartController {
@@ -39,5 +45,18 @@ public class CartController {
                 return "{ 'code' : 500 , 'message' : 'Internal Server Error' }";
             }
         });
+
+        get("/cart", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/cart.html");
+            model.put("admin", request.session().attribute("admin"));
+            model.put("correctinfo", request.session().attribute("correctinfo"));
+            model.put("username", request.session().attribute("username"));
+
+
+
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
     }
 }
