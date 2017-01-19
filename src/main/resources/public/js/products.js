@@ -96,12 +96,14 @@ function filltable(json) {
 
 function ConstructProductbox(name, price, image, id) {
     var content;
-    content = $("<div class='col-md-3 column productbox' id='productbox'>");
-    content.append("<div><img id='GamesPageImg' src='" + image + "'  class='img-responsive'>");
+    content = $("<div class='col-md-3 column productbox col-md-offset-0 col-xs-offset-3' id='productbox'>");
+    content.append("<div><a href='/games/bekijken?id="+ id +"'><img id='GamesPageImg' src='" + image + "'  class='img-responsive'>");
     content.append("<div class='caption'>");
     content.append("<h5 id='game_name'>" + name + "</h5>");
-    content.append("<p>Prijs: &euro;" + price + "</p>");
-    content.append("<p><a href='/games/bekijken?id="+ id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>   <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+winkelmand</a></p>");
+    content.append("<p>Prijs: &euro;" + price + "</p></a>");
+    content.append("<div class='row'><div class='col-xs-7'><a href='/games/bekijken?id="+ id +"' class='btn btn-success btn-block' role='button' id='button1'>Bekijken</a></div></div> " +
+        "<div class='row'><div class='col-xs-7'><a href='#' class='btn btn-primary btn-block' role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Toevoegen</a>" +
+        "</div></div>");
     content.append("</div></div></div>");
 
     return content;

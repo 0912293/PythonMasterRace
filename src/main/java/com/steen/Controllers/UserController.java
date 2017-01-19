@@ -72,7 +72,7 @@ public class UserController {
             String oldpass = request.queryParams("opass");
             String newpass = request.queryParams("npass");
             String newpass2 = request.queryParams("npass2");
-            String result = "test";
+            String result;
             userModel.setOldpass(oldpass);
             userModel.setNewpass(newpass);
             userModel.setNewpass2(newpass2);
@@ -82,7 +82,7 @@ public class UserController {
                 result = "Password changed";
             }else{
                 result = "Failed to change password";
-            } 
+            }
 
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
