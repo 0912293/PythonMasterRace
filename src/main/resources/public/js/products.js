@@ -15,16 +15,10 @@ function getCartActionFunc(ID, act) {
             "amount": 1,
             "action": act
         };
-        post("/cart/act", dict);
+        post("/cart/act", dict, function (msg) {
+            if (msg !== undefined)
+                alert(msg)
+        });
     }
     return addToCart
-}
-
-function addToCart() {
-    var dict = {
-        "productId": ID,
-        "amount": 1,
-        "action": act
-    };
-    post("/cart/act", dict);
 }

@@ -1,7 +1,6 @@
 var sortOption = null;
 var filterOption = null;
 var input = document.querySelector('input[type= text][id = "search"]');
-var tableJSON = null;
 
 $(function () {
     $('.form-filter').on("submit", function(e) {
@@ -103,7 +102,7 @@ function ConstructProductbox(name, price, image, id) {
     content.append("<h5 id='game_name'>" + name + "</h5>");
     content.append("<p>Prijs: &euro;" + price + "</p>");
     content.append("<p><a href='/games/bekijken?id="+ id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>");
-    content.append("<a class='btn btn-primary' role='button' id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+winkelmand</a></p>");
+    content.append("<a class='btn btn-primary' role='button' id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> toevoegen aan<br>winkelwagen</a></p>");
     content.append("</div></div></div>");
     return content;
 }

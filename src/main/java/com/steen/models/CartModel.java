@@ -1,5 +1,11 @@
 package com.steen.models;
 
+import com.steen.session.Search;
+import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import static com.steen.util.SQLToJSON.Type;
+import org.json.JSONObject;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -14,20 +20,6 @@ public class CartModel implements Model {
         products = new HashMap<>();
     }
 
-    public static <T> boolean checkForValue(T value, String table, String column) {
-        ResultSet resultSet = null;
-        String query = "SELECT * FROM " + table + " t WHERE t." + column + " = " + value.toString();
-        try {
-            PreparedStatement myStmt = connection.prepareStatement(query);
-            resultSet = myStmt.executeQuery(query);
-            return resultSet.isBeforeFirst();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public void addToCart(int productID, int amount) {
         if (products.containsKey(productID)) {
             products.compute(productID, (key, val) -> val + amount);
@@ -36,18 +28,47 @@ public class CartModel implements Model {
         }
     }
 
-    public boolean removeFromCart(int productID, int amount) {
-        if (products.containsKey(productID)) {
-            if (products.get(productID) > amount) {
-                products.compute(productID, (key, val) -> val - amount);
-                return true;
-            } else {
-                products.remove(productID);
-                return true;
+    public int removeFromCart(List<Integer> toRemove, int amnt) {
+        int removed = 0;
+        for (int productID : toRemove) {
+            if (products.containsKey(productID)) {
+                int amount = products.get(productID);
+                if (products.get(productID) > amount) {
+                    products.compute(productID, (key, val) -> val - amount);
+                    removed += amount;
+                } else {
+                    products.remove(productID);
+                    removed += amount;
+                }
             }
-        } else {
-            return false;
         }
+        return removed;
+
+    }
+
+    public String getCartJSON() {
+        // Get all products from id's
+        String query = "SELECT * FROM games g WHERE ";
+        if (products.size() <= 0) {
+            return "";
+        }
+        boolean first = true;
+        for (int k : products.keySet()) {
+            if (!first) {
+                query += " OR ";
+            } else first = false;
+            query += "g.games_id = " + k + "";
+        }
+
+        ResultSet rs = Search.getResultSet(query); // ResultSet containing all games with listed product ID
+        List<JSONObject> jsonList = getFormattedResult(rs);
+
+        for (JSONObject jsonObject : jsonList) {
+            int id = jsonObject.getInt("games_id");
+            jsonObject.put("amount", products.get(id));
+        }
+
+        return JsonListToString(jsonList, Type.ARRAY);
     }
 
     @Override

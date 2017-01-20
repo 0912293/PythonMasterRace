@@ -60,10 +60,13 @@
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
           <li><a href="/games">Producten</a> </li>
-          <li><a href="/wishlist">Wenslijst</a> </li>
+          #if($correctinfo)
+              <li><a href="/wishlist">Wenslijst</a> </li>
+          #end
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
+          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Winkelwagentje</a></li>
           #if($correctinfo)
               #if($admin)
                   <li style="cursor: default"><a href="/user/me">Ingelogd als <strong>$username</strong></a></li>

@@ -25,24 +25,37 @@ public class CartController {
         cartModel = (CartModel) models.get("cart");
 
         post("/cart/act", (request, response) -> {
-            System.out.println("test");
             try {
-                int p_id = Integer.parseInt(request.queryParams("productId"));
-                int amount = Integer.parseInt(request.queryParams("amount"));
                 int action = Integer.parseInt(request.queryParams("action"));
                 switch (action) {
                     case ADD:
+                        int p_id = Integer.parseInt(request.queryParams("productId"));
+                        int amount = Integer.parseInt(request.queryParams("amount"));
                         cartModel.addToCart(p_id, amount);
-                        break;
+                        return "Product toegevoegd aan winkelwagen.";
                     case DELETE:
-                        cartModel.removeFromCart(p_id, amount);
-                        break;
+                        List<Integer> idsToDelete = new ArrayList<>();
+                        for (int i = 0; true; i++) {
+                            String p_idString = request.queryParams("p_id" + i);
+                            if (p_idString == null) break;
+                            int productID = Integer.parseInt(p_idString);
+                            idsToDelete.add(productID);
+                        }
+                        int itemsdeleted = cartModel.removeFromCart(idsToDelete, -1);
+                        if (itemsdeleted > 0){
+                            if (itemsdeleted == 1)
+                                return "1 product verwijderd.";
+                            return itemsdeleted + " producten verwijderd.";
+                        } else {
+                            return "Kon de geselecteerde producten niet verwijderen. " +
+                                    "Neem aub. contact op met de sitebeheerder als dit vaak voor komt..";
+                        }
+                    default: throw new Exception();
                 }
-                System.out.println(cartModel.toString());
-                return "{ 'code' : 200 , 'message' : 'OK' }";
             } catch (Exception e) {
                 e.printStackTrace();
-                return "{ 'code' : 500 , 'message' : 'Internal Server Error' }";
+                return "Er ging iets mis aan onze kant, " +
+                        "neem aub. contact op met de sitebeheerder als dit vaak voor komt. ";
             }
         });
 

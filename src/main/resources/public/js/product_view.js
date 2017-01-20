@@ -37,7 +37,7 @@ function filldata(data) {
         content.append("<div class='col-lg-2 col-md-6 col-sm-6'>");
         content.append("</div><center><p id='ProductOmschrijving'>Omschrijving</p></center>");
         content.append("</div>");
-        content.append("<p><a class='btn btn-primary btn-lg' role='button' id='productViewCartButton"+ item.games_id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</a></p>");
+        content.append("<p><a class='btn btn-primary btn-lg' role='button' id='productViewCartButton"+ item.games_id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/> toevoegen aan winkelwagen</a></p>");
         productContent.append(content);
         $('#productViewCartButton' + item.games_id).click(getCartActionFunc(item.games_id, 0))
     })
