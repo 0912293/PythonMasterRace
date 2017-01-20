@@ -25,22 +25,44 @@
 
     function updateData() {
         var stdURL = "/api/wishlist.json";
-        getJson(stdURL);
+        getJsonUser(stdURL);
         // + "?id=" + searchAppend);
 
     }
 
-    function getJson(url) {
-        //console.log(url);
+    function getCurrentUrlParam(param) {
+        var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
+        if (results==null){
+            return null;
+        }
+        else{
+            return results[1] || 0;
+        }
+    }
+
+    function getJsonUser(url) {
         $.ajax({
             type: 'POST',
             url: url,
             dataType: "json",
-            success: filltable,
+            success: getJsonID(),
             error: function () {
                 console.log("Incorrect or missing JSON")
             }
         });
+    }
+
+    function getJsonID(data) {
+        var json = data;
+        console.log(json);
+        var id = json.wishlist_id;
+        console.log(id);
+        $.ajax({
+            type: 'POST',
+            url: "/api/wishlist.json\?" + json[0],
+            dataType: "json",
+            success: filltable()
+        })
     }
 
     function deleterows() {

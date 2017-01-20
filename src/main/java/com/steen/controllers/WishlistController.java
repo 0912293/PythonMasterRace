@@ -28,6 +28,8 @@ public class WishlistController {
             model.put("admin", request.session().attribute("admin"));
 
 
+
+
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 

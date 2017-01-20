@@ -72,13 +72,10 @@ public class ApiController {
 
         post("/api/wishlist.json", (request, response) -> {
             String username = request.session().attribute("username");
-            ResultSet resultSet = wishlistModel.selectExecutor(wishlistModel.getUserWishlist(username));
-            if (resultSet.next()){
-                int wishlistID = resultSet.getInt(1);
-                return apiModel.getJSON(wishlistModel.getQuery(wishlistID));
-            }
-            return "Could not find specific wishlist";
+            return apiModel.getJSON(wishlistModel.getUserWishlist(username));
         }
         );
+
+
     }
 }
