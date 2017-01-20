@@ -50,8 +50,10 @@ public class WishlistController {
                 else{
                     wishlistModel.executeUpdate(wishlistModel.addUserWishlist(username));
                     resultSet = wishlistModel.selectExecutor(query);
-                    wishlistID = resultSet.getInt(1);
-                    wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                    if(resultSet.next()){
+                        wishlistID = resultSet.getInt(1);
+                        wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                    }
                 }
                 return "Item has been added to your wishlist.";
             } catch (Exception e) {
@@ -61,24 +63,38 @@ public class WishlistController {
 
         post("/wishlist/delete", (request, response) -> {
             String username = request.session().attribute("username");
-            List<String> toDelete = new ArrayList<String>();
-            Integer i = 0;
-            String key = i.toString();
-            while(request.queryParams(key) != null){
-                toDelete.add(request.queryParams(key));
-                i++;
-                key = i.toString();
+            int wishlistID;
+            try {
+                String query = wishlistModel.getUserWishlist(username);
+                ResultSet resultSet = wishlistModel.selectExecutor(query);
+                if(resultSet.next()){
+                    wishlistID = resultSet.getInt(1);
+                    List<String> toDelete = new ArrayList<String>();
+                    Integer i = 0;
+                    String key = i.toString();
+                    while(request.queryParams(key) != null){
+                        toDelete.add(request.queryParams(key));
+                        i++;
+                        key = i.toString();
+
+                    }
+
+                    ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+                    for (String a: toDelete){
+
+                        int b =Integer.parseInt(a);
+                        toDelete2.add(b);
+                    }
+
+                    wishlistModel.deleteItem(wishlistID, toDelete2);
+                }
 
             }
-            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
-            for (String a: toDelete){
-
-                int b =Integer.parseInt(a);
-                toDelete2.add(b);
+            catch (Exception e){
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
-
-            wishlistModel.deleteItem(username, toDelete2);
-            return null;
+            return "Items have been deleted!";
         });
     }
 }

@@ -3,6 +3,7 @@ import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 
 import static spark.Spark.get;
@@ -71,7 +72,12 @@ public class ApiController {
 
         post("/api/wishlist.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(WishlistModel.getQuery(username));
+            ResultSet resultSet = wishlistModel.selectExecutor(wishlistModel.getUserWishlist(username));
+            if (resultSet.next()){
+                int wishlistID = resultSet.getInt(1);
+                return apiModel.getJSON(wishlistModel.getQuery(wishlistID));
+            }
+            return "Could not find specific wishlist";
         }
         );
     }
