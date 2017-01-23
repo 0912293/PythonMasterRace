@@ -1,6 +1,7 @@
 package com.steen.controllers;
 
 import com.steen.models.AdminModel;
+import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
@@ -17,16 +18,14 @@ import static spark.Spark.*;
 public class AdminController {
     public AdminController(final HashMap<String, Model> models) {
         AdminModel adminModel = (AdminModel) models.get("admin");
+        AdminProductModel adminProductModel = (AdminProductModel) models.get("admin_product");
 
         before("/admin/*", (req,res) -> {
-            if (!isAdmin(req)) {
-                halt("401 - not an admin");
-            }
+            if (!isAdmin(req)) {halt("401 - not an admin");}
         });
 
         before("/admin", (req,res) -> {
-            if (!isAdmin(req))
-                halt("401 - not an admin");
+            if (!isAdmin(req))halt("401 - not an admin");
         });
 
         //--------------------------------AdminModel--------
@@ -39,12 +38,6 @@ public class AdminController {
             model.put("userblacklisted", adminModel.checkBlacklisted());
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
-
-//        get("/admin_forbidden", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("template", "html/admin_forbidden.vtl");
-//            return new ModelAndView(model, p_layout);
-//        }, new VelocityTemplateEngine());
 
         post("/admin/delete_user", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
@@ -116,7 +109,6 @@ public class AdminController {
         post("/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
-
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
@@ -183,7 +175,6 @@ public class AdminController {
 
         get("/admin/chart", (req, res) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-
             model.put("template", sfp + "html/admin_chart.html");
             model.put("admin", req.session().attribute("admin"));
             model.put("username", req.session().attribute("username"));
@@ -191,6 +182,48 @@ public class AdminController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+        get("/admin/product", (req, res) -> { Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template", sfp + "html/admin_products.html");
+            model.put("admin", req.session().attribute("admin"));
+            model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/admin/product/search", (req, res) -> { Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template", sfp + "html/admin_products_edit.html");
+            model.put("admin", req.session().attribute("admin"));
+            model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        post("/admin/product/add/game", (req, res) -> {
+            String gname = req.queryParams("gname");
+            String gprice = req.queryParams("gprice");
+            String ggenre = req.queryParams("ggenre");
+            String gplatform = req.queryParams("gplatform");
+            String gpublisher = req.queryParams("gpublisher");
+            String gstock = req.queryParams("gstock");
+            String gimage = req.queryParams("gimage");
+            adminProductModel.AddGame(gname,Float.parseFloat(gprice),ggenre,gplatform,gpublisher,Integer.parseInt(gstock),gimage);
+            return "success";
+        });
+
+        post("/admin/product/add/platform", (req, res) -> {
+            String pname = req.queryParams("pname");
+            String pcolor = req.queryParams("pcolor");
+            String pmemory = req.queryParams("pmemory");
+            String pmanufact = req.queryParams("pmanufact");
+            String pprice = req.queryParams("pprice");
+            String pstock = req.queryParams("pstock");
+            adminProductModel.AddPlatform(pname,Float.parseFloat(pprice),pcolor,pmanufact,pmemory,Integer.parseInt(pstock));
+            return "success";
+        });
+
+        post("/admin/product/edit", (req, res) -> {
+            return null;
+        }, new VelocityTemplateEngine());
 
     }
     private Boolean isAdmin(Request req) {

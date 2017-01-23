@@ -27,6 +27,7 @@ public class Main {
         HashMap<String, Model> models = new HashMap<>();
         models.put("api", new ApiModel());
         models.put("admin", new AdminModel());
+        models.put("admin_product", new AdminProductModel());
         models.put("register", new RegisterModel());
         models.put("login", new LoginModel());
         models.put("product", new ProductModel());
