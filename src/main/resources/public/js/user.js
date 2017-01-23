@@ -1,5 +1,5 @@
 function changepass() {
-    console.log("Password changed")
+    console.log("Password changed");
     var dict = {
         'url' : location.pathname,
         'opass' : $('#wachtwoord').val(),
@@ -8,7 +8,7 @@ function changepass() {
     };
     post('/user/wachtwoord/veranderen', dict, function (data) {
         if(data !== undefined){
-            alert(data);
+            SpawnNotification('Wachtwoord - Actie: ', data,'/img/infoIcon.png',5000);
         }
         reload();
     });

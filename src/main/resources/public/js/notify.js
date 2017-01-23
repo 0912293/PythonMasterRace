@@ -4,6 +4,7 @@ $(function () {
     }
     else if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
         document.getElementById('NotificationPermissionAlert').style.display = "inline";
+        SpawnPermissionDialog();
     }
 });
 
@@ -12,7 +13,6 @@ function SpawnPermissionDialog(){
         console.log(result);
         document.getElementById('NotificationPermissionAlert').style.display = "none";
     });
-
 }
 
 function SpawnNotification(Title, Message, MessagePicture, TimeoutInterval) {
@@ -22,7 +22,7 @@ function SpawnNotification(Title, Message, MessagePicture, TimeoutInterval) {
     /// <param name="MessagePicture" type="String">The path to the picture that show inside the notification.(preferably quite small pictures, like icons(254x254))</param>
     /// <param name="TimeoutInterval" type="Number">TimeoutInterval in milisecond(s). A suggested value would be 5000, which corresponds 5 seconds.</param>
     if(NotificationAbilityCheck()){
-        optionsDict = {
+        var optionsDict = {
             body : Message,
             icon: MessagePicture
         };
@@ -35,8 +35,5 @@ function SpawnNotification(Title, Message, MessagePicture, TimeoutInterval) {
 }
 
 function NotificationAbilityCheck(){
-    if('Notification' in window && Notification.permission === 'granted') {
-        return true;
-    }
-    return false;
+    return 'Notification' in window && Notification.permission === 'granted';
 }
