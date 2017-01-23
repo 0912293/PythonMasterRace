@@ -21,6 +21,7 @@
         });
     </script>
     <script src="/js/common.js"></script>
+    <script src="/js/notify.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
@@ -92,7 +93,12 @@
     </div>
   </nav>
 
-
+    <div id="NotificationPermissionAlert" style="display: none" class="alert alert-success alert-dismissible" role="alert" >
+        <span class="glyphicon glyphicon-question-sign" aria-hidden="true"/>
+        <span class="sr-only">Notificatie systeem:</span>
+        <span>Deze website kan notificaties sturen naar uw systeem om meer informatie te weergeven. Hier moeten u toestemming voor geven:<span>
+        <span><button type="button" onClick="SpawnPermissionDialog()" class="btn btn-success">Sta toe of weiger</button>
+    </div>
 
 <!-----------------------template html------------------------------>
 

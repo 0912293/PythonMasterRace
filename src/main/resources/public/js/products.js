@@ -8,7 +8,7 @@ function addToWishlist(ID) {
     });
 }
 
-function getCartActionFunc(ID, act) {
+function getCartActionFunc(ID, name, imgPath,  act) {
     function addToCart() {
         var dict = {
             "productId": ID,
@@ -17,7 +17,8 @@ function getCartActionFunc(ID, act) {
         };
         post("/cart/act", dict, function (msg) {
             if (msg !== undefined)
-                alert(msg);
+                SpawnNotification('Winkelwagen - Product: ' + name, msg, imgPath, 5000);
+                // alert(msg);
             updateCart();
         });
     }

@@ -90,7 +90,7 @@ function filltable(json) {
     productContainer.empty();
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.games_name, item.games_price, item.games_image, item.games_id));
-        $('#productListCartButton' + item.games_id).click(getCartActionFunc(item.games_id, 0))
+        $('#productListCartButton' + item.games_id).click(getCartActionFunc(item.games_id, item.games_name, item.games_image, 0))
     })
 }
 
