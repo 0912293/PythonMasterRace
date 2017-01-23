@@ -17,17 +17,13 @@
 
 <script>
     $(document).ready(function () {
-        console.log("Check1")
         updateData();
     });
-
-
 
     function updateData() {
         var stdURL = "/api/wishlist.json";
         getJsonUser(stdURL);
         // + "?id=" + searchAppend);
-
     }
 
     function getCurrentUrlParam(param) {
@@ -45,7 +41,7 @@
             type: 'POST',
             url: url,
             dataType: "json",
-            success: getJsonID(),
+            success: getJsonID,
             error: function () {
                 console.log("Incorrect or missing JSON")
             }
@@ -55,11 +51,11 @@
     function getJsonID(data) {
         var json = data;
         console.log(json);
-        var id = json.wishlist_id;
+        var id = json[0].wishlist_id;
         console.log(id);
         $.ajax({
             type: 'POST',
-            url: "/api/wishlist.json\?" + json[0],
+            url: "/api/wishlist.json\?" + id,
             dataType: "json",
             success: filltable()
         })
