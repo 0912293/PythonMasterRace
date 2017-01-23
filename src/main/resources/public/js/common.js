@@ -31,8 +31,10 @@ function updateCart() {
         var nr_of_items = data.count;
         cartButton.empty();
         cartButton.append("<span class='glyphicon glyphicon-shopping-cart'></span> ");
-        if (nr_of_items == "1" || nr_of_items == 1) {
+        if (nr_of_items == 1) {
             cartButton.append(nr_of_items + " Product");
+        } else if (nr_of_items == 0) {
+            cartButton.append("No Products");
         } else {
             cartButton.append(nr_of_items + " Products");
         }
