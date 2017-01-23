@@ -1,0 +1,59 @@
+<div>
+    <h3>Controleer aub. de volgende informatie voordat u op bevestigen klikt.</h3>
+    <form id="verifyData_form">
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="mailadressTextCheck">Email </label>
+            <input type="text" id="mailadressTextCheck" required="required" placeholder="foo@bar.com">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="nameTextCheck">Naam </label>
+            <input type="text" id="nameTextCheck" required="required" placeholder="Bob">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="surnameTextCheck">Achternaam </label>
+            <input type="text" id="surnameTextCheck" required="required" placeholder="Eleveld">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="countryTextCheck">Land </label>
+            <input type="text" id="countryTextCheck" required="required" placeholder="Nederland">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="postalcodeTextCheck">Postcode </label>
+            <input type="text" id="postalcodeTextCheck" required="required" placeholder="0000AB">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="cityTextCheck">Stad </label>
+            <input type="text" id="cityTextCheck" required="required" placeholder="Vb. Rotterdam">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="streetTextCheck">Straatnaam </label>
+            <input type="text" id="streetTextCheck" required="required" placeholder="Vb. Keenstraat">
+        </div>
+        <div class="form-group row">
+            <label class="col-xs-2 col-form-label" for="housenumberTextCheck">Huisnummer </label>
+            <input type="text" id="housenumberTextCheck" required="required" placeholder="Vb. 125">
+        </div>
+        <h3>Bestelde producten:</h3>
+        <table class="table" id="productsCheckoutTable">
+            <tbody id="tableBody">
+                <tr id="headerRow">
+                    <th>Naam</th>
+                    <th></th>
+                    <th>Prijs</th>
+                    <th>Hoeveelheid</th>
+                </tr>
+            </tbody>
+            <tr id="totalRow">
+                <th></th>
+                <th></th>
+                <th>Totaal: </th>
+                <th id="totalCost"></th>
+            </tr>
+        </table>
+        <div>
+            <input type="submit" class="btn btn-success" value="Bevestigen">
+        </div>
+    </form>
+</div>
+
+<script src="/js/checkout.js"></script>

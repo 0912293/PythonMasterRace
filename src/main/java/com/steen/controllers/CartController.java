@@ -47,8 +47,9 @@ public class CartController {
                                 return "1 product verwijderd.";
                             return itemsdeleted + " producten verwijderd.";
                         } else {
-                            return "Kon de geselecteerde producten niet verwijderen. " +
-                                    "Neem aub. contact op met de sitebeheerder als dit vaak voor komt..";
+//                            return "Kon de geselecteerde producten niet verwijderen. " +
+//                                    "Neem aub. contact op met de sitebeheerder als dit vaak voor komt..";
+                            return "0 producten verwijderd.";
                         }
                     default: throw new Exception();
                 }

@@ -115,7 +115,7 @@ public class AdminController {
 
         post("/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
-            String order = request.queryParams("order");
+            String order = request.queryParams("orders");
 
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);

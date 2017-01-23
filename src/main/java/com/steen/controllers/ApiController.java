@@ -2,9 +2,13 @@ package com.steen.controllers;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
+import com.steen.util.JSONUtil;
+import com.steen.util.SQLToJSON;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -19,7 +23,7 @@ public class ApiController {
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
-            String order = request.queryParams("order");
+            String order = request.queryParams("orders");
 
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
@@ -62,7 +66,7 @@ public class ApiController {
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
             String search = request.queryParams("search");
-            String order = request.queryParams("order");
+            String order = request.queryParams("orders");
             String filter = request.queryParams("filter");
 
 
@@ -76,7 +80,11 @@ public class ApiController {
                 productModel.getSearch().addFilterParam(filter);
             }
 
-            return apiModel.getJSON(productModel.getSearch());
+            JSONArray jsonArray = new JSONArray(apiModel.getJSON(productModel.getSearch()));
+            jsonArray = JSONUtil.replaceKeys(jsonArray,
+                    new String[]{"games_name", "games_price", "games_id", "games_genre", "games_image"},
+                    new String[]{"name", "price", "id", "genre", "image"});
+            return jsonArray;
         }
         ));
 
@@ -93,6 +101,21 @@ public class ApiController {
             JSONObject jso = new JSONObject();
             jso.put("count", cartModel.getCount());
             return jso;
+        }));
+
+        post("/api/user/checkout_info.json", ((request, response) -> {
+            String username = "Lucas"; //request.session().attribute("username");
+            JSONObject userjson = new JSONObject(apiModel.getJSON("SELECT u.name, u.surname, u.email, " +
+                    "a.address_country AS country, a.address_postalcode AS postalcode, " +
+                    "a.address_city AS city, a.address_street AS street, a.address_number AS number " +
+                    "FROM users u, address a WHERE u.username = '" + username + "' AND u.address_id = a.address_id",
+                    SQLToJSON.Type.OBJECT));
+            userjson = JSONUtil.replaceKeys(userjson,
+                    new String[]{"address_city", "address_street", "address_number", "address_postalcode", "address_country"},
+                    new String[] {"city","street","number","postalcode","country"});
+            JSONArray productjson = new JSONArray(cartModel.getCartJSON());
+            JSONObject json = new JSONObject("{\"userinfo\":"+userjson+",\"products\":" + productjson + "}");
+            return json;
         }));
     }
 }

@@ -1,10 +1,21 @@
 $(function () {
-    retrieveJSON("/api/cart.json", {}, fillTable)
+    $('#checkoutButton').click(function() {
+        window.location='/checkout/verify';
+    });
+    retrieveJSON("/api/cart.json", {}, updatePage)
 });
 
-function fillTable(data) {
-    var table = $('#cartTable');
+function updatePage(data) {
+    console.log(data.length);
+    if (data.length <= 0) {
+        $('#checkoutButton').attr("disabled", "disabled");
+        $('#deleteButton').attr("disabled", "disabled");
+    } else {
+        $('#checkoutButton').removeAttr("disabled");
+        $('#deleteButton').removeAttr("disabled");
+    }
 
+    var table = $('#cartTable');
     $.each(data, function (i, item) {
         table.find('tbody')
             .append($('<tr>')
