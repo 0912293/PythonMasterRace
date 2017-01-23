@@ -12,6 +12,7 @@
     </table>
     <ul id="deleteList"></ul>
     <input id="deleteButton" type="button" value ="Verwijder uit wenslijst" onclick="deleterows()">
+    <input id="shareWishlist" type="button" value ="Get shareable link" onclick="getJsonUser('/api/getID.json', shareLink)">
 </div>
 
 
@@ -22,7 +23,7 @@
 
     function updateData() {
         var stdURL = "/api/getID.json";
-        getJsonUser(stdURL);
+        getJsonUser(stdURL, getJsonID);
         // + "?id=" + searchAppend);
     }
 
@@ -36,12 +37,12 @@
         }
     }
 
-    function getJsonUser(url) {
+    function getJsonUser(url, f) {
         $.ajax({
             type: 'POST',
             url: url,
             dataType: "json",
-            success: getJsonID,
+            success: f,
             error: function () {
                 console.log("Incorrect or missing JSON")
             }
@@ -59,6 +60,7 @@
             searchAppend = id
         }
         dict["wishlist_id"] = searchAppend;
+        var url = "/api/wishlist.json";
         $.ajax({
             type: 'POST',
             url: "/api/wishlist.json",
@@ -66,6 +68,24 @@
             dataType: "json",
             success: filltable
         })
+    }
+
+    function shareLink(data) {
+        var id = data[0].wishlist_id;
+        var link = window.location.href+"\?wishlistID="+id;
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", link);
+
+
+    }
+
+    function copyText(text){
+        var dummy = document.createElement("input");
+        document.body.appendChild(dummy);
+        $(dummy).css('display','none');
+        dummy.setAttribute("id", "dummy_id");
+        document.getElementById("dummy_id").value=text;
+        dummy.select();
+        document.execCommand("copy");
     }
 
     function deleterows() {

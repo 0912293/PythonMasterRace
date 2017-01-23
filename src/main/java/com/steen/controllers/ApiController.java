@@ -82,7 +82,5 @@ public class ApiController {
             System.out.println(intID);
             return apiModel.getJSON(wishlistModel.getQuery(intID));
         });
-
-
     }
 }
