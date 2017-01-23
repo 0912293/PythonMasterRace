@@ -26,7 +26,7 @@ public class WishlistController {
             model.put("username", request.session().attribute("username"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
-
+            model.put("wishlistID", wishlistModel.getUserWishlist(request.session().attribute("username")));
 
 
 

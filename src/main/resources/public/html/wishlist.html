@@ -55,7 +55,10 @@
         console.log(id);
         var dict = {};
         var searchAppend = getCurrentUrlParam("wishlistID");
-        dict["wishlist_id"] = searchAppend
+        if(searchAppend == null || ""){
+            searchAppend = id
+        }
+        dict["wishlist_id"] = searchAppend;
         $.ajax({
             type: 'POST',
             url: "/api/wishlist.json",
