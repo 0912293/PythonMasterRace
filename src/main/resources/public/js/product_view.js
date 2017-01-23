@@ -23,16 +23,6 @@ function getCurrentUrlParam(param) {
     }
 }
 
-function addToWishlist() {
-    var dict = {
-        "id": getCurrentUrlParam("id")
-    };
-    post('/wishlist/add', dict, function (data) {
-        if (data !== undefined)
-            alert(data)
-    });
-}
-
 function filldata(data) {
     var json = data;
     var content = [];
@@ -50,4 +40,14 @@ function filldata(data) {
         content.append("<p><a class='btn btn-primary btn-lg' href='#' role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/>+Koop nu</a></p>");
         productContent.append(content);
     })
+}
+
+function addToWishlist() {
+    var dict = {
+        "id": getCurrentUrlParam("id")
+    };
+    post('/wishlist/add', dict, function (data) {
+        if (data !== undefined)
+            alert(data)
+    });
 }
