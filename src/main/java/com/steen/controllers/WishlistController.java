@@ -33,6 +33,8 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
+
+
         post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ResultSet resultSet;
@@ -84,7 +86,7 @@ public class WishlistController {
                     ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
                     for (String a: toDelete){
 
-                        int b =Integer.parseInt(a);
+                        int b = Integer.parseInt(a);
                         toDelete2.add(b);
                     }
 

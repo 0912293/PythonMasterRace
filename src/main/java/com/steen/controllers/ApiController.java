@@ -70,11 +70,18 @@ public class ApiController {
         }
         ));
 
-        post("/api/wishlist.json", (request, response) -> {
+        post("/api/getID.json", (request, response) -> {
             String username = request.session().attribute("username");
             return apiModel.getJSON(wishlistModel.getUserWishlist(username));
         }
         );
+
+        post("/api/wishlist.json", (request, response) -> {
+            String id  = request.queryParams("wishlist_id");
+            int intID  = Integer.parseInt(id);
+            System.out.println(intID);
+            return apiModel.getJSON(wishlistModel.getQuery(intID));
+        });
 
 
     }

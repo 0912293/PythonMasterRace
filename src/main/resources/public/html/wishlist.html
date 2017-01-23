@@ -21,7 +21,7 @@
     });
 
     function updateData() {
-        var stdURL = "/api/wishlist.json";
+        var stdURL = "/api/getID.json";
         getJsonUser(stdURL);
         // + "?id=" + searchAppend);
     }
@@ -53,9 +53,13 @@
         console.log(json);
         var id = json[0].wishlist_id;
         console.log(id);
+        var dict = {};
+        dict["wishlist_id"] = id;
+        var searchAppend = getCurrentUrlParam("wishlistID");
         $.ajax({
             type: 'POST',
-            url: "/api/wishlist.json\?" + id,
+            url: "/api/wishlist.json",
+            data: dict,
             dataType: "json",
             success: filltable()
         })
@@ -103,4 +107,5 @@
             $('table').append(tr);
         })
     }
+
 </script>
