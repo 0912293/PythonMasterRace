@@ -30,7 +30,11 @@ function updateCart() {
         var nr_of_items = data.count;
         cartButton.empty();
         cartButton.append("<span class='glyphicon glyphicon-shopping-cart'></span> ");
-        cartButton.append("("+nr_of_items+")"+ " Winkelwagentje");
+        if (nr_of_items == "1" || nr_of_items == 1) {
+            cartButton.append(nr_of_items + " Product");
+        } else {
+            cartButton.append(nr_of_items + " Products");
+        }
     }
     retrieveJSON("/api/cart/count.json", {}, clear_refill);
 }
