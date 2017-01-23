@@ -32,7 +32,7 @@ public class Main {
         models.put("product", new ProductModel());
         models.put("user", new UserModel());
         models.put("wishlist", new WishlistModel());
-
+        models.put("favorites", new FavoritesModel());
 
         new RootController(models);
         new ApiController(models);
@@ -42,7 +42,7 @@ public class Main {
         new ProductsController(models);
         new UserController(models);
         new WishlistController(models);
-
+        new FavoritesController(models);
 
     }
 }
