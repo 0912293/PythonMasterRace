@@ -1,10 +1,10 @@
 package com.steen.models;
 
 import com.steen.Cryptr;
-import com.steen.util.DateBuilder;
+import com.steen.Util.DateBuilder;
 import com.steen.Main;
 import com.steen.session.User;
-import com.steen.util.SQLToJSON;
+import com.steen.Util.SQLToJSON;
 import com.steen.session.Search;
 
 import java.sql.Connection;
@@ -14,25 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.steen.models.LoginModel.checkBlacklist;
-import static com.steen.util.SQLToJSON.JsonListToString;
-import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.Util.SQLToJSON.JsonListToString;
+import static com.steen.Util.SQLToJSON.getFormattedResult;
 
 public class AdminModel implements Model {
     private String sql;
-    private String username = "";
-    private String name;
-    private String surname;
-    private String email;
-    private String year;
-    private String month;
-    private String day;
+    public String username = "";
+    public String name;
+    public String surname;
+    public String email;
+    public String year;
+    public String month;
+    public String day;
     private Integer address_id;
     private String address_country;
     private String address_street;
     private String address_postalcode;
     private String address_number;
     private String address_city;
-    private String birth_date;
+    public String birth_date;
     private Boolean admin;
     private ArrayList<User> users = new ArrayList<>();
     private Search search = new Search("SELECT * FROM users");
@@ -44,24 +44,6 @@ public class AdminModel implements Model {
     public AdminModel() {
         clear();
     }
-
-    //    public void ResetOldContent() {
-//        sql = null;
-//        username = null;
-//        name = null;
-//        surname = null;
-//        email = null;
-//        year = null;
-//        month = null;
-//        day = null;
-//        address_id = null;
-//        address_country = null;
-//        address_street = null;
-//        address_postalcode = null;
-//        address_number = null;
-//        address_city = null;
-//        birth_date = null;
-//    }
 
     //---------------------------------userlist--------------------
     private void userlist(){
@@ -136,6 +118,19 @@ public class AdminModel implements Model {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }
+    }
+
+    public void insertDummyUser(){ // only for unit testing purposes
+        try {
+                sql = "INSERT INTO users (username, name, surname, email, birth_date) VALUES ('"+ this.username +"', '" + this.name + "','" + this.surname + "', '" + this.email + "', '1996-07-05');";
+
+                PreparedStatement myStmt = connection.prepareStatement(sql);
+                myStmt.executeUpdate();
+                System.out.println("Inserted dummy user");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
         }
     }
 

@@ -1,7 +1,6 @@
 package com.steen.controllers;
 
-import com.steen.models.CartModel;
-import com.steen.models.Model;
+import com.steen.models.*;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
 import static spark.Spark.get;

@@ -1,14 +1,11 @@
 package com.steen.controllers;
 
-import com.steen.models.Model;
-import com.steen.models.WishlistModel;
-import com.steen.velocity.VelocityTemplateEngine;
-import spark.ModelAndView;
-
-import java.util.*;
-
+import com.steen.models.*;
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
+import com.steen.velocity.VelocityTemplateEngine;
+import spark.ModelAndView;
+import java.util.*;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
