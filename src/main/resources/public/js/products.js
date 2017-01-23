@@ -106,3 +106,4 @@ function ConstructProductbox(name, price, image, id) {
 
     return content;
 }
+

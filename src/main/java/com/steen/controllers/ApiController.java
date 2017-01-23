@@ -15,6 +15,8 @@ public class ApiController {
         AdminModel adminModel = (AdminModel) models.get("admin");
         ProductModel productModel = (ProductModel) models.get("product");
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
+        FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
+
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("order");
@@ -83,6 +85,11 @@ public class ApiController {
             return apiModel.getJSON(wishlistModel.getQuery(intID));
         });
 
+        post("/api/favorites.json", (request, response) -> {
+            String username = request.session().attribute("username");
+            //System.out.println("this gets executged");
+            return apiModel.getJSON(FavoritesModel.getQuery(username));
+        });
 
     }
 }

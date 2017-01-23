@@ -32,10 +32,30 @@ public class FavoritesController {
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
 
+
+
+
+
             return new ModelAndView(model, p_layout);
 
         }, new VelocityTemplateEngine());
 
+        post("/favorites/add", (request, response) -> {
+
+            String username = request.session().attribute("username");
+            int id;
+
+            try {
+                if (username == null || username.equals("")){
+                    throw new Exception();
+                }
+                id = Integer.parseInt(request.queryParams("id"));
+                favoritesModel.insertItem(username, id);
+                return "Product is toegevoegd aan je favorieten.";
+            } catch (Exception e){
+                return "Kijk of u bent ingelogd en probeer het nogmaals.";
+            }
+        });
 
 
     }

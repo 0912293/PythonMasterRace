@@ -19,6 +19,7 @@ public class WishlistController {
     public WishlistController(final HashMap<String, Model> models) {
 
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
+
         get("/wishlist", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("login_modal", sfp + "html/login_mod.vtl");
