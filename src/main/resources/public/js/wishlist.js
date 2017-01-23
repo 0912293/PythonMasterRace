@@ -15,7 +15,6 @@ function deleteRows() {
         console.log($(this).val());
         $(this).closest('tr').remove();
         //$('[id = deleteList]').append($(this).val());
-        alert("You checked this box");
         var key = i.toString();
         console.log("The key = " + key);
         console.log("The value = " + $(this).val());
@@ -24,7 +23,7 @@ function deleteRows() {
     });
     post("/wishlist/delete", dict, function (data) {
         if (data !== undefined)
-            alert(data);
+            SpawnNotification('Wishlist - Actie: ', data,'/img/deleteIcon.png',5000);
     });
 }
 

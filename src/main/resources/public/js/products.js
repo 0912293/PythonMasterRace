@@ -4,7 +4,7 @@ function addToWishlist(ID) {
     };
     post('/wishlist/add', dict, function (data) {
         if (data !== undefined)
-            alert(data);
+            SpawnNotification('Wenslijst - Actie: ','Dit product is toegevoegd aan uw wishlist','/img/okIcon.png',5000);
     });
 }
 
@@ -18,7 +18,6 @@ function getCartActionFunc(ID, name, imgPath,  act) {
         post("/cart/act", dict, function (msg) {
             if (msg !== undefined)
                 SpawnNotification('Winkelwagen - Product: ' + name, msg, imgPath, 5000);
-                // alert(msg);
             updateCart();
         });
     }
