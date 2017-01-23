@@ -3,6 +3,7 @@ $(function () {
         e.preventDefault();
         login();
     });
+    updateCart()
 });
 
 function logout() {
@@ -21,6 +22,17 @@ function login() {
     };
     post("/login", dict, reload);
     return false;
+}
+
+function updateCart() {
+    function clear_refill(data) {
+        var cartButton = $('#cartReftext');
+        var nr_of_items = data.count;
+        cartButton.empty();
+        cartButton.append("<span class='glyphicon glyphicon-shopping-cart'></span> ");
+        cartButton.append("("+nr_of_items+")"+ " Winkelwagentje");
+    }
+    retrieveJSON("/api/cart/count.json", {}, clear_refill);
 }
 
 function reload() {

@@ -36,5 +36,6 @@ function deleteSelectedRows() {
     post("/cart/act", dict, function (msg) {
         if (msg !== undefined)
             alert(msg)
-    })
+    });
+    updateCart();
 }

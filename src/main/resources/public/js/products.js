@@ -4,7 +4,7 @@ function addToWishlist(ID) {
     };
     post('/wishlist/add', dict, function (data) {
         if (data !== undefined)
-            alert(data)
+            alert(data);
     });
 }
 
@@ -17,7 +17,8 @@ function getCartActionFunc(ID, act) {
         };
         post("/cart/act", dict, function (msg) {
             if (msg !== undefined)
-                alert(msg)
+                alert(msg);
+            updateCart();
         });
     }
     return addToCart

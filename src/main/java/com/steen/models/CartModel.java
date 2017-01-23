@@ -46,6 +46,14 @@ public class CartModel implements Model {
 
     }
 
+    public int getCount() {
+        int total = 0;
+        for (int k : products.keySet()) {
+            total += products.get(k);
+        }
+        return total;
+    }
+
     public String getCartJSON() {
         // Get all products from id's
         String query = "SELECT * FROM games g WHERE ";

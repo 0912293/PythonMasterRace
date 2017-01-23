@@ -2,6 +2,7 @@ package com.steen.controllers;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -87,5 +88,11 @@ public class ApiController {
         );
 
         post("/api/cart.json", ((request, response) -> cartModel.getCartJSON()));
+
+        post("/api/cart/count.json", ((request, response) -> {
+            JSONObject jso = new JSONObject();
+            jso.put("count", cartModel.getCount());
+            return jso;
+        }));
     }
 }
