@@ -23,42 +23,40 @@
         <!-----------------------------Company information----------------------->
         <div style="padding-top:50px" class="row">
             <div class="col-md-5">
-                <p>Company Address</p>
-                <p>Company phone</p>
-                <p>Steen@steen.com</p>
+                <p id="companyFullAddress"><span>Wijnhaven 107</span> Rotterdam, Nederland</p>
+                <!--niet bellen naar dit nummer, het is niet gecheckt-->
+                <p id="companyPhone">010 78336 65</p>
+                <p id="companyMail">steensupport@gmail.com</p>
             </div>
         <!--------------------------------Invoice information---------------------->
             <div class="col-md-3 col-md-offset-2">
-                <p>Order ID:</p>
-                <p>Date:</p>
+                <p id="orderID">Order ID: </p>
+                <p id="orderDate">Date: </p>
             </div>
         </div>
         <!------------------------Customer information------------------------->
         <div style="margin-top:30px; margin-bottom:50px;" class="row">
             <div class="col-md-5">
-                <p>Customer Name</p>
-                <p>Customer address</p>
+                <p id="customerName"></p>
+                <p id="customerFullAddress"></p>
             </div>
         </div>
         <br>
         <!-------------------------------Products----------------------------->
         <div class="row">
             <div class="col-md-10">
-                <table class="table" >
-                    <tr>
+                <table class="table" id="invoiceTable">
+                    <tbody id="invoiceTableBody">
+                    <tr id="headerRow">
                         <th>Product</th>
                         <th>Aantal</th>
                         <th>Prijs</th>
                     </tr>
-                    <tr id="product_rows">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>Total:</td>
-                        <td><!--total--></td>
+                    </tbody>
+                    <tr id="totalRow">
+                        <th></th>
+                        <th>Totaal: </th>
+                        <th id="totalCost"></th>
                     </tr>
                 </table>
             </div>
@@ -71,6 +69,9 @@
         </div>
     </div>
 </div>
-
+<div>
+    <input type="button" class="btn btn-primary" id="cmd" value="Opslaan als">
+</div>
 </body>
 </html>
+<script src="/js/checkout_invoice.js"></script>

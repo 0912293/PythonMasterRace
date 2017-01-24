@@ -5,14 +5,6 @@ var specialElementHandlers = {
     }
 };
 
-$('#cmd').click(function () {
-    doc.fromHTML($('#toPdf').html(), 15, 15, {
-        'width': 170,
-        'elementHandlers': specialElementHandlers
-    });
-    doc.save(getCurrentUrlParam("uid") + '.pdf');
-});
-
 $(function () {
    var uid = getCurrentUrlParam("uid");
    if (checkInvoice()) {
@@ -21,6 +13,15 @@ $(function () {
        $('#inner').append("Uw factuur kon niet worden gevonden, " +
            "neem aub contact op met de sitebeheerder.");
    }
+
+    $('#cmd').click(function () {
+        console.log("bingbong");
+        doc.fromHTML($('#toPdf').html(), 15, 15, {
+            'width': 170,
+            'elementHandlers': specialElementHandlers
+        });
+        doc.save(getCurrentUrlParam("uid") + '.pdf');
+    });
 });
 
 function checkInvoice() {
