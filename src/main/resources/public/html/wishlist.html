@@ -1,9 +1,9 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-<h1>Wenslijst games</h1>
-<div class='col-md-9'>
-    <table class="table" id="wishlistTable">
-        <tr>
+<h1>Wenslijst</h1>
+<div class='col-md-9' id = 'wishListDiv'>
+    <table class="table" id="wishListTable">
+        <tr id="tableRowTwo">
             <th>Naam</th>
             <th>Prijs</th>
             <th>Console</th>
@@ -15,6 +15,16 @@
     <input id="shareWishlist" type="button" value ="Get shareable link" onclick="getJsonUser('/api/getID.json', shareLink)">
 </div>
 
+<div class='col-md-9' id = 'viewTableDiv'>
+    <table class="table" id="viewWishListTable">
+        <tr id="tableRowOne">
+            <th>Naam</th>
+            <th>Prijs</th>
+            <th>Console</th>
+        </tr>
+    </table>
+</div>
+
 
 <script>
     $(document).ready(function () {
@@ -24,7 +34,6 @@
     function updateData() {
         var stdURL = "/api/getID.json";
         getJsonUser(stdURL, getJsonID);
-        // + "?id=" + searchAppend);
     }
 
     function getCurrentUrlParam(param) {
@@ -37,6 +46,8 @@
         }
     }
 
+    // We pass a function in the parameter because we need the JSon data from this function for the share button
+    // as well as the getJSONID
     function getJsonUser(url, f) {
         $.ajax({
             type: 'POST',
@@ -49,16 +60,22 @@
         });
     }
 
+    // This function is given the username from getJsonUser and then checks if the url contains an wishlistID
+    // Depending on if it does or not we present them a different table
     function getJsonID(data) {
         var json = data;
-        console.log(json);
         var id = json[0].wishlist_id;
-        console.log(id);
         var dict = {};
+        var success;
         var searchAppend = getCurrentUrlParam("wishlistID");
         if(searchAppend == null || ""){
-            searchAppend = id
+            searchAppend = id;
+            success = filltable
         }
+        else{
+            success = fillviewTable
+        }
+        // We insert a key into our earlier declared Json with the current searchappend ID so it can return a Json with the specific games of that wishlistID
         dict["wishlist_id"] = searchAppend;
         var url = "/api/wishlist.json";
         $.ajax({
@@ -66,26 +83,16 @@
             url: "/api/wishlist.json",
             data: dict,
             dataType: "json",
-            success: filltable
+            success: success
         })
     }
 
     function shareLink(data) {
         var id = data[0].wishlist_id;
-        var link = window.location.href+"\?wishlistID="+id;
+        var link = window.location.href
+                +"\?wishlistID="+id;
+
         window.prompt("Copy to clipboard: Ctrl+C, Enter", link);
-
-
-    }
-
-    function copyText(text){
-        var dummy = document.createElement("input");
-        document.body.appendChild(dummy);
-        $(dummy).css('display','none');
-        dummy.setAttribute("id", "dummy_id");
-        document.getElementById("dummy_id").value=text;
-        dummy.select();
-        document.execCommand("copy");
     }
 
     function deleterows() {
@@ -95,8 +102,6 @@
         $('[id = chk]:checked').each(function () {
             console.log($(this).val());
             $(this).closest('tr').remove();
-            //$('[id = deleteList]').append($(this).val());
-            alert("You checked this box");
             var key = i.toString();
             console.log("The key = " + key);
             console.log("The value = " + $(this).val());
@@ -105,6 +110,7 @@
         });
         deleteSQL(dict)
     }
+
     function deleteSQL(dict) {
         var dict = dict;
         $.ajax({
@@ -117,18 +123,40 @@
         });
     }
 
+    function fillviewTable(data) {
+        console.log("Hij komt hier bij fillview");
+        var json = data;
+        var tr = [];
+
+        console.log(data);
+        $.each(json, function (i, item) {
+            tr = $('<tr/>')
+            tr.append("<input type='hidden' id='" + item.games_id + "' value='" + item.games_id + "'/>");
+            tr.append("<td>" + item.games_name + "</td>");
+            tr.append("<td>" + item.games_price + "</td>");
+            tr.append("<td>" + item.games_platform+ "</td>");
+            $('#viewWishListTable').append(tr);
+        });
+
+        var divOne = document.getElementById('wishListDiv');
+        divOne.style.display='none';
+    }
+
     function filltable(data) {
         var json = data;
         var tr = [];
         $.each(json, function (i, item) {
-            tr = $('<tr/>');
+            tr = $('<tr/>')
             tr.append("<input type='hidden' id='" + item.games_id + "' value='" + item.games_id + "'/>");
             tr.append("<td>" + item.games_name + "</td>");
             tr.append("<td>" + item.games_price + "</td>");
             tr.append("<td>" + item.games_platform+ "</td>");
             tr.append("<td><input type = 'checkbox'  value='"+ item.games_id + "' id = 'chk'" + item.games_id + "'/></td>");
-            $('table').append(tr);
-        })
+            $('#wishListTable').append(tr);
+        });
+
+        var divTwo = document.getElementById('viewTableDiv');
+        divTwo.style.display='none';
     }
 
 </script>
