@@ -10,5 +10,24 @@ $('#cmd').click(function () {
         'width': 170,
         'elementHandlers': specialElementHandlers
     });
-    doc.save('sample-file.pdf');
+    doc.save(getCurrentUrlParam("uid") + '.pdf');
 });
+
+$(function () {
+   var uid = getCurrentUrlParam("uid");
+   if (checkInvoice()) {
+       retrieveJSON("/invoice.json", { "uid" : uid }, fillData)
+   } else {
+       $('#inner').append("Uw factuur kon niet worden gevonden, " +
+           "neem aub contact op met de sitebeheerder.");
+   }
+});
+
+function checkInvoice() {
+    var found = false;
+    return found
+}
+
+function fillData(data) {
+
+}

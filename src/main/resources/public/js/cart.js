@@ -1,4 +1,5 @@
 $(function () {
+
     $('#checkoutButton').click(function() {
         window.location='/checkout/verify';
     });

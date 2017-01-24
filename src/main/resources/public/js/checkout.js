@@ -1,4 +1,10 @@
 $(function() {
+    $('#verifyData_form').submit(function () {
+        post("/invoice/new", {}, function (data) {
+            window.location = "/invoice?uid=" + data;
+        });
+        return false;
+    });
     retrieveJSON("/api/user/checkout_info.json", {}, fillValues);
 });
 

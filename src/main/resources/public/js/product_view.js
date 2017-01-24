@@ -13,16 +13,6 @@ function updateData() {
     retrieveJSON(stdURL, searchDict, filldata);
 }
 
-function getCurrentUrlParam(param) {
-    var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
-        return null;
-    }
-    else{
-        return results[1] || 0;
-    }
-}
-
 function filldata(data) {
     var json = data;
     var content = [];

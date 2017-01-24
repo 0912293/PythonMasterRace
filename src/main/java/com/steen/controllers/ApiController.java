@@ -20,6 +20,7 @@ public class ApiController {
         ProductModel productModel = (ProductModel) models.get("product");
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
+        CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
@@ -116,5 +117,10 @@ public class ApiController {
             JSONObject json = new JSONObject("{\"userinfo\":"+userjson+",\"products\":" + productjson + "}");
             return json;
         }));
+
+        post("/invoice.json", (request, response) ->  {
+            String uid = request.queryParams("uid");
+            return checkoutModel.getInvoiceJson(uid);
+        });
     }
 }

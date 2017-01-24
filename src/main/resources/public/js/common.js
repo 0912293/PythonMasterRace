@@ -57,6 +57,15 @@ function getKeyChecker(expectedKeyCode, func) {
     return checkKeyAndRun;
 }
 
+function getCurrentUrlParam(param) {
+    var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+        return null;
+    }
+    else{
+        return results[1] || 0;
+    }
+}
 
 function retrieveJSON(url, dict, callback) {
     $.ajax({
