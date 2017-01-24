@@ -1,18 +1,15 @@
 package com.steen.models;
-
 import com.steen.Cryptr;
 import com.steen.Util.DateBuilder;
 import com.steen.Main;
 import com.steen.session.User;
 import com.steen.Util.SQLToJSON;
 import com.steen.session.Search;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.steen.models.LoginModel.checkBlacklist;
 import static com.steen.Util.SQLToJSON.JsonListToString;
 import static com.steen.Util.SQLToJSON.getFormattedResult;
@@ -38,13 +35,10 @@ public class AdminModel implements Model {
     private Search search = new Search("SELECT * FROM users");
     private DateBuilder dbuilder = new DateBuilder();
     private ResultSet rs;
-
     private Connection connection = Main.connection;
-
     public AdminModel() {
         clear();
     }
-
     //---------------------------------userlist--------------------
     private void userlist(){
         try {
@@ -209,7 +203,6 @@ public class AdminModel implements Model {
                     this.address_city + "', address_street = '" +
                     this.address_street + "', address_number = '" +
                     this.address_number + "' WHERE address_id = '"+ this.address_id +"';";
-
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
             System.out.println("updated address");
@@ -235,7 +228,6 @@ public class AdminModel implements Model {
             e.printStackTrace();
         }
     }
-
     //-----------------------------------------get user data
     public void searchUser(String user) {
         try {
@@ -312,9 +304,7 @@ public class AdminModel implements Model {
         }
     }
 
-    public enum Data{
-        USERNAME,NAME,SURNAME,EMAIL,COUNTRY,STREET,POSTAL,NUMBER,CITY,YEAR,MONTH,DAY
-    }
+    public enum Data{USERNAME,NAME,SURNAME,EMAIL,COUNTRY,STREET,POSTAL,NUMBER,CITY,YEAR,MONTH,DAY}
 
     public String getData(Data data){
         switch(data){
@@ -356,18 +346,10 @@ public class AdminModel implements Model {
         }
         return null;
     }
-
-    public String getChart1JSON(){
-        return getJSON("SELECT games_platform, SUM(games_stock) AS stock FROM games GROUP BY games_platform");
-    }
-
-    public String getChart2JSON(){
-        return getJSON("SELECT games_platform, COUNT(games_id) AS game_count FROM games GROUP BY games_platform");
-    }
-
-    public String getChart3JSON(){
-        return getJSON("SELECT admin as user, COUNT(username) as ucount FROM users GROUP BY admin");
-    }
+    public String getAdmin(String user){return getJSON("SELECT admin FROM users WHERE username = '"+user+"'");}
+    public String getChart1JSON(){return getJSON("SELECT games_platform, SUM(games_stock) AS stock FROM games GROUP BY games_platform");}
+    public String getChart2JSON(){return getJSON("SELECT games_platform, COUNT(games_id) AS game_count FROM games GROUP BY games_platform");}
+    public String getChart3JSON(){return getJSON("SELECT admin as user, COUNT(username) as ucount FROM users GROUP BY admin");}
 
     public String getJSON(String query) {
         List jsonList;
@@ -379,7 +361,6 @@ public class AdminModel implements Model {
         }
         return null;
     }
-
     public Search getSearch() {
         return search;
     }

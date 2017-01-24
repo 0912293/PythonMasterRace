@@ -1,6 +1,17 @@
 $(function () {
     updateData();
 });
+var dict = {};
+$(document).ready(function(){get('/api/admincheck', dict, showbutton);});
+
+function showbutton(j){
+    if(j[11] == "1") {
+        document.getElementById('editable').style.display = 'block';
+    }else {
+        document.getElementById('editable').style.display = 'none';
+    }
+}
+
 
 function updateData() {
     var stdURL = "/api/product/view.json";
@@ -21,6 +32,26 @@ function getCurrentUrlParam(param) {
     else{
         return results[1] || 0;
     }
+}
+
+function addToWishlist() {
+    var dict = {
+        "id": getCurrentUrlParam("id")
+    };
+    post('/wishlist', dict, function (data) {
+        if (data !== undefined)
+            alert(data)
+    });
+}
+
+function editGame() {
+    var dict = {
+        "id": getCurrentUrlParam("id")
+    };
+    console.log(dict.id);
+    post('/api/product/id', dict, function (data) {
+        window.location.replace("/admin/product/edit");
+    });
 }
 
 function filldata(data) {
