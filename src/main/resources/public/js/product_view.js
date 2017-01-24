@@ -51,3 +51,13 @@ function addToWishlist() {
             alert(data)
     });
 }
+
+function addToFavList(){
+    var dict = {
+        "id" : getCurrentUrlParam("id")
+    };
+    post('/favorites/add', dict, function (data){
+        if (data !== undefined)
+            alert(data)
+    });
+}
