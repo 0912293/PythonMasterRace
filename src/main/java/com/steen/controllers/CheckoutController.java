@@ -1,6 +1,7 @@
 package com.steen.controllers;
 
 import com.steen.models.CartModel;
+import com.steen.models.CheckoutModel;
 import com.steen.models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
@@ -15,6 +16,7 @@ import static spark.Spark.get;
 
 public class CheckoutController {
     public CheckoutController(final HashMap<String, Model> models) {
+        CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
         CartModel cartModel = (CartModel) models.get("cart");
 
         get("/checkout/verify", (request,response) -> {
@@ -30,6 +32,17 @@ public class CheckoutController {
                 model.put("correctinfo", request.session().attribute("correctinfo"));
                 model.put("username", request.session().attribute("username"));
             }
+            model.put("login_modal", sfp + "html/login_mod.vtl");
+            model.put("template", sfp + "html/checkout.html");
+
+            return new ModelAndView(model, p_layout);
+        }, new VelocityTemplateEngine());
+
+        get("/checkout/finalise", (request, response) -> {
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("admin", request.session().attribute("admin"));
+            model.put("correctinfo", request.session().attribute("correctinfo"));
+            model.put("username", request.session().attribute("username"));
             model.put("login_modal", sfp + "html/login_mod.vtl");
             model.put("template", sfp + "html/checkout.html");
 
