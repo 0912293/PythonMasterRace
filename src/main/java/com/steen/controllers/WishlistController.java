@@ -33,18 +33,6 @@ public class WishlistController {
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
-        post("/wishlist/view", (request, response) ->{
-            Map<String, Object> model = new HashMap<>();
-            model.put("login_modal", sfp + "html/login_mod.vtl");
-            model.put("template", sfp + "html/wishlist.html");
-            model.put("username", request.session().attribute("username"));
-            model.put("correctinfo", request.session().attribute("correctinfo"));
-            model.put("admin", request.session().attribute("admin"));
-            model.put("wishlistID", wishlistModel.getUserWishlist(request.session().attribute("username")));
-
-            return new ModelAndView(model, p_layout);
-        });
-
 
         post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
