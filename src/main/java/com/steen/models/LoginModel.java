@@ -12,12 +12,14 @@ public class LoginModel implements Model {
     private String username;
     private String password;
     private String sql;
-    Boolean admin = false;
-    Boolean correctLoginInfo = false;
-    Boolean blacklisted = false;
+    public Boolean admin = false;
+    public Boolean correctLoginInfo = false;
+    public Boolean blacklisted = false;
     ResultSet rs;
 
-    public LoginModel() {}
+    public LoginModel() {
+
+    }
 
     public void setCredentials(String username, String password){
         this.username = username;
@@ -30,6 +32,7 @@ public class LoginModel implements Model {
         }
     }
 
+    //TODO: Rewrite to usage with Search class.
     public static boolean checkBlacklist(String username){
         boolean blacklisted = false;
         try {

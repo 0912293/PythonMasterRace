@@ -1,4 +1,4 @@
-package com.steen.util;
+package com.steen.Util;
 
 import org.apache.velocity.app.VelocityEngine;
 import com.steen.velocity.VelocityTemplateEngine;
