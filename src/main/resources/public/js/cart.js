@@ -1,19 +1,17 @@
 $(function () {
-
     $('#checkoutButton').click(function() {
         window.location='/checkout/verify';
     });
-    retrieveJSON("/api/cart.json", {}, updatePage)
+    retrieveJSON("/api/cart.json", {}, updatePage);
 });
 
 function updatePage(data) {
     console.log(data.length);
-    if (data.length <= 0) {
+    if (data.length > 0) {
+        $('#checkoutButton').removeAttr("disabled");
+    } else {
         $('#checkoutButton').attr("disabled", "disabled");
         $('#deleteButton').attr("disabled", "disabled");
-    } else {
-        $('#checkoutButton').removeAttr("disabled");
-        $('#deleteButton').removeAttr("disabled");
     }
 
     var table = $('#cartTable');
@@ -28,8 +26,19 @@ function updatePage(data) {
                     "<td>" + item.amount + "</td>"
                 )
             );
-    }
-)}
+    });
+    $("[id = cartchk]").change(function() {
+        console.log("dingdong");
+        console.log($('[id = cartchk]:checked').length);
+        if(this.checked) {
+            $('#deleteButton').removeAttr("disabled");
+        } else if (!this.checked) {
+            if ($('[id = cartchk]:checked').length <= 0) {
+                $('#deleteButton').attr("disabled", "disabled");
+            }
+        }
+    });
+}
 
 function deleteSelectedRows() {
     var dict = {
@@ -50,4 +59,5 @@ function deleteSelectedRows() {
             alert(msg)
     });
     updateCart();
+    retrieveJSON("/api/cart.json", {}, updatePage);
 }
