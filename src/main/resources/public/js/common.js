@@ -1,4 +1,3 @@
-
 $(function () {
     $('.form-login').on("submit", function(e) {
         e.preventDefault();

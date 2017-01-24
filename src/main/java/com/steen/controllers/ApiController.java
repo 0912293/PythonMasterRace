@@ -83,7 +83,7 @@ public class ApiController {
             JSONArray jsonArray = new JSONArray(apiModel.getJSON(productModel.getSearch()));
             jsonArray = JSONUtil.replaceKeys(jsonArray,
                     new String[]{"games_name", "games_price", "games_id", "games_genre", "games_image"},
-                    new String[]{"name", "price", "id", "genre", "image"});
+                    new String[]{"name", "price", "gameId", "genre", "image"});
             return jsonArray;
         }
         ));
@@ -104,7 +104,7 @@ public class ApiController {
         }));
 
         post("/api/user/checkout_info.json", ((request, response) -> {
-            String username = "Lucas"; //request.session().attribute("username");
+            String username = request.session().attribute("username");
             JSONObject userjson = new JSONObject(apiModel.getJSON("SELECT u.name, u.surname, u.email, " +
                     "a.address_country AS country, a.address_postalcode AS postalcode, " +
                     "a.address_city AS city, a.address_street AS street, a.address_number AS number " +
@@ -120,7 +120,9 @@ public class ApiController {
 
         post("/invoice.json", (request, response) ->  {
             String uid = request.queryParams("uid");
-            return checkoutModel.getInvoiceJson(uid);
+            //get relevant info from db
+            //put in json object
+            return null;
         });
     }
 }

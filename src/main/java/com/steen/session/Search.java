@@ -20,14 +20,12 @@ public class Search {
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = baseQuery;
-        getResultSet();
     }
 
     public Search() {
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
-        getResultSet();
     }
 
     public ResultSet getResultSet() {
@@ -81,27 +79,22 @@ public class Search {
 
     public void addFilterParam(String param) {
         filter.addParameter(param);
-        getResultSet();
     }
 
     public void addFilterParam(String column, String value, Filter.Operator operator) {
         filter.addParameter(column, value, operator);
-        getResultSet();
     }
 
     public void removeFilterParam(String param) {
         filter.removeParameter(param);
-        getResultSet();
     }
 
     public void removeFilterParam(int index) {
         filter.removeParameter(index);
-        getResultSet();
     }
 
     public void addOrderParam(String column){
         orderBy.addParameter(column);
-        getResultSet();
     }
 
     public void clearFilters() {
@@ -110,15 +103,6 @@ public class Search {
 
     public void clearOrderBy() {
         orderBy.orders.clear();
-    }
-
-//    public ProductModel getProductModel() {
-//        return productModel;
-//    }
-
-    public ArrayList<Object> getObjects() {
-        getResultSet();
-        return objects;
     }
 
     public Filter getFilter() {

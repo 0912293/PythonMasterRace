@@ -5,6 +5,7 @@ import com.steen.models.CartModel;
 import com.steen.models.CheckoutModel;
 import com.steen.models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
+import org.json.JSONArray;
 import spark.ModelAndView;
 
 import java.util.Date;
@@ -43,13 +44,13 @@ public class CheckoutController {
 
         // Invoices:
         post("/invoice/new", (request, response) -> {
-            HashMap<Integer, Integer> products = cartModel.getProducts();
-            if (!products.keySet().isEmpty()) {
+            JSONArray products = new JSONArray(cartModel.getCartJSON());
+            if (products.length() > 0) {
                 Cryptr encrypter = Cryptr.getInstance(
                         new Date().toString() + request.session().attribute("username"),
                         Cryptr.Type.MD5);
                 String uid = encrypter.getEncryptedString();
-                checkoutModel.insertInvoice(uid, products);
+                checkoutModel.insertInvoice(uid, request.session().attribute("username"), products);
                 return uid;
             }
             return null;

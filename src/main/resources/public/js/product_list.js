@@ -88,8 +88,8 @@ function filltable(json) {
 
     productContainer.empty();
     $.each(json, function (i, item) {
-        productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.id));
-        $('#productListCartButton' + item.id).click(getCartActionFunc(item.id, 0))
+        productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.gameId));
+        $('#productListCartButton' + item.gameId).click(getCartActionFunc(item.gameId, 0))
     })
 }
 
