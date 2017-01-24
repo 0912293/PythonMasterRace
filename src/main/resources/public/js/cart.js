@@ -1,7 +1,22 @@
 $(function () {
-    $('#checkoutButton').click(function() {
-        window.location='/checkout/verify';
+    retrieveJSON("/session/user.ses", {}, function (data) {
+        var checkoutbutton = $('#checkoutButton');
+        console.log(data);
+        if (data !== undefined) {
+            if (data.username != "" && data.username != null) {
+                checkoutbutton.click(function() {
+                    window.location='/checkout/verify';
+                });
+            } else {
+                checkoutbutton.attr("data-toggle", "modal");
+                checkoutbutton.attr("data-target", "#login_modal");
+            }
+        } else {
+            checkoutbutton.attr("data-toggle", "modal");
+            checkoutbutton.attr("data-target", "#login_modal");
+        }
     });
+
     retrieveJSON("/api/cart.json", {}, updatePage);
 });
 
@@ -28,8 +43,6 @@ function updatePage(data) {
             );
     });
     $("[id = cartchk]").change(function() {
-        console.log("dingdong");
-        console.log($('[id = cartchk]:checked').length);
         if(this.checked) {
             $('#deleteButton').removeAttr("disabled");
         } else if (!this.checked) {
