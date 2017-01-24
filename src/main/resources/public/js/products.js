@@ -101,9 +101,27 @@ function ConstructProductbox(name, price, image, id) {
     content.append("<div class='caption'>");
     content.append("<h5 id='game_name'>" + name + "</h5>");
     content.append("<p>Prijs: &euro;" + price + "</p>");
+    content.append("<p><a href='#' class='btn btn-xs btn-default' id='btn-fav-" + id + "' role='button' onclick='postGameID(" + id + ")'><span class='glyphicon glyphicon-heart-empty'></span> Fav</a></p>")
     content.append("<p><a href='/games/bekijken?id="+ id +"' class='btn btn-success' role='button' id='button1'>Bekijken</a>   <a href='#' class='btn btn-primary role='button'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span>+winkelmand</a></p>");
     content.append("</div></div></div>");
 
     return content;
 }
 
+
+
+
+function postGameID(id){
+
+        var dict = {
+            "id": id
+        };
+
+        post('/favorites/add', dict, function (data) {
+            if (data !== undefined)
+                alert(data)
+        })
+
+
+
+}

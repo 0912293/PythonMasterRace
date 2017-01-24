@@ -26,6 +26,23 @@ public class FavoritesModel implements Model {
                 "AND f.games_id = g.games_id";
     }
 
+    public  Boolean checkInDatabase(String username, int id){
+        ResultSet rs = null;
+        String query = "SELECT * FROM " +
+                "favorites f, games g " +
+                "WHERE f.username = " + "'" + username + "'" +
+                "AND f.games_id = " + id + ";";
+        try{
+            Statement myStmt = connection.createStatement();
+            rs = myStmt.executeQuery(query);
+            return rs.isBeforeFirst();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+
+    }
     public void insertItem(String username, int id) {
         updateInsert(username, id);
         try {
