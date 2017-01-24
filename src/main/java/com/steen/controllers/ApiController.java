@@ -63,6 +63,10 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
+        post("/session/user.ses", ((request, response) -> {
+            return new JSONObject("{ username :" + request.session().attribute("username")+" }");
+        }));
+
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
             String search = request.queryParams("search");

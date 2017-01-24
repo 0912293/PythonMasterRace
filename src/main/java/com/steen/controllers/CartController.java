@@ -68,8 +68,6 @@ public class CartController {
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
 
-
-
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
     }
