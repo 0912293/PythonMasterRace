@@ -66,9 +66,8 @@ public class ApiController {
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
             String search = request.queryParams("search");
-            String order = request.queryParams("orders");
+            String order = request.queryParams("order");
             String filter = request.queryParams("filter");
-
 
             if (search != null && !search.equals("null") && !search.equals("")) {
                 productModel.getSearch().addFilterParam("games_name", search, Filter.Operator.LIKE);

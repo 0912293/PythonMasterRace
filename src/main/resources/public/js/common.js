@@ -84,12 +84,15 @@ function post(url, dict, callback) {
                 callback(data)
         },
         error: function () {
-            console.log("Incorrect or missing JSON")
+            console.log("Could not post to: " + url)
         }
     })
 }
 
-function get(url, callback) {
+function get(url, dict, callback) {
+    $.each(dict, function (key, value) {
+        url += "?"+key+"="+value
+    });
     $.ajax({
         type: 'GET',
         url: url,
@@ -98,7 +101,7 @@ function get(url, callback) {
                 callback(data)
         },
         error: function () {
-            console.log("Incorrect or missing JSON")
+            console.log("Could not get from: " + url)
         }
     })
 }

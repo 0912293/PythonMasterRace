@@ -62,7 +62,6 @@ function fillDropdownsOuter(selector) {
             group = dropdown.find("optgroup[label='Platform']")
         }
         group.empty();
-        console.log(json);
         $.each(json, function (i, item) {
             if (selector == 0) {
                 group.append("<option>" + item.games_genre + "</option>")
@@ -76,12 +75,12 @@ function fillDropdownsOuter(selector) {
 
 function updateTable(searchAppend) {
     var stdURL = "/api/product/games.json";
-    var searchDict = {
+    var dict = {
         'search': (searchAppend !== undefined) ? searchAppend : null,
         'order': sortOption,
         'filter': filterOption
     };
-    retrieveJSON(stdURL, searchDict, filltable);
+    retrieveJSON(stdURL, dict, filltable);
 }
 
 function filltable(json) {
