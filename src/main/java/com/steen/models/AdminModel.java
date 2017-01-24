@@ -327,11 +327,9 @@ public class AdminModel implements Model {
         }
         return null;
     }
-
+    public String getAdmin(String user){return getJSON("SELECT admin FROM users WHERE username = '"+user+"'");}
     public String getChart1JSON(){return getJSON("SELECT games_platform, SUM(games_stock) AS stock FROM games GROUP BY games_platform");}
-
     public String getChart2JSON(){return getJSON("SELECT games_platform, COUNT(games_id) AS game_count FROM games GROUP BY games_platform");}
-
     public String getChart3JSON(){return getJSON("SELECT admin as user, COUNT(username) as ucount FROM users GROUP BY admin");}
 
     public String getJSON(String query) {

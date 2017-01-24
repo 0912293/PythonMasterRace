@@ -5,6 +5,7 @@ import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
+import spark.ExceptionHandler;
 import spark.ModelAndView;
 import spark.Request;
 
@@ -16,6 +17,7 @@ import static com.steen.Main.sfp;
 import static spark.Spark.*;
 
 public class AdminController {
+    int id;
     public AdminController(final HashMap<String, Model> models) {
         AdminModel adminModel = (AdminModel) models.get("admin");
         AdminProductModel adminProductModel = (AdminProductModel) models.get("admin_product");
@@ -221,9 +223,47 @@ public class AdminController {
             return "success";
         });
 
-        post("/admin/product/edit", (req, res) -> {
-            return null;
+        get("/api/admincheck", (req, res) -> {
+            return adminModel.getAdmin(req.session().attribute("username"));
+        });
+
+        post("/api/product/id", (req, res) -> {
+            try{
+                id = Integer.parseInt(req.queryParams("id"));
+            }
+            catch(Exception e){
+            }
+            return "oh boi";
+        });
+
+        post("api/product/info", (req, res) ->{
+            return adminProductModel.getGame(Integer.toString(id));
+        });
+
+        get("/admin/product/edit", (req, res) -> { Map<String, Object> model = new HashMap<String, Object>();
+            model.put("template", sfp + "html/admin_products_edit.html");
+            try{
+                model.put("gid", id);
+            }
+            catch(Exception e){
+            }
+            model.put("admin", req.session().attribute("admin"));
+            model.put("username", req.session().attribute("username"));
+            model.put("correctinfo", req.session().attribute("correctinfo"));
+            return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
+
+        post("/admin/product/edit/game", (req, res) -> {
+            String gname = req.queryParams("gname");
+            String gprice = req.queryParams("gprice");
+            String ggenre = req.queryParams("ggenre");
+            String gplatform = req.queryParams("gplatform");
+            String gpublisher = req.queryParams("gpublisher");
+            String gstock = req.queryParams("gstock");
+            String gimage = req.queryParams("gimage");
+            adminProductModel.updateGame(gname,Float.parseFloat(gprice),ggenre,gplatform,gpublisher,Integer.parseInt(gstock),gimage,id);
+            return "success";
+        });
 
     }
     private Boolean isAdmin(Request req) {
