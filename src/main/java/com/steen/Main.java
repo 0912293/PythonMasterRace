@@ -19,31 +19,31 @@ public class Main {
     public static Map<Integer, Map<String, Object>> sessions = new HashMap<>();
 
 
-    public static void main(String[] args) {
-        Spark.port(4567);
-
-        staticFileLocation("/public"); // sets folder for non java files
-
-        HashMap<String, Model> models = new HashMap<>();
-        models.put("api", new ApiModel());
-        models.put("admin", new AdminModel());
-        models.put("register", new RegisterModel());
-        models.put("login", new LoginModel());
-        models.put("product", new ProductModel());
-        models.put("user", new UserModel());
-        models.put("wishlist", new WishlistModel());
-        models.put("cart", new CartModel());
-        models.put("checkout", new CheckoutModel());
-
-        new RootController(models);
-        new ApiController(models);
-        new AdminController(models);
-        new RegisterController(models);
-        new LoginController(models);
-        new ProductsController(models);
-        new UserController(models);
-        new WishlistController(models);
-        new CartController(models);
-        new CheckoutController(models);
-    }
+//    public static void main(String[] args) {
+//        Spark.port(4567);
+//
+//        staticFileLocation("/public"); // sets folder for non java files
+//
+//        HashMap<String, Model> models = new HashMap<>();
+//        models.put("api", new ApiModel());
+//        models.put("admin", new AdminModel());
+//        models.put("register", new RegisterModel());
+//        models.put("login", new LoginModel());
+//        models.put("product", new ProductModel());
+//        models.put("user", new UserModel());
+//        models.put("wishlist", new WishlistModel());
+//        models.put("cart", new CartModel());
+//        models.put("checkout", new CheckoutModel());
+//
+//        new RootController(models);
+//        new ApiController(models);
+//        new AdminController(models);
+//        new RegisterController(models);
+//        new LoginController(models);
+//        new ProductsController(models);
+//        new UserController(models);
+//        new WishlistController(models);
+//        new CartController(models);
+//        new CheckoutController(models);
+//    }
 }
