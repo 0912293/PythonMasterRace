@@ -29,7 +29,9 @@ function filldata(data) {
     var productContent = $('#ProductContent');
     productContent.empty();
 
+
     $.each(json, function (i, item) {
+        console.log(item.games_id);
         content = $("<h1 id='ProductName' class='text-center'>" + item.games_name + "</h1>");
         content.append("<div class='row'>");
         content.append("<center><img id='ProductImage' src='" + item.games_image  + "' class='img-responsive'></center>");
@@ -39,6 +41,6 @@ function filldata(data) {
         content.append("</div>");
         content.append("<p><a class='btn btn-primary btn-lg' role='button' id='productViewCartButton"+ item.games_id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/> toevoegen aan winkelwagen</a></p>");
         productContent.append(content);
-        $('#productViewCartButton' + item.games_id).click(getCartActionFunc(item.games_id, 0))
+        $('#productViewCartButton' + item.games_id).click(getCartActionFunc(item.games_id, item.games_name, item.games_image, 0));
     })
 }
