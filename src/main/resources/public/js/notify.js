@@ -3,7 +3,6 @@ $(function () {
         console.log("This browser does not support system notifications");
     }
     else if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
-        document.getElementById('NotificationPermissionAlert').style.display = "inline";
         SpawnPermissionDialog();
     }
 });
@@ -11,7 +10,6 @@ $(function () {
 function SpawnPermissionDialog(){
     Notification.requestPermission().then(function(result) {
         console.log(result);
-        document.getElementById('NotificationPermissionAlert').style.display = "none";
     });
 }
 
