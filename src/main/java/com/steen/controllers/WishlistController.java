@@ -35,7 +35,6 @@ public class WishlistController {
         }, new VelocityTemplateEngine());
 
 
-
         post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ResultSet resultSet;
