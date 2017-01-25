@@ -3,6 +3,8 @@ package com.steen.models;
 import com.steen.Cryptr;
 import com.steen.Util.DateBuilder;
 import com.steen.Main;
+import com.steen.session.Filter;
+import com.steen.session.Insert;
 import com.steen.session.User;
 import com.steen.Util.SQLToJSON;
 import com.steen.session.Search;
@@ -11,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.steen.models.LoginModel.checkBlacklist;
@@ -48,10 +51,8 @@ public class AdminModel implements Model {
     //---------------------------------userlist--------------------
     private void userlist(){
         try {
-            sql = "SELECT * FROM users;";
-
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            rs = myStmt.executeQuery(sql);
+            Search csearch = new Search("SELECT * FROM users");
+            rs = csearch.getResultSet();
 
             users.clear();
             while (rs.next()) {
@@ -75,11 +76,10 @@ public class AdminModel implements Model {
     //-----------------------------------------checkAdmin-----------
     public boolean checkAdmin(){
         try {
-            sql = "SELECT admin FROM users WHERE username = '"+ this.username +"';";
+            Search csearch = new Search("SELECT admin FROM users");
+            csearch.addFilterParam("username",this.username, Filter.Operator.LIKE);
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            rs = myStmt.executeQuery(sql);
-
+            rs = csearch.getResultSet();
             while(rs.next()){
                 admin = rs.getBoolean("admin");
             }
@@ -97,11 +97,19 @@ public class AdminModel implements Model {
 
     public void blacklistUser(){
         try {
-            sql = "INSERT INTO blacklist (username,blacklisted) VALUES ('" + this.username + "',true);";
+            ArrayList<String> list = new ArrayList<String >(Arrays.asList("username","blacklisted"));
+            Insert insert =  new Insert("blacklist", list);
+            insert.addRecord(new ArrayList<>(Arrays.asList("'" + this.username + "'","true")));
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
-            System.out.println("blacklisted user");
+            int affected = insert.executeQuery();
+            if(affected > 0) {
+                System.out.println("blacklisted user");
+
+            }
+            else{
+                System.out.print("Blacklisting went wrong :^)");
+            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -110,6 +118,7 @@ public class AdminModel implements Model {
 
     public void undoBlackList(){
         try {
+            //LOWER IS NOT SUPPORT BY SEARCH (YET)
             sql = "DELETE FROM blacklist WHERE LOWER(username) = LOWER('" + this.username + "');";
 
             PreparedStatement myStmt = connection.prepareStatement(sql);
@@ -123,10 +132,11 @@ public class AdminModel implements Model {
 
     public void insertDummyUser(){ // only for unit testing purposes
         try {
-                sql = "INSERT INTO users (username, name, surname, email, birth_date) VALUES ('"+ this.username +"', '" + this.name + "','" + this.surname + "', '" + this.email + "', '1996-07-05');";
+                ArrayList<String> list = new ArrayList<String >(Arrays.asList("username","name", "surname", "email", "birth_date"));
+                Insert insert =  new Insert("users", list);
+                insert.addRecord(new ArrayList<>(Arrays.asList("'" + this.username + "'", "'" + this.name + "'", "'" + this.surname + "'", "'" + this.email + "'", "'1996-07-05'")));
 
-                PreparedStatement myStmt = connection.prepareStatement(sql);
-                myStmt.executeUpdate();
+                insert.executeQuery();
                 System.out.println("Inserted dummy user");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -137,10 +147,10 @@ public class AdminModel implements Model {
     public void delete_user(){
         if(!checkAdmin()) {
             try {
-                sql = "DELETE FROM users WHERE username = '" + this.username + "';";
+                Search csearch = new Search("DELETE FROM users");
+                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
 
-                PreparedStatement myStmt = connection.prepareStatement(sql);
-                myStmt.executeUpdate();
+                csearch.executeNonQuery();
                 System.out.println("deleted user");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -152,10 +162,10 @@ public class AdminModel implements Model {
     public void resetPassword(){
         if(!checkAdmin()) {
             try {
-                sql = "UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString() + "' WHERE username = '" + this.username + "';";
+                Search csearch = new Search("UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString());
+                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
 
-                PreparedStatement myStmt = connection.prepareStatement(sql);
-                myStmt.executeUpdate();
+                csearch.executeNonQuery();
                 System.out.println("reseted password");
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -203,15 +213,15 @@ public class AdminModel implements Model {
 
     private void updateAddress() {
         try {
-            sql = "UPDATE address SET address_country = '" +
-                    this.address_country + "', address_postalcode = '" +
-                    this.address_postalcode + "', address_city = '" +
-                    this.address_city + "', address_street = '" +
-                    this.address_street + "', address_number = '" +
-                    this.address_number + "' WHERE address_id = '"+ this.address_id +"';";
+            Search csearch = new Search("UPDATE users SET name = '" +
+                    this.name + "', surname = '" +
+                    this.surname + "', email = '" +
+                    this.email + "', birth_date = '" +
+                    this.birth_date + "' WHERE username = '"+
+                    this.username +"'");
+            csearch.addFilterParam("address_id", this.address_id.toString(), Filter.Operator.EQUAL );
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
+            csearch.executeNonQuery();
             System.out.println("updated address");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -221,14 +231,14 @@ public class AdminModel implements Model {
 
     private void updateUser() {
         try {
-            sql = "UPDATE users SET name = '" +
+            Search csearch = new Search("UPDATE users SET name = '" +
                             this.name + "', surname = '" +
                             this.surname + "', email = '" +
                             this.email + "', birth_date = '" +
-                            this.birth_date + "' WHERE username = '"+ this.username +"';";
+                            this.birth_date + "'");
+            csearch.addFilterParam("username", this.username, Filter.Operator.EQUAL);
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeUpdate();
+            csearch.executeNonQuery();
             System.out.println("updated user");
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -239,13 +249,10 @@ public class AdminModel implements Model {
     //-----------------------------------------get user data
     public void searchUser(String user) {
         try {
-            sql = "SELECT * FROM users WHERE username = '" + user + "'";
+            Search csearch = new Search("SELECT * FROM users");
+            csearch.addFilterParam("username", user, Filter.Operator.LIKE);
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeQuery(sql);
-
-            rs = myStmt.executeQuery();
-
+            rs = csearch.getResultSet();
             while (rs.next()) {
                 username = rs.getString("username");
                 name = rs.getString("name");
@@ -265,17 +272,13 @@ public class AdminModel implements Model {
 
     private void getDate() {
         try {
-            sql = "SELECT EXTRACT(YEAR FROM birth_date) AS birthyear , " +
+            Search csearch = new Search("SELECT EXTRACT(YEAR FROM birth_date) AS birthyear , " +
                     "EXTRACT(MONTH FROM birth_date) AS birthmonth , " +
                     "EXTRACT(DAY FROM birth_date) AS birthday " +
-                    "FROM users WHERE username = '" + username + "'";
+                    "FROM users");
+            csearch.addFilterParam("username", username, Filter.Operator.LIKE);
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeQuery(sql);
-
-            rs = myStmt.executeQuery();
-
-
+            rs = csearch.getResultSet();
             while (rs.next()) {
                 year = rs.getString("birthyear");
                 month = rs.getString("birthmonth");
@@ -291,13 +294,10 @@ public class AdminModel implements Model {
 
     private void searchUserAddress() {
         try {
-            sql = "SELECT * FROM address WHERE address_id = '" + address_id + "'";
+            Search csearch = new Search("SELECT * FROM address");
+            csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.LIKE);
 
-            PreparedStatement myStmt = connection.prepareStatement(sql);
-            myStmt.executeQuery(sql);
-
-            rs = myStmt.executeQuery();
-
+            rs = csearch.getResultSet();
             while (rs.next()) {
                 address_country = rs.getString("address_country");
                 address_city = rs.getString("address_city");
@@ -358,21 +358,27 @@ public class AdminModel implements Model {
     }
 
     public String getChart1JSON(){
-        return getJSON("SELECT games_platform, SUM(games_stock) AS stock FROM games GROUP BY games_platform");
+        Search csearch = new Search("SELECT games_platform, SUM(games_stock) AS stock FROM games");
+        csearch.addOrderParam("games_platform");
+        return getJSON(csearch);
     }
 
     public String getChart2JSON(){
-        return getJSON("SELECT games_platform, COUNT(games_id) AS game_count FROM games GROUP BY games_platform");
+        Search csearch = new Search("SELECT games_platform, COUNT(games_id) AS game_count FROM games");
+        csearch.addOrderParam("games_platform");
+        return getJSON(csearch);
     }
 
     public String getChart3JSON(){
-        return getJSON("SELECT admin as user, COUNT(username) as ucount FROM users GROUP BY admin");
+        Search csearch = new Search("SELECT admin as user, COUNT(username) as ucount FROM users");
+        csearch.addOrderParam("admin");
+        return getJSON(csearch);
     }
 
-    public String getJSON(String query) {
+    public String getJSON(Search search) {
         List jsonList;
         try {
-            jsonList = getFormattedResult(Search.getResultSet(query));
+            jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
             System.out.println("SQL >> Could not get JSON");
