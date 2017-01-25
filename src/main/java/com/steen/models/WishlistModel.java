@@ -23,12 +23,12 @@ public class WishlistModel implements Model {
         return "SELECT * FROM user_wishlist u WHERE u.username =" + "'" + username + "'";
     }
 
-    public String addUserWishlist(String username){
-        return "INSERT INTO user_wishlist(username) values(" + "'" + username + "')";
+    public String addUserWishlist(String username, String crypted_user){
+        return "INSERT INTO user_wishlist VALUES(" + "'" + username + "'" + "," + "'" + crypted_user + "')";
     }
 
-    public String insertItem(int wishlistID, int id) {
-        return "INSERT INTO wishlist values("+ "'" + wishlistID + "'," + "'" + id + "')";
+    public String insertItem(String crypted_user, int id) {
+        return "INSERT INTO wishlist VALUES(" + "'" + crypted_user + "',"  + id + ")";
     }
 
     public ResultSet selectExecutor(String query){
@@ -58,8 +58,8 @@ public class WishlistModel implements Model {
 
 
 
-    public void deleteItem(int id, ArrayList<Integer> list){
-        updateDelete(id, list);
+    public void deleteItem(String cryptedUser, ArrayList<Integer> list){
+        updateDelete(cryptedUser, list);
         try{
             Statement myStmt = connection.createStatement();
             for (String item : deletelist) {
@@ -72,20 +72,26 @@ public class WishlistModel implements Model {
         }
     }
 
-    public String getQuery(int id){
+
+    public String getQuery(String crypt){
         return "SELECT * FROM " +
                 "wishlist w, games g " +
-                "WHERE w.wishlist_id = " + "'" + id + "'" +
+                "WHERE w.crypted_user = " + "'" + crypt + "'" +
                 "AND w.games_id = g.games_id";
     }
 
 
-    private void updateDelete(int id, ArrayList<Integer> list) {
+    public String getUserCrypt(String username){
+        return "SELECT crypted_user FROM user_wishlist WHERE username="+ "'" + username + "'";
+    }
+
+
+    private void updateDelete(String cryptedUser, ArrayList<Integer> list) {
         String result = "";
         ArrayList<String> sql_list = new ArrayList<>();
         for (int item: list) {
             result = "DELETE FROM wishlist " +
-                    "WHERE wishlist_id = '" + id + "' AND wishlist.games_id = " + item + ";";
+                    "WHERE crypted_user = '" + cryptedUser + "' AND wishlist.games_id = " + item + ";";
             sql_list.add(result);
         }
         this.deletelist = sql_list;

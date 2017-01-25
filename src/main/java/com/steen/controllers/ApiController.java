@@ -1,4 +1,5 @@
 package com.steen.controllers;
+import com.steen.Cryptr;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
@@ -72,17 +73,14 @@ public class ApiController {
         }
         ));
 
-        post("/api/getID.json", (request, response) -> {
+        post("/api/getUserCrypt.json", (request, response) ->{
             String username = request.session().attribute("username");
-            return apiModel.getJSON(wishlistModel.getUserWishlist(username));
-        }
-        );
+            return apiModel.getJSON(wishlistModel.getUserCrypt(username));
+        });
 
         post("/api/wishlist.json", (request, response) -> {
-            String id  = request.queryParams("wishlist_id");
-            int intID  = Integer.parseInt(id);
-            System.out.println(intID);
-            return apiModel.getJSON(wishlistModel.getQuery(intID));
+            String crypted_user  = request.queryParams("wishlist_id");
+            return apiModel.getJSON(wishlistModel.getQuery(crypted_user));
         });
 
         post("/api/favorites.json", (request, response) -> {

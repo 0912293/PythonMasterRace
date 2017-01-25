@@ -12,7 +12,7 @@
     </table>
     <ul id="deleteList"></ul>
     <input id="deleteButton" type="button" value ="Verwijder uit wenslijst" onclick="deleterows()">
-    <input id="shareWishlist" type="button" value ="Get shareable link" onclick="getJsonUser('/api/getID.json', shareLink)">
+    <input id="shareWishlist" type="button" value ="Get shareable link" onclick="getJsonUserCrypt()">
 </div>
 
 <div class='col-md-9' id = 'viewTableDiv'>
@@ -32,8 +32,7 @@
     });
 
     function updateData() {
-        var stdURL = "/api/getID.json";
-        getJsonUser(stdURL, getJsonID);
+        getJsonUser();
     }
 
     function getCurrentUrlParam(param) {
@@ -48,12 +47,24 @@
 
     // We pass a function in the parameter because we need the JSon data from this function for the share button
     // as well as the getJSONID
-    function getJsonUser(url, f) {
+    function getJsonUser() {
         $.ajax({
             type: 'POST',
-            url: url,
+            url: "/api/getUserCrypt.json",
             dataType: "json",
-            success: f,
+            success: getJsonID,
+            error: function () {
+                console.log("Incorrect or missing JSON")
+            }
+        });
+    }
+
+    function getJsonUserCrypt() {
+        $.ajax({
+            type: 'POST',
+            url: "/api/getUserCrypt.json",
+            dataType: "json",
+            success: shareLink,
             error: function () {
                 console.log("Incorrect or missing JSON")
             }
@@ -64,12 +75,13 @@
     // Depending on if it does or not we present them a different table
     function getJsonID(data) {
         var json = data;
-        var id = json[0].wishlist_id;
+        var cryptUser = json[0].crypted_user;
         var dict = {};
+        // Je moet zorgen dat je hier die encrypted user krijgt
         var success;
         var searchAppend = getCurrentUrlParam("wishlistID");
         if(searchAppend == null || ""){
-            searchAppend = id;
+            searchAppend = cryptUser;
             success = filltable
         }
         else{
@@ -77,7 +89,6 @@
         }
         // We insert a key into our earlier declared Json with the current searchappend ID so it can return a Json with the specific games of that wishlistID
         dict["wishlist_id"] = searchAppend;
-        var url = "/api/wishlist.json";
         $.ajax({
             type: 'POST',
             url: "/api/wishlist.json",
@@ -88,9 +99,10 @@
     }
 
     function shareLink(data) {
-        var id = data[0].wishlist_id;
+        var cryptUser = data[0].crypted_user;
+
         var link = window.location.href
-                +"\?wishlistID="+id;
+                +"\?wishlistID="+cryptUser;
 
         window.prompt("Copy to clipboard: Ctrl+C, Enter", link);
     }
@@ -124,7 +136,6 @@
     }
 
     function fillviewTable(data) {
-        console.log("Hij komt hier bij fillview");
         var json = data;
         var tr = [];
 

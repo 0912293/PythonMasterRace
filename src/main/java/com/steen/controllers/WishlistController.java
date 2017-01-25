@@ -1,5 +1,6 @@
 package com.steen.controllers;
 
+import com.steen.Cryptr;
 import com.steen.models.Model;
 import com.steen.models.WishlistModel;
 import com.steen.velocity.VelocityTemplateEngine;
@@ -39,8 +40,11 @@ public class WishlistController {
             Map<String, Object> model = new HashMap<>();
             ResultSet resultSet;
             String username = request.session().attribute("username");
+            Cryptr encrypter = Cryptr.getInstance(username, Cryptr.Type.MD5);
+            String encrypted_user = encrypter.getEncryptedString();
+            System.out.println(encrypted_user);
             int id = Integer.parseInt(request.queryParams("id"));
-            int wishlistID;
+            System.out.println("De id is " + id);
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
@@ -48,31 +52,30 @@ public class WishlistController {
                 String query = wishlistModel.getUserWishlist(username);
                 resultSet = wishlistModel.selectExecutor(query);
                 if(resultSet.next()){
-                    wishlistID = resultSet.getInt(1);
-                    wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                    wishlistModel.executeUpdate(wishlistModel.insertItem(encrypted_user, id));
                 }
                 else{
-                    wishlistModel.executeUpdate(wishlistModel.addUserWishlist(username));
+                    wishlistModel.executeUpdate(wishlistModel.addUserWishlist(username, encrypted_user));
                     resultSet = wishlistModel.selectExecutor(query);
                     if(resultSet.next()){
-                        wishlistID = resultSet.getInt(1);
-                        wishlistModel.executeUpdate(wishlistModel.insertItem(wishlistID, id));
+                        wishlistModel.executeUpdate(wishlistModel.insertItem(encrypted_user, id));
                     }
                 }
                 return "Item has been added to your wishlist.";
             } catch (Exception e) {
+                System.out.println(e);
                 return "Please, check that you are logged in.";
             }
         });
 
         post("/wishlist/delete", (request, response) -> {
             String username = request.session().attribute("username");
-            int wishlistID;
+            String cryptedUser;
             try {
                 String query = wishlistModel.getUserWishlist(username);
                 ResultSet resultSet = wishlistModel.selectExecutor(query);
                 if(resultSet.next()){
-                    wishlistID = resultSet.getInt(1);
+                    cryptedUser = resultSet.getString(2);
                     List<String> toDelete = new ArrayList<String>();
                     Integer i = 0;
                     String key = i.toString();
@@ -90,7 +93,7 @@ public class WishlistController {
                         toDelete2.add(b);
                     }
 
-                    wishlistModel.deleteItem(wishlistID, toDelete2);
+                    wishlistModel.deleteItem(cryptedUser, toDelete2);
                 }
 
             }
