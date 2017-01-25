@@ -34,7 +34,8 @@ public class RegisterModelTest {
 
     @After
     public void tearDown() throws Exception {
-
+        this.Model = null;
+        System.gc();
     }
 
     @Test
