@@ -1,12 +1,12 @@
 package com.steen.models;
 
 import com.steen.Cryptr;
-import com.steen.Util.DateBuilder;
+import com.steen.util.DateBuilder;
 import com.steen.Main;
 import com.steen.session.Filter;
 import com.steen.session.Insert;
 import com.steen.session.User;
-import com.steen.Util.SQLToJSON;
+import com.steen.util.SQLToJSON;
 import com.steen.session.Search;
 
 import java.sql.Connection;
@@ -15,10 +15,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import static com.steen.models.LoginModel.checkBlacklist;
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import static com.steen.util.SQLToJSON.getFormattedResult;
 
 public class AdminModel implements Model {
     private String sql;
@@ -41,13 +40,10 @@ public class AdminModel implements Model {
     private Search search = new Search("SELECT * FROM users");
     private DateBuilder dbuilder = new DateBuilder();
     private ResultSet rs;
-
     private Connection connection = Main.connection;
-
     public AdminModel() {
         clear();
     }
-
     //---------------------------------userlist--------------------
     private void userlist(){
         try {
@@ -213,13 +209,13 @@ public class AdminModel implements Model {
 
     private void updateAddress() {
         try {
-            Search csearch = new Search("UPDATE users SET name = '" +
-                    this.name + "', surname = '" +
-                    this.surname + "', email = '" +
-                    this.email + "', birth_date = '" +
-                    this.birth_date + "' WHERE username = '"+
-                    this.username +"'");
-            csearch.addFilterParam("address_id", this.address_id.toString(), Filter.Operator.EQUAL );
+            Search csearch = new Search("UPDATE address SET address_country = '" +
+                    this.address_country + "', address_postalcode = '" +
+                    this.address_postalcode + "', address_city = '" +
+                    this.address_city + "', address_street = '" +
+                    this.address_street + "', address_number = '" +
+                    this.address_number + "' WHERE address_id = '"+ this.address_id +"';";
+            csearch.addFilterParam("address_id", this.address_id, Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
             System.out.println("updated address");
@@ -236,7 +232,7 @@ public class AdminModel implements Model {
                             this.surname + "', email = '" +
                             this.email + "', birth_date = '" +
                             this.birth_date + "'");
-            csearch.addFilterParam("username", this.username, Filter.Operator.EQUAL);
+            csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
 
             csearch.executeNonQuery();
             System.out.println("updated user");
@@ -245,7 +241,6 @@ public class AdminModel implements Model {
             e.printStackTrace();
         }
     }
-
     //-----------------------------------------get user data
     public void searchUser(String user) {
         try {
@@ -312,9 +307,7 @@ public class AdminModel implements Model {
         }
     }
 
-    public enum Data{
-        USERNAME,NAME,SURNAME,EMAIL,COUNTRY,STREET,POSTAL,NUMBER,CITY,YEAR,MONTH,DAY
-    }
+    public enum Data{USERNAME,NAME,SURNAME,EMAIL,COUNTRY,STREET,POSTAL,NUMBER,CITY,YEAR,MONTH,DAY}
 
     public String getData(Data data){
         switch(data){
@@ -385,7 +378,6 @@ public class AdminModel implements Model {
         }
         return null;
     }
-
     public Search getSearch() {
         return search;
     }

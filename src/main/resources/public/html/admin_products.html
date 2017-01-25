@@ -1,0 +1,80 @@
+<h1>Producten toevoegen</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Game toevoegen</h3>
+        <form>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Naam</label>
+                <input id="g_name" type="text" required="required" placeholder="Naam">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Prijs</label>
+                <input id="g_price" type="text" required="required" placeholder="30.95">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Genre</label>
+                <input id="g_genre" type="text" required="required" placeholder="Actie">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Platform</label>
+                <input id="g_platform" type="text" required="required" placeholder="Platform">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Publisher</label>
+                <input id="g_publisher" type="text" placeholder="Publisher">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Stock</label>
+                <input id="g_stock" type="text" placeholder="20">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Plaatje</label>
+                <input id="g_image" type="text" required="required" placeholder="URL Link">
+            </div>
+            <button class="btn btn-success" onclick="addgame()">Add Game</button>
+        </form>
+    </div>
+
+    <div class="col-md-2">
+        <h3>Nav</h3>
+        <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
+        <p><a href="/admin"><span class="glyphicon glyphicon-pencil"></span> Gebruikers aanpassen</a></p>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>Platform toevoegen</h3>
+        <form>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Naam</label>
+                <input id="p_name" type="text" placeholder="Naam" required="required">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Kleur</label>
+                <input id="p_color" type="text" placeholder="Kleur" required="required">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Geheugen</label>
+                <input id="p_memory" type="text" placeholder="500GB">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Fabrikant</label>
+                <input id="p_manufacturer" type="text" placeholder="Fabrikant" required="required">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Prijs</label>
+                <input id="p_price" type="text" placeholder="300" required="required">
+            </div>
+            <div class="form-group row">
+                <label class="col-xs-2 col-form-label">Stock</label>
+                <input id="p_stock" value=" " type="text" placeholder="10">
+            </div>
+            <button class="btn btn-success" onclick="addplatform()">Add Platform</button>
+        </form>
+    </div>
+</div>
+
+<script src="/js/add_product.js"></script>

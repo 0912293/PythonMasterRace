@@ -1,9 +1,9 @@
 package com.steen.models;
 
 import com.steen.session.Search;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.Type;
+import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import static com.steen.util.SQLToJSON.Type;
 import org.json.JSONObject;
 
 import java.sql.ResultSet;
