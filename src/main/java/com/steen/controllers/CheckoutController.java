@@ -53,6 +53,7 @@ public class CheckoutController {
                 checkoutModel.insertInvoice(uid, request.session().attribute("username"), products);
                 return uid;
             }
+            cartModel.clearCart();
             return null;
         });
 

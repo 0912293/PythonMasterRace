@@ -118,15 +118,22 @@ public class ApiController {
                     new String[]{"address_city", "address_street", "address_number", "address_postalcode", "address_country"},
                     new String[] {"city","street","number","postalcode","country"});
             JSONArray productjson = new JSONArray(cartModel.getCartJSON());
-            JSONObject json = new JSONObject("{\"userinfo\":"+userjson+",\"products\":" + productjson + "}");
+            JSONObject json = new JSONObject("{'userinfo':"+userjson+",'products':" + productjson + "}");
             return json;
         }));
 
         post("/invoice.json", (request, response) ->  {
             String uid = request.queryParams("uid");
-            //get relevant info from db
-            //put in json object
-            return null;
+            JSONObject invoiceJson = new JSONObject();
+            JSONObject userJson = new JSONObject(apiModel.getJSON("SELECT o.order_id, o.order_pd, u.name, u.surname, " +
+                            "a.address_postalcode, a.address_country, a.address_city, a.address_street, a.address_number " +
+                            "FROM `order` o, users u, address a  " +
+                            "WHERE o.order_id = '"+uid+"' AND o.users_username = u.username AND u.address_id = a.address_id",
+                    SQLToJSON.Type.OBJECT));
+            JSONArray productJson = new JSONArray(CheckoutModel.getInvoiceJSON(uid));
+            invoiceJson.put("userinfo", userJson);
+            invoiceJson.put("products", productJson);
+            return invoiceJson;
         });
     }
 }

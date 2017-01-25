@@ -2,6 +2,14 @@ $(function() {
     $('#verifyData_form').submit(function () {
         post("/invoice/new", {}, function (data) {
             window.location = "/invoice?uid=" + data;
+            var dict = {
+                "title" : "invoice",
+                "url" : "http://www." + location.href.split( '/' )[2] + "/invoice?uid="+data,
+                "to" : $('#mailadressTextCheck').val()
+            };
+            post("/mail", dict, function (data) {
+                alert("sent");
+            })
         });
         return false;
     });

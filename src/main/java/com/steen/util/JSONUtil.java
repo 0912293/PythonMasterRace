@@ -23,4 +23,15 @@ public class JSONUtil {
         }
         return jsonArray;
     }
+
+    public static JSONArray concat(JSONArray fst, JSONArray snd) {
+        JSONArray res = new JSONArray();
+        for (int i = 0; i < fst.length(); i++) {
+            res.put(fst.get(i));
+        }
+        for (int i = 0; i < snd.length(); i++) {
+            res.put(snd.get(i));
+        }
+        return res;
+    }
 }

@@ -58,6 +58,10 @@ public class CartModel implements Model {
         return products;
     }
 
+    public void clearCart() {
+        products.clear();
+    }
+
     public String getCartJSON() {
         // Get all products from id's
         String query = "SELECT * FROM games g WHERE ";
