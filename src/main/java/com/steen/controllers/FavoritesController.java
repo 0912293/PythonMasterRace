@@ -44,14 +44,18 @@ public class FavoritesController {
 
             String username = request.session().attribute("username");
             int id;
-
+            id = Integer.parseInt(request.queryParams("id"));
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
                 }
-                id = Integer.parseInt(request.queryParams("id"));
-                favoritesModel.insertItem(username, id);
-                return "Product is toegevoegd aan je favorieten.";
+                if (favoritesModel.checkInDatabase(username, id)) {
+                    return "Product staat al in je favorieten.";
+
+                }else{
+                    favoritesModel.insertItem(username, id);
+                    return "Product is toegevoegd aan je favorieten.";
+                }
             } catch (Exception e){
                 return "Kijk of u bent ingelogd en probeer het nogmaals.";
             }
