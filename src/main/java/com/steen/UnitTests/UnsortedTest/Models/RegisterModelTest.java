@@ -1,7 +1,6 @@
 package com.steen.UnitTests.UnsortedTest.Models;
 
-import com.steen.CryptrMd5;
-import com.steen.Util.DateBuilder;
+import com.steen.util.DateBuilder;
 import com.steen.models.RegisterModel;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -14,8 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import com.steen.Cryptr;
-
-import java.util.ArrayList;
 
 /**
  * Created by Lennard Kras on 18-1-2017.
