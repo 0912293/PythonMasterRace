@@ -214,8 +214,8 @@ public class AdminModel implements Model {
                     this.address_postalcode + "', address_city = '" +
                     this.address_city + "', address_street = '" +
                     this.address_street + "', address_number = '" +
-                    this.address_number + "' WHERE address_id = '"+ this.address_id +"';";
-            csearch.addFilterParam("address_id", this.address_id, Filter.Operator.EQUAL);
+                    this.address_number + "'");
+            csearch.addFilterParam("address_id", this.address_id.toString(), Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
             System.out.println("updated address");
@@ -350,6 +350,11 @@ public class AdminModel implements Model {
         return null;
     }
 
+    public String getAdmin(String user){
+        Search csearch = new Search("SELECT admin FROM users");
+        csearch.addFilterParam("username", user, Filter.Operator.LIKE);
+        return getJSON(csearch);
+    }
     public String getChart1JSON(){
         Search csearch = new Search("SELECT games_platform, SUM(games_stock) AS stock FROM games");
         csearch.addOrderParam("games_platform");
