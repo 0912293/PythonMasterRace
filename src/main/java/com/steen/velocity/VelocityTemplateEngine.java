@@ -72,7 +72,7 @@ public class VelocityTemplateEngine extends TemplateEngine {
             template.merge(context, writer);
             return writer.toString();
         } else {
-            throw new IllegalArgumentException("modelAndView must be of type java.util.Map");
+            throw new IllegalArgumentException("modelAndView must be of type java.Util.Map");
         }
     }
 }

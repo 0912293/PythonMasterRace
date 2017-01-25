@@ -3,6 +3,7 @@ import com.steen.Cryptr;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
+import org.json.JSONObject;
 
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -16,6 +17,8 @@ public class ApiController {
         AdminModel adminModel = (AdminModel) models.get("admin");
         ProductModel productModel = (ProductModel) models.get("product");
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
+        CartModel cartModel = (CartModel) models.get("cart");
+
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
         post("/api/admin/users.json", (request, response) -> {
@@ -42,12 +45,20 @@ public class ApiController {
             productModel.clearSession();
             String query = "";
             String selector = request.queryParams("selector");
-            if (selector.equals("0")) {
-                query = "SELECT DISTINCT games_genre FROM games";
-            } else if (selector.equals("1")) {
-                query = "SELECT DISTINCT games_platform FROM games";
-            } else {
-                // RIP
+
+            final String genre = "0";
+            final String platform = "1";
+
+            switch (selector) {
+                case genre:
+                    query = "SELECT DISTINCT games_genre FROM games";
+                    break;
+                case platform:
+                    query = "SELECT DISTINCT games_platform FROM games";
+                    break;
+                default:
+                    // RIP
+                    break;
             }
             return apiModel.getJSON(query);
         }));
@@ -85,9 +96,16 @@ public class ApiController {
 
         post("/api/favorites.json", (request, response) -> {
             String username = request.session().attribute("username");
-            //System.out.println("this gets executged");
-            return apiModel.getJSON(FavoritesModel.getQuery(username));
-        });
+            return apiModel.getJSON(wishlistModel.getQuery(username));
+        }
+        );
 
+        post("/api/cart.json", ((request, response) -> cartModel.getCartJSON()));
+
+        post("/api/cart/count.json", ((request, response) -> {
+            JSONObject jso = new JSONObject();
+            jso.put("count", cartModel.getCount());
+            return jso;
+        }));
     }
 }

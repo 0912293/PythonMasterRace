@@ -1,8 +1,10 @@
+
 $(function () {
     $('.form-login').on("submit", function(e) {
         e.preventDefault();
         login();
     });
+    updateCart()
 });
 
 function logout() {
@@ -21,6 +23,23 @@ function login() {
     };
     post("/login", dict, reload);
     return false;
+}
+
+function updateCart() {
+    function clear_refill(data) {
+        var cartButton = $('#cartReftext');
+        var nr_of_items = data.count;
+        cartButton.empty();
+        cartButton.append("<span class='glyphicon glyphicon-shopping-cart'></span> ");
+        if (nr_of_items == 1) {
+            cartButton.append(nr_of_items + " Product");
+        } else if (nr_of_items == 0) {
+            cartButton.append("No Products");
+        } else {
+            cartButton.append(nr_of_items + " Products");
+        }
+    }
+    retrieveJSON("/api/cart/count.json", {}, clear_refill);
 }
 
 function reload() {
@@ -46,7 +65,8 @@ function retrieveJSON(url, dict, callback) {
         data: dict,
         dataType: "json",
         success: function (data) {
-            callback(data)
+            if (callback !== undefined)
+                callback(data)
         },
         error: function () {
             console.log("Incorrect or missing JSON")
@@ -60,7 +80,8 @@ function post(url, dict, callback) {
         url: url,
         data: dict,
         success: function (data) {
-            callback(data)
+            if (callback !== undefined)
+                callback(data)
         },
         error: function () {
             console.log("Incorrect or missing JSON")
@@ -68,12 +89,17 @@ function post(url, dict, callback) {
     })
 }
 
-function get(url, callback) {
+function get(url, dict, callback) {
+    $.each(dict, function (key, value) {
+        url += "?"+key+"="+value;
+    });
     $.ajax({
         type: 'GET',
         url: url,
         success: function (data) {
-            callback(data)
+            if (callback !== undefined){
+                callback(data);
+            }
         },
         error: function () {
             console.log("Incorrect or missing JSON")

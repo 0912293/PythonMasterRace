@@ -3,14 +3,14 @@ package com.steen.controllers;
 import com.steen.Cryptr;
 import com.steen.models.Model;
 import com.steen.models.WishlistModel;
+import com.steen.models.*;
+import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 
 import java.sql.ResultSet;
 import java.util.*;
-
-import static com.steen.Main.p_layout;
-import static com.steen.Main.sfp;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -34,7 +34,6 @@ public class WishlistController {
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
-
 
         post("/wishlist/add", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -84,10 +83,9 @@ public class WishlistController {
                         i++;
                         key = i.toString();
 
-                    }
-
-                    ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
-                    for (String a: toDelete){
+            }
+            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            for (String a: toDelete){
 
                         int b = Integer.parseInt(a);
                         toDelete2.add(b);
