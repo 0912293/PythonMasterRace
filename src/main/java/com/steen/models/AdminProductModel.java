@@ -2,14 +2,14 @@ package com.steen.models;
 
 import com.steen.Main;
 
-import com.steen.Util.SQLToJSON;
+import com.steen.util.SQLToJSON;
 import com.steen.session.Search;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-import static com.steen.Util.SQLToJSON.JsonListToString;
-import static com.steen.Util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+import static com.steen.util.SQLToJSON.getFormattedResult;
 
 public class AdminProductModel implements Model{
     private Search search = new Search("SELECT * FROM users");

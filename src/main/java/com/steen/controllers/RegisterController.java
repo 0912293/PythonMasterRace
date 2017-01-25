@@ -1,8 +1,8 @@
 package com.steen.controllers;
 
-import com.steen.Util.DateBuilder;
+import com.steen.util.DateBuilder;
 import com.steen.models.*;
-import static com.steen.Util.ViewUtil.strictVelocityEngine;
+import static com.steen.util.ViewUtil.strictVelocityEngine;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import java.util.ArrayList;

@@ -38,7 +38,18 @@ function addToWishlist() {
     var dict = {
         "id": getCurrentUrlParam("id")
     };
-    post('/wishlist', dict, function (data) {
+    post('/wishlist/add', dict, function (data) {
+        if (data !== undefined)
+            alert(data)
+        window.location.replace("/wishlist");
+    });
+}
+
+function addToFavList(){
+    var dict = {
+        "id" : getCurrentUrlParam("id")
+    };
+    post('/favorites/add', dict, function (data){
         if (data !== undefined)
             alert(data)
     });
@@ -60,7 +71,6 @@ function filldata(data) {
     var productContent = $('#ProductContent');
     productContent.empty();
 
-
     $.each(json, function (i, item) {
         console.log(item.games_id);
         content = $("<h1 id='ProductName' class='text-center'>" + item.games_name + "</h1>");
@@ -75,3 +85,4 @@ function filldata(data) {
         $('#productViewCartButton' + item.games_id).click(getCartActionFunc(item.games_id, item.games_name, item.games_image, 0));
     })
 }
+

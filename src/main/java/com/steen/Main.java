@@ -33,6 +33,7 @@ public class Main {
         models.put("product", new ProductModel());
         models.put("user", new UserModel());
         models.put("wishlist", new WishlistModel());
+        models.put("favorites", new FavoritesModel());
         models.put("cart", new CartModel());
 
         new RootController(models);
@@ -43,6 +44,8 @@ public class Main {
         new ProductsController(models);
         new UserController(models);
         new WishlistController(models);
+        new FavoritesController(models);
+
         new CartController(models);
     }
 }
