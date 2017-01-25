@@ -59,7 +59,10 @@ public class CartModel implements Model {
     }
 
     public void clearCart() {
-        products.clear();
+        HashMap<Integer, Integer> temp = (HashMap<Integer, Integer>) products.clone();
+        for (Integer key : temp.keySet()) {
+            products.remove(key);
+        }
     }
 
     public String getCartJSON() {

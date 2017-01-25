@@ -51,9 +51,9 @@ public class CheckoutController {
                         Cryptr.Type.MD5);
                 String uid = encrypter.getEncryptedString();
                 checkoutModel.insertInvoice(uid, request.session().attribute("username"), products);
+                cartModel.clearCart();
                 return uid;
             }
-            cartModel.clearCart();
             return null;
         });
 

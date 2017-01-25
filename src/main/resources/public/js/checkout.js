@@ -4,7 +4,7 @@ $(function() {
             window.location = "/invoice?uid=" + data;
             var dict = {
                 "title" : "invoice",
-                "url" : "http://www." + location.href.split( '/' )[2] + "/invoice?uid="+data,
+                "url" : "http://" + location.href.split( '/' )[2] + "/invoice?uid="+data,
                 "to" : $('#mailadressTextCheck').val()
             };
             post("/mail", dict, function (data) {

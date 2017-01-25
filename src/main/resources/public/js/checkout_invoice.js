@@ -11,6 +11,7 @@ $(function () {
         if (data !== undefined)
             updatePage(data)
     });
+    updateCart();
 });
 
 function updatePage(invoice) {
