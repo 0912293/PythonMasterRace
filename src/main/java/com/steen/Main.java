@@ -5,6 +5,7 @@ import static spark.Spark.*;
 import com.steen.controllers.*;
 import com.steen.db.Connector;
 import com.steen.models.*;
+import com.steen.session.Search;
 import spark.Spark;
 
 import java.sql.Connection;
@@ -31,6 +32,7 @@ public class Main {
         models.put("register", new RegisterModel());
         models.put("login", new LoginModel());
         models.put("product", new ProductModel());
+        models.put("platform", new ProductModel());
         models.put("user", new UserModel());
         models.put("wishlist", new WishlistModel());
         models.put("favorites", new FavoritesModel());

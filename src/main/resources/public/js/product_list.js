@@ -76,12 +76,14 @@ function fillDropdownsOuter(selector) {
 
 function updateTable(searchAppend) {
     var stdURL = "/api/product/games.json";
+    var stdURL1 = "/api/product/platforms.json";
     var searchDict = {
         'search': (searchAppend !== undefined) ? searchAppend : null,
         'order': sortOption,
         'filter': filterOption
     };
     retrieveJSON(stdURL, searchDict, filltable);
+    retrieveJSON(stdURL1, searchDict, fillplatform)
 }
 
 function filltable(json) {
@@ -91,6 +93,15 @@ function filltable(json) {
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.games_name, item.games_price, item.games_image, item.games_id));
         $('#productListCartButton' + item.games_id).click(getCartActionFunc(item.games_id, item.games_name, item.games_image, 0))
+    })
+}
+
+function fillplatform(json) {
+    var productContainer = $('#ProductContainer');
+
+    $.each(json, function (i, item) {
+        productContainer.append(ConstructProductbox(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
+        $('#productListCartButton' + item.platform_id).click(getCartActionFunc(item.platform_id, item.platform_name, item.platform_image, 0))
     })
 }
 

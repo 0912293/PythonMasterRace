@@ -16,10 +16,11 @@ public class ApiController {
         ApiModel apiModel = (ApiModel) models.get("api");
         AdminModel adminModel = (AdminModel) models.get("admin");
         ProductModel productModel = (ProductModel) models.get("product");
+        ProductModel platformModel = (ProductModel) models.get("platform");
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
-
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
+        platformModel.setSearch(new Search("SELECT * FROM platforms"));
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
@@ -83,6 +84,26 @@ public class ApiController {
             return apiModel.getJSON(productModel.getSearch());
         }
         ));
+
+        post("/api/product/platforms.json", (request, response) -> {
+            platformModel.clearSession();
+            platformModel.setSearch(new Search("SELECT * FROM platforms"));
+
+            String search = request.queryParams("search");
+            String order = request.queryParams("order");
+            String filter = request.queryParams("filter");
+
+            if (search != null && !search.equals("null") && !search.equals("")) {
+                platformModel.getSearch().addFilterParam("platform_name", search, Filter.Operator.LIKE);
+            }
+            if (order != null && !order.equals("null") && !order.equals("")) {
+                platformModel.getSearch().addOrderParam(order);
+            }
+            if (filter != null && !filter.equals("null") && !filter.equals("")) {
+                platformModel.getSearch().addFilterParam(filter);
+            }
+            return apiModel.getJSON(platformModel.getSearch());
+        });
 
         post("/api/getUserCrypt.json", (request, response) ->{
             String username = request.session().attribute("username");
