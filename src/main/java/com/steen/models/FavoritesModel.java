@@ -10,6 +10,8 @@ import java.sql.Statement;
 /**
  * Created by jesse on 23-1-2017.
  */
+
+
 public class FavoritesModel implements Model {
     private Connection connection = Main.connection;
 
@@ -26,7 +28,7 @@ public class FavoritesModel implements Model {
                 "AND f.games_id = g.games_id";
     }
 
-    public  Boolean checkInDatabase(String username, int id){
+    public Boolean checkInDatabase(String username, int id){
         ResultSet rs = null;
         String query = "SELECT * FROM " +
                 "favorites f, games g " +

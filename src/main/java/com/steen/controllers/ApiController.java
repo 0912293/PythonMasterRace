@@ -23,7 +23,7 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
-
+        HistoryModel historyModel = (HistoryModel) models.get("history");
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
         post("/api/admin/users.json", (request, response) -> {
@@ -147,6 +147,11 @@ public class ApiController {
             invoiceJson.put("userinfo", userJson);
             invoiceJson.put("products", productJson);
             return invoiceJson;
+        });
+
+        post("/api/order_history.json", (request, response) -> {
+            String username = request.session().attribute("username");
+            return apiModel.getJSON(historyModel.getQuery(username));
         });
     }
 }
