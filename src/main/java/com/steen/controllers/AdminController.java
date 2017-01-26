@@ -161,7 +161,7 @@ public class AdminController {
                 model.put("postal", adminModel.getData(AdminModel.Data.POSTAL));
                 model.put("userblacklisted", adminModel.checkBlacklisted());
                 try {
-                    model.put("number", Integer.parseInt(adminModel.getData(AdminModel.Data.NUMBER)));
+                    model.put("number", adminModel.getData(AdminModel.Data.NUMBER));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     System.out.println("malformed 'number' attribute for selected user");
