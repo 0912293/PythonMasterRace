@@ -99,14 +99,15 @@ function post(url, dict, callback) {
 
 function get(url, dict, callback) {
     $.each(dict, function (key, value) {
-        url += "?"+key+"="+value
+        url += "?"+key+"="+value;
     });
     $.ajax({
         type: 'GET',
         url: url,
         success: function (data) {
-            if (callback !== undefined)
-                callback(data)
+            if (callback !== undefined){
+                callback(data);
+            }
         },
         error: function () {
             console.log("Could not get from: " + url)

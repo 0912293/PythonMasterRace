@@ -34,20 +34,26 @@ public class Search {
         try {
             PreparedStatement myStmt = connection.prepareStatement(filteredQuery);
             resultSet = myStmt.executeQuery(filteredQuery);
-//            games.clear();
-//            while (resultSet.next()) {
-//                String gameName = resultSet.getString(2);
-//                String gamePrice = resultSet.getString(3);
-//                String gamePlatform = resultSet.getString(5);
-//                String imageURL = resultSet.getString("games_image");
-//                Game game = new Game(gameName, gamePlatform, gamePrice, "'" + imageURL + "'");
-//                games.add(game);
-//            }
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return resultSet;
+    }
+
+    public int executeNonQuery() { //Use this in case of delete or update!
+        updateQuery();
+        int affectedRows = 0;
+        try {
+            PreparedStatement myStmt = connection.prepareStatement(filteredQuery);
+            affectedRows = myStmt.executeUpdate(filteredQuery);
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+        return affectedRows;
     }
 
     public static ResultSet getResultSet(String query) {

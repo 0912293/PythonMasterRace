@@ -1,4 +1,5 @@
 package com.steen.controllers;
+import com.steen.Cryptr;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
@@ -7,6 +8,7 @@ import com.steen.util.SQLToJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -21,6 +23,8 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+
+        FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
@@ -92,10 +96,19 @@ public class ApiController {
         }
         ));
 
-        post("/api/wishlist.json", (request, response) -> {
-
+        post("/api/getUserCrypt.json", (request, response) ->{
             String username = request.session().attribute("username");
-            return apiModel.getJSON(WishlistModel.getQuery(username));
+            return apiModel.getJSON(wishlistModel.getUserCrypt(username));
+        });
+
+        post("/api/wishlist.json", (request, response) -> {
+            String crypted_user  = request.queryParams("wishlist_id");
+            return apiModel.getJSON(wishlistModel.getQuery(crypted_user));
+        });
+
+        post("/api/favorites.json", (request, response) -> {
+            String username = request.session().attribute("username");
+            return apiModel.getJSON(wishlistModel.getQuery(username));
         }
         );
 

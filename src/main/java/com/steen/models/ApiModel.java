@@ -2,11 +2,11 @@ package com.steen.models;
 
 import com.steen.util.SQLToJSON;
 import com.steen.session.Search;
-
 import java.util.List;
-
-import static com.steen.util.SQLToJSON.JsonListToString;
 import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
+
+
 
 public class ApiModel implements Model {
     public String getJSON(Search search) {

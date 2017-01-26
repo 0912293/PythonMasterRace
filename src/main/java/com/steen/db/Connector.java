@@ -9,7 +9,7 @@ public final class Connector {
 //  private static String user = "app";
 //  private static String password = "letmesee";
 
-  //  private static String user = "root";
+//    private static String user = "root";
 //  private static String password = "root";
 
     private static String url = "jdbc:mysql://projectsteen.ddns.net:3306/webshopdb?&amp;allowMultiQueries=true";

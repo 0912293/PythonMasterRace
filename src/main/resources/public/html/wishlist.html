@@ -1,11 +1,26 @@
-<h1>Wenslijst games</h1>
-<div class='col-md-9'>
-    <table class="table" id="wishlistTable">
-        <tr>
-            <th>Product</th>
-            <th>Hoeveelheid</th>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<h1>Wenslijst</h1>
+<div class='col-md-9' id = 'wishListDiv'>
+    <table class="table" id="wishListTable">
+        <tr id="tableRowTwo">
+            <th>Naam</th>
             <th>Prijs</th>
-            <th>Acties</th>
+            <th>Console</th>
+            <th>Verwijder</th>
+        </tr>
+    </table>
+    <ul id="deleteList"></ul>
+    <input id="deleteButton" class="btn btn-warning" type="button" value ="Verwijder uit wenslijst" onclick="deleterows()">
+    <input id="shareWishlist" class="btn btn-success"  type="button" value ="Get shareable link" onclick="getJsonUserCrypt()">
+</div>
+
+<div class='col-md-9' id = 'viewTableDiv'>
+    <table class="table" id="viewWishListTable">
+        <tr id="tableRowOne">
+            <th>Naam</th>
+            <th>Prijs</th>
+            <th>Console</th>
         </tr>
     </table>
 </div>

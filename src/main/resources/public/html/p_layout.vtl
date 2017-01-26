@@ -15,6 +15,7 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="/js/common.js"></script>
+    <script src="/js/notify.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <style>
@@ -49,23 +50,37 @@
         #button1 {
             margin-bottom: 10px;
         }
+
+        .navbar-default {
+            background-color: #292c2f;
+            border-color: #bfbfbf;
+        }
+
+        .nav.navbar-nav.navbar-right li a {
+            color: white;
+        }
+
+        .nav.navbar-nav li a{
+            color:white;
+            hover:#2ffff;
+        }
+
+        ul.nav a:hover { color: #5383d3 !important; }
+
     </style>
   </head>
   <body>
 
 <!------------------navbar------------------->
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/">Steen</a>
+        <a class="navbar-brand" href="/"><p style="color:white;">Steen</p></a>
       </div>
       <ul class="nav navbar-nav">
         <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
           <li><a href="/games">Producten</a> </li>
-          #if($correctinfo)
-              <li><a href="/wishlist">Wenslijst</a> </li>
-          #end
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
@@ -85,9 +100,6 @@
       </ul>
     </div>
   </nav>
-
-
-
 <!-----------------------template html------------------------------>
 
     <div class="container">
@@ -120,7 +132,7 @@
 			<div class="footer-right">
 
 				<p class="footer-company-about">
-					<span>Over het bedrijf</span>
+					<span>Over ons</span>
 					Wij houden van stenen.
 				</p>
 

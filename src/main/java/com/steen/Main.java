@@ -27,11 +27,13 @@ public class Main {
         HashMap<String, Model> models = new HashMap<>();
         models.put("api", new ApiModel());
         models.put("admin", new AdminModel());
+        models.put("admin_product", new AdminProductModel());
         models.put("register", new RegisterModel());
         models.put("login", new LoginModel());
         models.put("product", new ProductModel());
         models.put("user", new UserModel());
         models.put("wishlist", new WishlistModel());
+        models.put("favorites", new FavoritesModel());
         models.put("cart", new CartModel());
         models.put("checkout", new CheckoutModel());
         models.put("mail", new MailModel());
@@ -44,6 +46,8 @@ public class Main {
         new ProductsController(models);
         new UserController(models);
         new WishlistController(models);
+        new FavoritesController(models);
+
         new CartController(models);
         new CheckoutController(models);
         new MailController(models);

@@ -69,7 +69,7 @@ function deleteSelectedRows() {
     });
     post("/cart/act", dict, function (msg) {
         if (msg !== undefined)
-            alert(msg)
+            SpawnNotification('Winkelwagen - Verwijdering: ', 'De gekozen producten zijn verwijderd.', '/img/deleteIcon.png', 5000)
     });
     updateCart();
     retrieveJSON("/api/cart.json", {}, updatePage);
