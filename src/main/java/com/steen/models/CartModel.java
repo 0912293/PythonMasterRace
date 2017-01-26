@@ -51,11 +51,22 @@ public class CartModel implements Model {
         return total;
     }
 
+    public HashMap<Integer, Integer> getProducts() {
+        return products;
+    }
+
+    public void clearCart() {
+        HashMap<Integer, Integer> temp = (HashMap<Integer, Integer>) products.clone();
+        for (Integer key : temp.keySet()) {
+            products.remove(key);
+        }
+    }
+
     public String getCartJSON() {
         // Get all products from id's
         String query = "SELECT * FROM games g WHERE ";
         if (products.size() <= 0) {
-            return "";
+            return "[]";
         }
         boolean first = true;
         for (int k : products.keySet()) {
@@ -72,7 +83,6 @@ public class CartModel implements Model {
             int id = jsonObject.getInt("games_id");
             jsonObject.put("amount", products.get(id));
         }
-
         return JsonListToString(jsonList, Type.ARRAY);
     }
 

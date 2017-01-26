@@ -45,8 +45,7 @@ public class SQLToJSON {
         switch (type) {
             case ARRAY: jsonstring += "[";
                 break;
-            case OBJECT: jsonstring += "{";
-                break;
+            case OBJECT: break;
         }
         for (int i = 0; i < jsonList.size(); i++){
             jsonstring += jsonList.get(i);
@@ -57,8 +56,7 @@ public class SQLToJSON {
         switch (type) {
             case ARRAY: jsonstring += "]";
                 break;
-            case OBJECT: jsonstring += "}";
-                break;
+            case OBJECT: break;
         }
         return jsonstring;
     }

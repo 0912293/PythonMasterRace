@@ -45,8 +45,9 @@ public class CartController {
                                 return "1 product verwijderd.";
                             return itemsdeleted + " producten verwijderd.";
                         } else {
-                            return "Kon de geselecteerde producten niet verwijderen. " +
-                                    "Neem aub. contact op met de sitebeheerder als dit vaak voor komt..";
+//                            return "Kon de geselecteerde producten niet verwijderen. " +
+//                                    "Neem aub. contact op met de sitebeheerder als dit vaak voor komt..";
+                            return "0 producten verwijderd.";
                         }
                     default: throw new Exception();
                 }
@@ -64,8 +65,6 @@ public class CartController {
             model.put("admin", request.session().attribute("admin"));
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("username", request.session().attribute("username"));
-
-
 
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());

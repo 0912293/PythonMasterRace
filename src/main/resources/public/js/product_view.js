@@ -40,7 +40,7 @@ function addToWishlist() {
     };
     post('/wishlist/add', dict, function (data) {
         if (data !== undefined)
-            alert(data)
+            alert(data);
         window.location.replace("/wishlist");
     });
 }

@@ -1,10 +1,35 @@
 $(function () {
-    retrieveJSON("/api/cart.json", {}, fillTable)
+    retrieveJSON("/session/user.ses", {}, function (data) {
+        var checkoutbutton = $('#checkoutButton');
+        console.log(data);
+        if (data !== undefined) {
+            if (data.username != "" && data.username != null) {
+                checkoutbutton.click(function() {
+                    window.location='/checkout/verify';
+                });
+            } else {
+                checkoutbutton.attr("data-toggle", "modal");
+                checkoutbutton.attr("data-target", "#login_modal");
+            }
+        } else {
+            checkoutbutton.attr("data-toggle", "modal");
+            checkoutbutton.attr("data-target", "#login_modal");
+        }
+    });
+
+    retrieveJSON("/api/cart.json", {}, updatePage);
 });
 
-function fillTable(data) {
-    var table = $('#cartTable');
+function updatePage(data) {
+    console.log(data.length);
+    if (data.length > 0) {
+        $('#checkoutButton').removeAttr("disabled");
+    } else {
+        $('#checkoutButton').attr("disabled", "disabled");
+        $('#deleteButton').attr("disabled", "disabled");
+    }
 
+    var table = $('#cartTable');
     $.each(data, function (i, item) {
         table.find('tbody')
             .append($('<tr>')
@@ -16,8 +41,17 @@ function fillTable(data) {
                     "<td>" + item.amount + "</td>"
                 )
             );
-    }
-)}
+    });
+    $("[id = cartchk]").change(function() {
+        if(this.checked) {
+            $('#deleteButton').removeAttr("disabled");
+        } else if (!this.checked) {
+            if ($('[id = cartchk]:checked').length <= 0) {
+                $('#deleteButton').attr("disabled", "disabled");
+            }
+        }
+    });
+}
 
 function deleteSelectedRows() {
     var dict = {
@@ -38,4 +72,5 @@ function deleteSelectedRows() {
             SpawnNotification('Winkelwagen - Verwijdering: ', 'De gekozen producten zijn verwijderd.', '/img/deleteIcon.png', 5000)
     });
     updateCart();
+    retrieveJSON("/api/cart.json", {}, updatePage);
 }

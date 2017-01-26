@@ -1,4 +1,3 @@
-
 $(function () {
     $('.form-login').on("submit", function(e) {
         e.preventDefault();
@@ -57,6 +56,15 @@ function getKeyChecker(expectedKeyCode, func) {
     return checkKeyAndRun;
 }
 
+function getCurrentUrlParam(param) {
+    var results = new RegExp('[\?&]' + param + '=([^&#]*)').exec(window.location.href);
+    if (results==null){
+        return null;
+    }
+    else{
+        return results[1] || 0;
+    }
+}
 
 function retrieveJSON(url, dict, callback) {
     $.ajax({
@@ -84,7 +92,7 @@ function post(url, dict, callback) {
                 callback(data)
         },
         error: function () {
-            console.log("Incorrect or missing JSON")
+            console.log("Could not post to: " + url)
         }
     })
 }
@@ -102,7 +110,7 @@ function get(url, dict, callback) {
             }
         },
         error: function () {
-            console.log("Incorrect or missing JSON")
+            console.log("Could not get from: " + url)
         }
     })
 }

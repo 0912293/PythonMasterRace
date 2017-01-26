@@ -30,4 +30,15 @@ public class ApiModel implements Model {
         }
         return null;
     }
+
+    public String getJSON(String query, SQLToJSON.Type type) {
+        List jsonList;
+        try {
+            jsonList = getFormattedResult(Search.getResultSet(query));
+            return JsonListToString(jsonList, type);
+        } catch (Exception e) {
+            System.out.println("SQL >> Could not get JSON");
+        }
+        return null;
+    }
 }

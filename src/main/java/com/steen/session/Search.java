@@ -20,14 +20,12 @@ public class Search {
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = baseQuery;
-        getResultSet();
     }
 
     public Search() {
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
-        getResultSet();
     }
 
     public ResultSet getResultSet() {
@@ -111,15 +109,6 @@ public class Search {
 
     public void clearOrderBy() {
         orderBy.orders.clear();
-    }
-
-//    public ProductModel getProductModel() {
-//        return productModel;
-//    }
-
-    public ArrayList<Object> getObjects() {
-        getResultSet();
-        return objects;
     }
 
     public Filter getFilter() {

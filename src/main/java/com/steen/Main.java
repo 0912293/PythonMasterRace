@@ -35,6 +35,8 @@ public class Main {
         models.put("wishlist", new WishlistModel());
         models.put("favorites", new FavoritesModel());
         models.put("cart", new CartModel());
+        models.put("checkout", new CheckoutModel());
+        models.put("mail", new MailModel());
 
         new RootController(models);
         new ApiController(models);
@@ -47,5 +49,7 @@ public class Main {
         new FavoritesController(models);
 
         new CartController(models);
+        new CheckoutController(models);
+        new MailController(models);
     }
 }
