@@ -23,6 +23,7 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+        ProductModel platformModel = (ProductModel) models.get("platforms");
 
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
@@ -76,6 +77,12 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
+        post("/api/product/games.json", ((request, response) -> {
+            productModel.clearSession();
+
+            return apiModel.getJSON("SELECT * FROM platforms");
+        }
+        ));
 
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();

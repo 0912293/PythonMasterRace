@@ -62,6 +62,7 @@ function fillDropdownsOuter(selector) {
             group = dropdown.find("optgroup[label='Platform']")
         }
         group.empty();
+        console.log(json);
         $.each(json, function (i, item) {
             if (selector == 0) {
                 group.append("<option>" + item.games_genre + "</option>")
@@ -75,11 +76,14 @@ function fillDropdownsOuter(selector) {
 
 function updateTable(searchAppend) {
     var stdURL = "/api/product/games.json";
+    var stdURL1 = "/api/product/platforms.json";
+
     var dict = {
         'search': (searchAppend !== undefined) ? searchAppend : null,
         'order': sortOption,
         'filter': filterOption
     };
+    retrieveJSON(stdURL1, dict, fillplatform);
     retrieveJSON(stdURL, dict, filltable);
 }
 
@@ -90,6 +94,15 @@ function filltable(json) {
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.gameId));
         $('#productListCartButton' + item.gameId).click(getCartActionFunc(item.gameId,item.name,item.image, 0))
+    })
+}
+
+function fillplatform(json) {
+    var productContainer = $('#ProductContainer');
+    console.log("Check aflkadfjfa");
+    $.each(json, function (i, item) {
+        productContainer.append(ConstructProductbox(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
+        $('#productListCartButton' + item.platform_id).click(getCartActionFunc(item.platform_id, item.platform_name, item.platform_image, 0))
     })
 }
 
