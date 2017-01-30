@@ -111,8 +111,9 @@ function fillviewTable(data) {
     var tr = [];
 
     console.log(data);
+
     $.each(json, function (i, item) {
-        tr = $('<tr/>')
+        tr = $('<tr/>');
         tr.append("<input type='hidden' id='" + item.games_id + "' value='" + item.games_id + "'/>");
         tr.append("<td>" + item.games_name + "</td>");
         tr.append("<td>" + item.games_price + "</td>");

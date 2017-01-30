@@ -32,16 +32,7 @@ public class Search {
 
     public ResultSet getResultSet() {
         updateQuery();
-        ResultSet resultSet = null;
-        try {
-            PreparedStatement myStmt = connection.prepareStatement(filteredQuery);
-            resultSet = myStmt.executeQuery(filteredQuery);
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        return resultSet;
+        return getResultSet(filteredQuery);
     }
 
     public int executeNonQuery() { //Use this in case of delete or update!

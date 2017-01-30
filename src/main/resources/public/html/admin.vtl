@@ -1,102 +1,121 @@
 #if($admin)
     #if($result)
-<h1>Gebruiker: $result</h1>
-<div class ="col-md-8">
-<form name="edit_form"  action="/admin/update_user" method="post">
-    <div class="form-group row">
-        <label for="user" class="col-xs-2 col-form-label">Gebruikersnaam</label>
-        <div class="col-xs-10">
-            <input class="form-control" name="user" type="text" id="usern"
-                   required="required" value=$user>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="email" class="col-xs-2 col-form-label">Email</label>
-        <div class="col-xs-10">
-            <input class="form-control" name="email" type="email" id="email"
-                   required="required" value="$email">
-        </div>
-    </div>
+<h3>Gebruiker: $result</h3>
 
-    <div class="form-group row">
-        <label for="name" class="col-xs-2 col-form-label">Naam</label>
-        <div class="col-xs-3">
-            <input class="form-control" type="text" name="name" id="name" value=$name
-                   required="required">
-        </div>
-        <div class="col-xs-3">
-            <input class="form-control" type="text" name="sur" id="sur" value=$surname
-                   required="required">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="bday" class="col-xs-2 col-form-label">Geboortedatum</label>
-        <div class="col-xs-2">
-            <input class="form-control" type="number" name="day" id="day" value=$day min="1" max="31"
-                   required="required">
-        </div>
-        <div class="col-xs-2">
-            <input class="form-control" type="number" name="month" id="month" value=$month  min="1" max="12"
-                   required="required">
-        </div>
-        <div class="col-xs-2">
-            <input class="form-control" type="number" name="year" id="year" value=$year min="1900" max="2010"
-                   required="required">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="street" class="col-xs-2 col-form-label">Adres</label>
-        <div class="col-xs-5">
-            <input class="form-control" type="text" name="street" id="street" value=$street placeholder="Ex.: Wijnhaven
-                   required="required">
-        </div>
-        <div class="col-xs-2">
-            <input class="form-control" type="number" name="number" id="number" value=$number
-                   required="required">
-        </div>
-        <div class="col-xs-3">
-            <input class="form-control" type="text" name="postal" id="postal" value=$postal
-                   required="required">
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="street" class="col-xs-2 col-form-label"></label>
-        <div class="col-xs-3">
-            <input class="form-control" type="text" name="country" id="country" value=$country
-                   required="required">
-        </div>
-        <div class="col-xs-3">
-            <input class="form-control" type="text" name="city" id="city" value=$city
-                   required="required">
-        </div>
-    </div>
-    <button type="submit" class="btn btn-primary btn-lg">Toepassen</button>
-    <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a>
-</form></div>
-<div class="col-md-2 offset-md-8">
-<form action="/admin/reset_pass" method="post">
-    <button class="btn btn-danger" >Wachtwoord resetten</button>
-</form> <br>
-<form action="/admin/delete_user" method="post">
-    <button class="btn btn-danger" >Gebruiker verwijderen</button>
-</form> <br>
-#if ($userblacklisted)
-<form action="/admin/blacklist_undo" method="post">
-    <button class="btn btn-warning">Uit blacklist verwijderen</button>
-</form>
-#else
-<form action="/admin/blacklist_user" method="post">
-    <button class="btn btn-danger" >Op blacklist zetten</button>
-</form>
-#end
+<div class="col-md-2 col-md-push-10">
+    <h3>Nav</h3>
+    <p class="nav_text"><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
+    <p class="nav_text"><a href="/admin/product"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
 </div>
+
+    <div class ="col-md-8 col-md-pull-2">
+        <form name="edit_form"  action="/admin/update_user" method="post">
+            <div class="form-group row">
+                <label for="user" class="col-xs-3 col-form-label">Gebruikersnaam</label>
+                <div class="col-xs-10">
+                    <input class="form-control" name="user" type="text" id="usern"
+                           required="required" value=$user>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="email" class="col-xs-3 col-form-label">Email</label>
+                <div class="col-xs-10">
+                    <input class="form-control" name="email" type="email" id="email"
+                           required="required" value="$email">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="name" class="col-xs-3 col-form-label">Naam</label>
+                <div class="col-xs-3">
+                    <input class="form-control" type="text" name="name" id="name" value=$name
+                           required="required">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control" type="text" name="sur" id="sur" value=$surname
+                           required="required">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="bday" class="col-xs-3 col-form-label">Geboortedatum</label>
+                <div class="col-xs-2">
+                    <input class="form-control" type="number" name="day" id="day" value=$day min="1" max="31"
+                           required="required">
+                </div>
+                <div class="col-xs-2">
+                    <input class="form-control" type="number" name="month" id="month" value=$month  min="1" max="12"
+                           required="required">
+                </div>
+                <div class="col-xs-2">
+                    <input class="form-control" type="number" name="year" id="year" value=$year min="1900" max="2010"
+                           required="required">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="street" class="col-xs-3 col-form-label">Adres</label>
+                <div class="col-xs-5">
+                    <input class="form-control" type="text" name="street" id="street" value=$street placeholder="Ex.: Wijnhaven"
+                           required="required">
+                </div>
+                <div class="col-xs-2">
+                    <input class="form-control" type="number" name="number" id="number" value=$number
+                           required="required">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control" type="text" name="postal" id="postal" value=$postal
+                           required="required">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="street" class="col-xs-3 col-form-label"></label>
+                <div class="col-xs-3">
+                    <input class="form-control" type="text" name="country" id="country" value=$country
+                           required="required">
+                </div>
+                <div class="col-xs-3">
+                    <input class="form-control" type="text" name="city" id="city" value=$city
+                           required="required">
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-12">
+                <button id="admin_btn_submit_edit_user" type="submit" class="btn btn-primary btn-block">Toepassen</button>
+            </div>
+            <div class="col-md-3 col-xs-12">
+                <a href="javascript:history.back()"><button type="button" class="btn btn-default btn-block"><span class="glyphicon glyphicon-arrow-left"></span> Terug</button></a><br>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3">
+        <form action="/admin/reset_pass" method="post">
+            <button class="admin_edit_user_btn btn btn-danger btn-block">Wachtwoord resetten</button>
+        </form> <br>
+        <form action="/admin/delete_user" method="post">
+            <button class="admin_edit_user_btn btn btn-danger btn-block">Gebruiker verwijderen</button>
+        </form> <br>
+        #if ($userblacklisted)
+        <form action="/admin/blacklist_undo" method="post">
+            <button class="admin_edit_user_btn btn btn-warning btn-block">Uit blacklist verwijderen</button>
+        </form>
+        #else
+        <form action="/admin/blacklist_user" method="post">
+            <button class="admin_edit_user_btn btn btn-danger btn-block">Op blacklist zetten</button>
+        </form>
+    </div>
+#end
+
 
     #else
 <h1>Admin</h1><br>
-<div class="col-xs-12 col-md-10">
+<div id="admin_nav" class="col-md-2 col-md-push-10">
+    <h3>Nav</h3>
+    <p class="nav_text"><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
+    <p class="nav_text"><a href="/admin/product"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
+</div>
+
+<div class="col-xs-12 col-md-10 col-md-pull-2">
     <form action="/admin/getUserData">
         <div class="form-group row">
             <div class="col-xs-2">
@@ -115,11 +134,7 @@
     <label><a href="/admin/users">Alle gebruikers</a></label>
 </div>
     #end
-<div class="col-md-2">
-    <h3>Nav</h3>
-    <p><a href="/admin/chart"><span class="glyphicon glyphicon-stats"></span> Grafieken</a></p>
-    <p><a href="/admin/product"><span class="glyphicon glyphicon-plus-sign"></span> Producten toevoegen</a></p>
-</div>
+
 #else
 <h1>u heeft niet de benodigde bevoegdheden voor deze actie</h1>
 #end
