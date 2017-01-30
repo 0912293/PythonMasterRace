@@ -23,9 +23,9 @@ public class FavoritesModel implements Model {
 
     public static String getQuery(String username){
         return "SELECT * FROM " +
-                "favorites f, games g " +
+                "favorites f, ordered_game_info og " +
                 "WHERE f.username = " + "'" + username + "'" +
-                "AND f.games_id = g.games_id";
+                "AND f.og_id = og.og_orderedproduct_id";
     }
 
     public Boolean checkInDatabase(String username, int id){
@@ -33,7 +33,7 @@ public class FavoritesModel implements Model {
         String query = "SELECT * FROM " +
                 "favorites f, games g " +
                 "WHERE f.username = " + "'" + username + "'" +
-                "AND f.games_id = " + id + ";";
+                "AND f.og_id = " + id + ";";
         try{
             Statement myStmt = connection.createStatement();
             rs = myStmt.executeQuery(query);
@@ -59,7 +59,7 @@ public class FavoritesModel implements Model {
     }
     private void updateInsert(String username, int id) {
 
-        this.insertquery = "INSERT INTO favorites (username, games_id)" +
+        this.insertquery = "INSERT INTO favorites (username, og_id)" +
                 "VALUES('" + username + "'," +
                 "" + id + ");";
 

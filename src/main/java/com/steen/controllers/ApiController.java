@@ -108,7 +108,7 @@ public class ApiController {
 
         post("/api/favorites.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(wishlistModel.getQuery(username));
+            return apiModel.getJSON(FavoritesModel.getQuery(username));
         }
         );
 

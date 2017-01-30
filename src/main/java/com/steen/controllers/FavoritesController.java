@@ -32,19 +32,15 @@ public class FavoritesController {
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
 
-
-
-
-
             return new ModelAndView(model, p_layout);
 
         }, new VelocityTemplateEngine());
 
         post("/favorites/add", (request, response) -> {
-
             String username = request.session().attribute("username");
             int id;
             id = Integer.parseInt(request.queryParams("id"));
+            System.out.println(id);
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();

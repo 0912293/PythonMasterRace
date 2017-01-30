@@ -30,10 +30,16 @@ function filltable(data) {
 
         $.each(order.products, function (j, product) {
             trMeta = $('<tr class="metaData" bgcolor="#e9e9e9" style="display: none"/>');
-            trMeta.append('<td/>');
+            trMeta.append('<td><button class="btn btn-xs btn-danger" id="favbutton'+product.id+'"><span class="glyphicon glyphicon-heart-empty"></span></button></td>');
             trMeta.append('<td colspan="2">'+product.product_name+'</td>');
             trMeta.append('<td>&euro;'+product.product_price+'</td>');
             $('table').append(trMeta);
+            if (product.g_id != -1){
+                $('#favbutton'+product.id).click(addFav(product.g_id, true))
+            }else{
+                $('#favbutton'+product.id).click(addFav(product.p_id, false))
+            }
+
         });
     });
 }
@@ -54,3 +60,15 @@ function toggleRowMeta(row){
         });
     }
 }
+
+function addFav(id, isGame){
+
+    return function () {
+        post("/favorites/add", {'id':id, 'isGame' : isGame}, function (msg) {
+            alert(msg)
+        });
+    }
+}
+
+
+
