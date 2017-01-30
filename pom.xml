@@ -53,6 +53,13 @@
             <version>1.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.steen</groupId>
+            <artifactId>cryptr-1.1</artifactId>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/cryptr-1.1.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
