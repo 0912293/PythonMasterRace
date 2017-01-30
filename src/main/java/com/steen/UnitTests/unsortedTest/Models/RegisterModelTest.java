@@ -2,22 +2,16 @@ package com.steen.UnitTests.unsortedTest.Models;
 
 import com.steen.util.DateBuilder;
 import com.steen.models.RegisterModel;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import com.steen.Cryptr;
 
 /**
  * Created by Lennard Kras on 18-1-2017.
  */
-@RunWith(Arquillian.class)
+
 public class RegisterModelTest {
 
     RegisterModel Model;
@@ -128,13 +122,6 @@ public class RegisterModelTest {
     @Test
     public void parseReg() throws Exception {
         //Only testable with an integration test due to SQL and private methods.
-    }
-
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addClass(com.steen.models.RegisterModel.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
 }

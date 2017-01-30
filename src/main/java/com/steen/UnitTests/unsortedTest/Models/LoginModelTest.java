@@ -3,23 +3,16 @@ package com.steen.UnitTests.unsortedTest.Models;
 import com.steen.db.Connector;
 import com.steen.Cryptr;
 import com.steen.models.LoginModel;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.sql.Connection;
 
 /**
  * Created by Lennard Kras on 18-1-2017.
  */
-@RunWith(Arquillian.class)
 public class LoginModelTest {
 
     LoginModel Model;
@@ -121,13 +114,6 @@ public class LoginModelTest {
         }catch(Exception e) {
             Assert.fail(e.getMessage());
         }
-    }
-
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addClass(com.steen.models.LoginModel.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
 }

@@ -3,11 +3,6 @@ package com.steen.UnitTests.unsortedTest.Models;
 import com.steen.db.Connector;
 import com.steen.models.AdminModel;
 import com.steen.session.User;
-import org.jboss.arquillian.container.test.api.Deployment;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,7 +14,6 @@ import java.util.ArrayList;
 /**
  * Created by Lennard Kras on 18-1-2017.
  */
-@RunWith(Arquillian.class)
 public class AdminModelTest {
 
     AdminModel Model;
@@ -263,11 +257,5 @@ public class AdminModelTest {
         }
     }
 
-    @Deployment
-    public static JavaArchive createDeployment() {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addClass(com.steen.models.AdminModel.class)
-                .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-    }
 
 }
