@@ -12,17 +12,20 @@ public class Search {
     private ArrayList<Object> objects = new ArrayList<>();
     private Filter filter;
     private OrderBy orderBy;
+    private GroupBy groupBy;
     private String sqlQuery;
     private String filteredQuery;
 
     public Search(String baseQuery) {
 //        this.productModel = productModel;
+        this.groupBy = new GroupBy();
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = baseQuery;
     }
 
     public Search() {
+        this.groupBy = new GroupBy();
         this.filter = new Filter();
         this.orderBy = new OrderBy();
         this.sqlQuery = "SELECT * FROM games";
@@ -67,6 +70,9 @@ public class Search {
         if (orderBy.orders.size() > 0) {
             filteredQuery += " " + orderBy.getOrderByStatement();
         }
+        if (groupBy.group.size() > 0) {
+            filteredQuery += " " + groupBy.getGroupByStatement();
+        }
     }
 
     public String getFilteredQuery() {
@@ -92,6 +98,10 @@ public class Search {
 
     public void addOrderParam(String column){
         orderBy.addParameter(column);
+    }
+
+    public void addGroupParam(String column){
+        groupBy.addParameter(column);
     }
 
     public void clearFilters() {

@@ -356,20 +356,19 @@ public class AdminModel implements Model {
         return getJSON(csearch);
     }
     public String getChart1JSON(){
-        Search csearch = new Search("SELECT games_platform, SUM(games_stock) AS stock FROM games");
-        csearch.addOrderParam("games_platform");
+        Search csearch = new Search("SELECT COUNT(o.order_id) as ord, o.order_pd FROM webshopdb.order o group by order_pd");
         return getJSON(csearch);
     }
 
     public String getChart2JSON(){
         Search csearch = new Search("SELECT games_platform, COUNT(games_id) AS game_count FROM games");
-        csearch.addOrderParam("games_platform");
+        csearch.addGroupParam("games_platform");
         return getJSON(csearch);
     }
 
     public String getChart3JSON(){
         Search csearch = new Search("SELECT admin as user, COUNT(username) as ucount FROM users");
-        csearch.addOrderParam("admin");
+        csearch.addGroupParam("admin");
         return getJSON(csearch);
     }
 

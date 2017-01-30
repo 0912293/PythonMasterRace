@@ -2,7 +2,7 @@ google.charts.load('current', {packages: ['corechart'], callback: DrawCharts});
 
 var options = {
     'legend':'left',
-    'title':'Stock per platform',
+    'title':'orders per dag',
     'is3D':true,
     'width':400,
     'height':300
@@ -32,11 +32,11 @@ function DrawCharts() {
 
 function drawChart(json) {
     var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Name');
-    data.addColumn('number', 'Orders');
+    data.addColumn('string', 'order_pd');
+    data.addColumn('number', 'ord');
     $.each(json, function (i, item) {
         data.addRows([
-            [item.games_platform, parseInt(item.stock)]
+            [item.order_pd, parseInt(item.ord)]
         ]);
     });
     var chart = new google.visualization.ColumnChart(document.getElementById('testChart'));
