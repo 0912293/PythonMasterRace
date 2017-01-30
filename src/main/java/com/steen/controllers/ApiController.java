@@ -153,5 +153,20 @@ public class ApiController {
             String username = request.session().attribute("username");
             return historyModel.getJSON(username);
         });
+
+        post("/api/admin/chart1.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart1JSON();
+        });
+
+        post("/api/admin/chart2.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart2JSON();
+        });
+
+        post("/api/admin/chart3.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart3JSON();
+        });
     }
 }

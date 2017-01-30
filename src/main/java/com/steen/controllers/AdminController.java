@@ -121,21 +121,6 @@ public class AdminController {
             return adminModel.getUsersJSON();
         });
 
-        post("/api/admin/chart1.json", (request, response) -> {
-            adminModel.getSearch();
-            return adminModel.getChart1JSON();
-        });
-
-        post("/api/admin/chart2.json", (request, response) -> {
-            adminModel.getSearch();
-            return adminModel.getChart2JSON();
-        });
-
-        post("/api/admin/chart3.json", (request, response) -> {
-            adminModel.getSearch();
-            return adminModel.getChart3JSON();
-        });
-
         get("/admin/getUserData",(req,res)->{
             Map<String, Object> model = new HashMap<String, Object>();
             model.put("template", sfp + "html/admin.vtl");
