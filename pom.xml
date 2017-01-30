@@ -14,12 +14,7 @@
             <artifactId>spark-core</artifactId>
             <version>2.3</version>
         </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-jetty-embedded-9</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.json/json -->
         <dependency>
@@ -38,6 +33,9 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.6</version>
+            <type>jar</type>
+            <scope>compile</scope>
+
         </dependency>
 
         <dependency>
@@ -63,17 +61,6 @@
 
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.jboss.arquillian</groupId>
-                <artifactId>arquillian-bom</artifactId>
-                <version>1.1.12.Final</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
