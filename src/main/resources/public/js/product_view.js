@@ -87,7 +87,7 @@ function filldata(data) {
         content.append("<center><img id='ProductImage' src='" + item.games_image  + "' class='img-responsive'></center>");
         content.append("<div class='col-lg-2 col-lg-offset-4 col-md-offset-4 col-md-2 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3'/>");
         content.append("<div class='col-lg-2 col-md-6 col-sm-6'>");
-        content.append("</div><center><p id='ProductOmschrijving'>Omschrijving</p></center>");
+        content.append("</div><center><p id='ProductOmschrijving'></p></center>");
         content.append("</div>");
         content.append("<p><a class='btn btn-primary btn-lg' role='button' id='productViewCartButton"+ item.games_id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/> toevoegen aan winkelwagen</a></p>");
         productContent.append(content);

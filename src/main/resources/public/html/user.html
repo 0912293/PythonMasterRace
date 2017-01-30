@@ -1,18 +1,22 @@
 <h1>User: $username</h1>
-<div class="col-md-3">
-    <label>Wachtwoord veranderen</label>
-        <input id="wachtwoord" type="password" required="required" placeholder="Oud wachtwoord"><br><br>
-        <input id="n_wachtwoord" type="password" required="required" placeholder="Nieuw wachtwoord">
-        <input id="n2_wachtwoord" type="password" required="required" placeholder="Nieuw wachtwoord"><br><br>
-        <button type="button" class="btn btn-primary" onclick="changepass()">Veranderen</button>
+<div class="row">
 
+    <div class="col-md-2 col-md-offset-5 col-md-push-5">
+        <h3>Nav</h3>
+        <p class="nav_text"><a href="/user/orders"><span class="glyphicon glyphicon-book"></span> Orders</a></p>
+        <p class="nav_text"><a href="/user/favorieten"><span class="glyphicon glyphicon-heart"></span> Favorieten</a></p>
+        <p class="nav_text"><a href="/wishlist"><span class="glyphicon glyphicon-gift"></span> Wenslijst</a></p>
+    </div>
 
+    <div class="col-md-5 col-md-pull-7">
+        <h3>Wachtwoord veranderen</h3>
+            <input id="wachtwoord" type="password" required="required" placeholder="Oud wachtwoord"><br><br>
+            <input id="n_wachtwoord" type="password" required="required" placeholder="Nieuw wachtwoord"><br><br>
+            <input id="n2_wachtwoord" type="password" required="required" placeholder="Nieuw wachtwoord"><br><br>
+            <div class="col-md-5 col-xs-12">
+                <button type="button" class="btn btn-primary btn-block" onclick="changepass()">Veranderen</button>
+            </div>
+
+    </div>
 </div>
-<div class="col-md-2 col-md-offset-5">
-    <h3>Nav</h3>
-    <p><a href="/user/orders"><span class="glyphicon glyphicon-book"></span> Orders</a></p>
-    <p><a href="/user/favorieten"><span class="glyphicon glyphicon-heart"></span> Favorieten</a></p>
-    <p><a href="/wishlist"><span class="glyphicon glyphicon-gift"></span> Wenslijst</a></p>
-</div>
-
 <script src="/js/user.js"></script>

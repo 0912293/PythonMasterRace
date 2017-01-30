@@ -11,27 +11,29 @@
       <div class="modal-body">
         <form class="form-login">
           <div class="form-group row">
-          <div class="col-xs-3">
-            <label for="username">Gebruikersnaam</label>
+            <div class="col-xs-3">
+              <label for="username">Gebruikersnaam</label>
+            </div>
+            <div class="col-xs-2">
+              <input id="username" name="username" type="text" required="required">
+            </div>
           </div>
-          <div class="col-xs-2">
-            <input id="username" name="username" type="text" required="required">
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <label for="pass">Wachtwoord</label>
+            </div>
+            <div class="col-xs-2">
+              <input id="pass" name="pass" type="password" required="required">
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-xs-3">
-            <label for="pass">Wachtwoord</label>
-          </div>
-          <div class="col-xs-2">
-            <input id="pass" name="pass" type="password" required="required">
-          </div>
-        </div>
+            <a href="/p_reg" style="float:left;"><input type="button" class="btn btn-warning" value="Registreren"></a>
+            <button style="float:right;" type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+            <button style="float:right;" type="submit" class="btn btn-primary" data-toggle="modal" data-target="#login_s_modal">Log In</button>
+        </form>
 
         <div class="modal-footer">
-            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#login_s_modal">Log In</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
         </div>
-      </form>
+
       </div>
     </div>
   </div>

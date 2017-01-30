@@ -11,8 +11,14 @@
         </tr>
     </table>
     <ul id="deleteList"></ul>
-    <input id="deleteButton" class="btn btn-warning" type="button" value ="Verwijder uit wenslijst" onclick="deleterows()">
-    <input id="shareWishlist" class="btn btn-success"  type="button" value ="Get shareable link" onclick="getJsonUserCrypt()">
+    <div class="col-md-4 col-s-5 col-xs-12">
+        <input id="deleteButton" class="btn btn-block btn-danger" type="button" value ="Verwijder uit wenslijst" onclick="deleterows()">
+    </div>
+
+    <div class="col-md-4 col-s-5 col-xs-12">
+        <input id="shareWishlist" class="btn btn-block btn-success"  type="button" value ="Get shareable link" onclick="getJsonUserCrypt()">
+    </div>
+
 </div>
 
 <div class='col-md-9' id = 'viewTableDiv'>
