@@ -7,7 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
