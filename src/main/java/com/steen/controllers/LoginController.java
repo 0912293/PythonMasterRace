@@ -4,6 +4,8 @@ import com.steen.models.*;
 import static com.steen.models.LoginModel.checkBlacklist;
 import com.steen.session.User;
 import static com.steen.Main.p_layout;
+import static com.steen.Main.sfp;
+import static com.steen.models.LoginModel.checkBlacklist;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
 import static spark.Spark.get;

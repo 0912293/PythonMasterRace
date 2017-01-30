@@ -1,8 +1,8 @@
 $(function () {
     updateData();
+    get('/api/admincheck.ses', {}, showbutton);
+    retrieveJSON('/api/user.ses', {}, showWishlistButton)
 });
-var dict = {};
-$(document).ready(function(){get('/api/admincheck', dict, showbutton);});
 
 function showbutton(j){
     if(j[11] == "1") {
@@ -12,6 +12,15 @@ function showbutton(j){
     }
 }
 
+function showWishlistButton(data) {
+    var username = data.username;
+    console.log(username);
+    if (username !== undefined) {
+        if (data.username != "" && data.username != null) {
+            document.getElementById('wishlistButtonDiv').style.display = 'block';
+        }
+    }
+}
 
 function updateData() {
     var stdURL = "/api/product/view.json";
