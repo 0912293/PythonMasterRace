@@ -151,7 +151,7 @@ public class ApiController {
 
         post("/api/order_history.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(historyModel.getQuery(username));
+            return historyModel.getJSON(username);
         });
     }
 }

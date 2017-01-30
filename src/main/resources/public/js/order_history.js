@@ -1,42 +1,56 @@
-/**
- * Created by jesse on 26-1-2017.
- */
-
-
-$(document).ready(function () {
-    console.log("Check1");
+$(function () {
     updateData();
 });
 
 function updateData() {
     var stdURL = "/api/order_history.json";
-    getJson(stdURL);// + "?id=" + searchAppend);
-}
-
-function getJson(url) {
-    //console.log(url);
-    $.ajax({
-        type: 'POST',
-        url: url,
-        dataType: "json",
-        success: filltable,
-        error: function () {
-            console.log("Incorrect or missing JSON")
-        }
-    });
+    retrieveJSON(stdURL, {}, filltable);// + "?id=" + searchAppend);
 }
 
 function filltable(data) {
     var json = data;
     var tr = [];
-    $.each(json, function (i, item) {
+    var trMeta = [];
+    var rownr = 0;
+    $.each(json, function (i, order) {
+        var info = order.info;
 
-        tr = $('<tr/>');
-        //tr.append("<input type='hidden' id='" + item.games_id + "' value='" + item.games_id + "'/>");
-        tr.append("<td>" + item.order_id + "</td>");
-        tr.append("<td>" + item.order_pd + "</td>");
-        tr.append("<td>" + item.order_osc + "</td>");
-
+        tr = $('<tr class="rowHead"/>');
+        tr.append("<td><span id='exp_col_icon"+rownr+"' class='glyphicon glyphicon-plus'></button>");
+        tr.append("<td> <a href=/invoice?uid="+info.order_id+">" + info.order_id + "</a></td>");
+        tr.append("<td>" + info.order_pd + "</td>");
+        tr.append("<td>" + info.orderstatus_descr + "</td>");
         $('table').append(tr);
+
+        $('#exp_col_icon'+rownr++).click(function (){
+            var row = this.closest('tr.rowHead');
+            toggleRowMeta(row)
+        });
+
+
+        $.each(order.products, function (j, product) {
+            trMeta = $('<tr class="metaData" bgcolor="#e9e9e9" style="display: none"/>');
+            trMeta.append('<td/>');
+            trMeta.append('<td colspan="2">'+product.product_name+'</td>');
+            trMeta.append('<td>&euro;'+product.product_price+'</td>');
+            $('table').append(trMeta);
+        });
     });
+}
+
+function toggleRowMeta(row){
+    var rowHeads = $('.rowHead');
+    if (row !== undefined) {
+        $(row).find('span').attr('class', function (_, value) {
+            return value == 'glyphicon glyphicon-minus' ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus'
+        });
+        $(row).nextUntil('tr.rowHead').slideToggle(100, function () {
+        });
+    } else {
+        rowHeads.find('span').attr('class', function (_, value) {
+            return value == 'glyphicon glyphicon-minus' ? 'glyphicon glyphicon-plus' : 'glyphicon glyphicon-minus'
+        });
+        rowHeads.nextUntil('tr.rowHead').slideToggle(100, function () {
+        });
+    }
 }
