@@ -48,21 +48,21 @@ public class HistoryModel implements Model {
                 String ord_id = jsonObject.getString("order_id");
 
                 List<JSONObject> games_for_order = getFormattedResult(stmnt.executeQuery(
-                        "SELECT ogi.og_info_games_name, ogi.og_info_games_price " +
+                        "SELECT ogi.og_info_games_name, ogi.og_info_games_price, ogi.og_orderedproduct_id " +
                         "FROM ordered_game_info ogi, ordered_product op " +
                         "WHERE op.op_order_id = '"+ord_id+"' AND op.orderedproduct_id = ogi.og_orderedproduct_id"));
 
                 games_for_order = JSONUtil.replaceKeys(games_for_order,
-                        new String[] {"og_info_games_name", "og_info_games_price"},
-                        new String[] {"product_name", "product_price"});
+                        new String[] {"og_info_games_name", "og_info_games_price", "og_orderedproduct_id"},
+                        new String[] {"product_name", "product_price", "id"});
 
                 List<JSONObject> platforms_for_order = getFormattedResult(stmnt.executeQuery(
-                        "SELECT opi.opl_info_name, opi.opl_info_price " +
+                        "SELECT opi.opl_info_name, opi.opl_info_price, opi.opl_orderedproduct_id " +
                         "FROM ordered_platform_info opi, ordered_product op " +
                         "WHERE op.op_order_id = '"+ord_id+"' AND op.orderedproduct_id = opi.opl_orderedproduct_id"));
                 platforms_for_order = JSONUtil.replaceKeys(platforms_for_order,
-                        new String[] {"opl_info_name", "opl_info_price"},
-                        new String[] {"product_name", "product_price"});
+                        new String[] {"opl_info_name", "opl_info_price", "opl_orderedproduct_id"},
+                        new String[] {"product_name", "product_price", "id"});
 
 
                 if (games_for_order.size() > 0) {
