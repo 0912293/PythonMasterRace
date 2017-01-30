@@ -69,6 +69,13 @@
             #admin_btn_submit_edit_user{
                 margin-bottom: 20px;
             }
+            #cartchk{
+                width: 25px;
+                height: 25px;
+            }
+            #register-btn{
+                margin-bottom: 20px;
+            }
         }
 
         @media(min-width:768px){
@@ -118,6 +125,13 @@
                 min-width:100%
             }
             #admin_btn_submit_edit_user{
+                margin-bottom: 20px;
+            }
+            #cartchk{
+                width: 23px;
+                height: 23px;
+            }
+            #register-btn{
                 margin-bottom: 20px;
             }
         }
@@ -170,6 +184,13 @@
             }
             #admin_btn_submit_edit_user{
                 margin-bottom: 20px;
+            }
+            #cartchk{
+                width: 16px;
+                height: 16px;
+            }
+            #register-btn{
+                margin-bottom: 5px;
             }
         }
 
