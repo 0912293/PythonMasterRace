@@ -29,9 +29,9 @@ function filltable(data) {
     $.each(json, function (i, item) {
         tr = $('<tr/>');
         tr.append("<input type='hidden' id='" + item.og_id + "' value='" + item.og_id + "'/>");
-        tr.append("<td>" + item.og_info_games_name + "</td>");
-        tr.append("<td>" + item.og_info_games_price + "</td>");
-        tr.append("<td>" + item.og_info_games_platform+ "</td>");
+        tr.append("<td>" + item.games_name + "</td>");
+        tr.append("<td>" + item.games_price + "</td>");
+        tr.append("<td>" + item.games_platform+ "</td>");
 
         $('table').append(tr);
     })

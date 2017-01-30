@@ -23,9 +23,9 @@ public class FavoritesModel implements Model {
 
     public static String getQuery(String username){
         return "SELECT * FROM " +
-                "favorites f, ordered_game_info og " +
+                "favorites f, games g " +
                 "WHERE f.username = " + "'" + username + "'" +
-                "AND f.og_id = og.og_orderedproduct_id";
+                "AND f.og_id = g.games_id";
     }
 
     public Boolean checkInDatabase(String username, int id){
