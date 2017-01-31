@@ -65,6 +65,7 @@ public class CartModel implements Model {
     public String getCartJSON() {
         // Get all products from id's
         String query = "SELECT * FROM games g WHERE ";
+        String queryPlatform = "SELECT * FROM platforms p WHERE ";
         if (products.size() <= 0) {
             return "[]";
         }
@@ -75,6 +76,8 @@ public class CartModel implements Model {
             } else first = false;
             query += "g.games_id = " + k + "";
         }
+
+
 
         ResultSet rs = Search.getResultSet(query); // ResultSet containing all games with listed product ID
         List<JSONObject> jsonList = getFormattedResult(rs);

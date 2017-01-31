@@ -83,27 +83,26 @@ function updateTable(searchAppend) {
         'order': sortOption,
         'filter': filterOption
     };
+
+    $('#ProductContainer').empty();
     retrieveJSON(stdURL1, dict, fillplatform);
     retrieveJSON(stdURL, dict, filltable);
 }
-
+var productContainer = $('#ProductContainer');
 function filltable(json) {
-    var productContainer = $('#ProductContainer');
 
-    productContainer.empty();
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.gameId));
         $('#productListCartButton' + item.gameId).click(getCartActionFunc(item.gameId,item.name,item.image, 0))
-    })
+    });
 }
 
 function fillplatform(json) {
-    var productContainer = $('#ProductContainer');
-    console.log("Check aflkadfjfa");
+    // var productContainer = $('#ProductContainer');
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
         $('#productListCartButton' + item.platform_id).click(getCartActionFunc(item.platform_id, item.platform_name, item.platform_image, 0))
-    })
+    });
 }
 
 function ConstructProductbox(name, price, image, id) {
