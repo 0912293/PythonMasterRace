@@ -3,16 +3,32 @@ var filterOption = null;
 var input = document.querySelector('input[type= text][id = "search"]');
 
 $(function () {
+    enableLoader();
     $('.form-filter').on("submit", function(e) {
+        enableLoader();
         e.preventDefault();
         updateTable($('#search').val())
+        disableLoader()
     });
     $('#sortoption').change(function(){ checkSort() });
     $('#filteroption').change(function () { checkFilter() });
     updateDropdowns();
     checkSort();
     updateTable();
+    disableLoader();
 });
+
+function enableLoader() {
+    document.getElementById('LoaderSvg').style.display = 'inline';
+    document.getElementById('ProductContainer').style.display = 'none'
+}
+
+function disableLoader() {
+    wacht(4500).then(() => {
+        document.getElementById('LoaderSvg').style.display = 'none';
+        document.getElementById('ProductContainer').style.display = 'inline'
+    });
+}
 
 function checkSort() {
     var optObj = $('#sortoption').find(":selected");
@@ -106,3 +122,8 @@ function ConstructProductbox(name, price, image, id) {
         content.append("</div></div></div>");
     return content;
 }
+
+function wacht(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
