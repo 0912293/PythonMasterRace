@@ -23,7 +23,7 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
-
+        HistoryModel historyModel = (HistoryModel) models.get("history");
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
         post("/api/user.ses", ((request, response) -> {
@@ -113,7 +113,7 @@ public class ApiController {
 
         post("/api/favorites.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(wishlistModel.getQuery(username));
+            return apiModel.getJSON(FavoritesModel.getQuery(username));
         }
         );
 
@@ -152,6 +152,26 @@ public class ApiController {
             invoiceJson.put("userinfo", userJson);
             invoiceJson.put("products", productJson);
             return invoiceJson;
+        });
+
+        post("/api/order_history.json", (request, response) -> {
+            String username = request.session().attribute("username");
+            return historyModel.getJSON(username);
+        });
+
+        post("/api/admin/chart1.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart1JSON();
+        });
+
+        post("/api/admin/chart2.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart2JSON();
+        });
+
+        post("/api/admin/chart3.json", (request, response) -> {
+            adminModel.getSearch();
+            return adminModel.getChart3JSON();
         });
     }
 }

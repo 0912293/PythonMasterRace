@@ -368,7 +368,7 @@ public class AdminModel implements Model {
     }
 
     public String getChart3JSON(){
-        Search csearch = new Search("SELECT admin as user, COUNT(username) as ucount FROM users");
+        Search csearch = new Search("SELECT admin as user, COUNT(username) AS ucount FROM users");
         csearch.addOrderParam("admin");
         return getJSON(csearch);
     }
