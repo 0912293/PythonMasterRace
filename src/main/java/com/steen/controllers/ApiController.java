@@ -23,6 +23,7 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+        AdminChartModel adminChartModel = (AdminChartModel) models.get("admin_chart");
 
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
@@ -31,20 +32,18 @@ public class ApiController {
         }));
 
         get("/api/admincheck.ses", (req, res) -> {
-            return adminModel.getAdmin(req.session().attribute("username"));
+            return adminChartModel.getAdmin(req.session().attribute("username"));
         });
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("orders");
-
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
             if (order != null && !order.equals("")) {
                 adminModel.getSearch().addOrderParam(order);
             }
-
             return apiModel.getJSON(adminModel.getSearch());
         });
 

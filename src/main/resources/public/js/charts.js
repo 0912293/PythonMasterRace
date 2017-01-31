@@ -2,25 +2,25 @@ google.charts.load('current', {packages: ['corechart'], callback: DrawCharts});
 
 var options = {
     'legend':'left',
-    'title':'orders per dag',
+    'title':'Orders per dag',
     'is3D':true,
-    'width':400,
+    'width':600,
     'height':300
 };
 
 var options2 = {
     'legend':'left',
-    'title':'Games per platform',
+    'title':'Top 10 games toegevoegd aan wenslijst',
     'is3D':false,
-    'width':400,
+    'width':600,
     'height':300
 };
 
 var options3 = {
     'legend':'left',
-    'title':'Amount of users per type',
+    'title':'Omzet per dag',
     'is3D':false,
-    'width':400,
+    'width':600,
     'height':300
 };
 
@@ -49,10 +49,10 @@ function drawChart2(jsn) {
     data2.addColumn('number', 'Amount');
     $.each(jsn, function (i, item) {
         data2.addRows([
-            [item.games_platform, parseInt(item.game_count)]
+            [item.games_name, parseInt(item.added)]
         ]);
     });
-    var chart2 = new google.visualization.PieChart(document.getElementById('testChart2'));     //google.visualization. CHART TYPE()
+    var chart2 = new google.visualization.BarChart(document.getElementById('testChart2'));     //google.visualization. CHART TYPE()
     chart2.draw(data2, options2);
 }
 
@@ -62,16 +62,10 @@ function drawChart3(jsn) {
     data3.addColumn('string', 'Name');
     data3.addColumn('number', 'Amount');
     $.each(jsn, function (i, item) {
-        if(parseInt(item.admin) == 1){
-            usertype = 'admins'
-        }
-        else{
-            usertype = 'users'
-        }
         data3.addRows([
-            [usertype, parseInt(item.ucount)]
+            [item.order_pd, parseInt(item.total)]
         ]);
     });
-    var chart3 = new google.visualization.PieChart(document.getElementById('testChart3'));     //google.visualization. CHART TYPE()
+    var chart3 = new google.visualization.ColumnChart(document.getElementById('testChart3'));     //google.visualization. CHART TYPE()
     chart3.draw(data3, options3);
 }

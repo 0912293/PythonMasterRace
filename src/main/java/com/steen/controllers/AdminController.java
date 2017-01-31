@@ -1,5 +1,6 @@
 package com.steen.controllers;
 
+import com.steen.models.AdminChartModel;
 import com.steen.models.AdminModel;
 import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
@@ -21,6 +22,7 @@ public class AdminController {
     public AdminController(final HashMap<String, Model> models) {
         AdminModel adminModel = (AdminModel) models.get("admin");
         AdminProductModel adminProductModel = (AdminProductModel) models.get("admin_product");
+        AdminChartModel adminChartModel = (AdminChartModel) models.get("admin_chart");
 
         before("/admin/*", (req,res) -> {
             if (!isAdmin(req)) {halt("401 - not an admin");}
@@ -123,17 +125,17 @@ public class AdminController {
 
         post("/api/admin/chart1.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart1JSON();
+            return adminChartModel.getChart1JSON();
         });
 
         post("/api/admin/chart2.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart2JSON();
+            return adminChartModel.getChart2JSON();
         });
 
         post("/api/admin/chart3.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart3JSON();
+            return adminChartModel.getChart3JSON();
         });
 
         get("/admin/getUserData",(req,res)->{
