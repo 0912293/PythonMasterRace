@@ -33,8 +33,8 @@ public class AdminChartModel implements Model{
 
     public String getChart2JSON(){
         Search csearch = new Search("SELECT COUNT(wishlist.games_id) AS added, games.games_name FROM wishlist, games WHERE " +
-                "wishlist.games_id = games.games_id group by wishlist.games_id ORDER BY added DESC LIMIT 10");
-        //No >.>
+                "wishlist.games_id = games.games_id group by wishlist.games_id");
+        csearch.addOrderParam("added DESC LIMIT 10");
         return getJSON(csearch);
     }
 
@@ -43,8 +43,8 @@ public class AdminChartModel implements Model{
                 "webshopdb.order.order_pd " +
                 "FROM ordered_game_info, webshopdb.order, ordered_product " +
                 "WHERE ordered_game_info.og_orderedproduct_id = ordered_product.orderedproduct_id " +
-                "AND ordered_product.op_order_id = webshopdb.order.order_id " +
-                "GROUP BY webshopdb.order.order_pd;");
+                "AND ordered_product.op_order_id = webshopdb.order.order_id ");
+        csearch.addGroupParam("webshopdb.order.order_pd;");
         return getJSON(csearch);
     }
 
