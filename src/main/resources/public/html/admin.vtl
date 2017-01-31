@@ -12,14 +12,15 @@
         <form name="edit_form"  action="/admin/update_user" method="post">
             <div class="form-group row">
                 <label for="user" class="col-xs-3 col-form-label">Gebruikersnaam</label>
-                <div class="col-xs-10">
+                <div class="col-xs-8">
                     <input class="form-control" name="user" type="text" id="usern"
                            required="required" value=$user>
                 </div>
             </div>
+
             <div class="form-group row">
                 <label for="email" class="col-xs-3 col-form-label">Email</label>
-                <div class="col-xs-10">
+                <div class="col-xs-8">
                     <input class="form-control" name="email" type="email" id="email"
                            required="required" value="$email">
                 </div>
@@ -27,11 +28,11 @@
 
             <div class="form-group row">
                 <label for="name" class="col-xs-3 col-form-label">Naam</label>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                     <input class="form-control" type="text" name="name" id="name" value=$name
                            required="required">
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-4">
                     <input class="form-control" type="text" name="sur" id="sur" value=$surname
                            required="required">
                 </div>
@@ -47,7 +48,7 @@
                     <input class="form-control" type="number" name="month" id="month" value=$month  min="1" max="12"
                            required="required">
                 </div>
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                     <input class="form-control" type="number" name="year" id="year" value=$year min="1900" max="2010"
                            required="required">
                 </div>
@@ -55,7 +56,7 @@
 
             <div class="form-group row">
                 <label for="street" class="col-xs-3 col-form-label">Adres</label>
-                <div class="col-xs-5">
+                <div class="col-xs-4">
                     <input class="form-control" type="text" name="street" id="street" value=$street placeholder="Ex.: Wijnhaven"
                            required="required">
                 </div>
@@ -63,7 +64,7 @@
                     <input class="form-control" type="number" name="number" id="number" value=$number
                            required="required">
                 </div>
-                <div class="col-xs-3">
+                <div class="col-xs-2">
                     <input class="form-control" type="text" name="postal" id="postal" value=$postal
                            required="required">
                 </div>

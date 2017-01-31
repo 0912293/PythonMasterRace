@@ -3,7 +3,10 @@ package com.steen.controllers;
 import com.steen.models.FavoritesModel;
 import com.steen.models.Model;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.steen.velocity.VelocityTemplateEngine;
@@ -32,19 +35,15 @@ public class FavoritesController {
             model.put("correctinfo", request.session().attribute("correctinfo"));
             model.put("admin", request.session().attribute("admin"));
 
-
-
-
-
             return new ModelAndView(model, p_layout);
 
         }, new VelocityTemplateEngine());
 
         post("/favorites/add", (request, response) -> {
-
             String username = request.session().attribute("username");
             int id;
             id = Integer.parseInt(request.queryParams("id"));
+            System.out.println(id);
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
@@ -61,6 +60,28 @@ public class FavoritesController {
             }
         });
 
+        post("/favorites/delete", (request, response) -> {
+            String username = request.session().attribute("username");
 
+            List<String> toDelete = new ArrayList<String>();
+            Integer i = 0;
+            String key = i.toString();
+            while(request.queryParams(key) != null){
+                toDelete.add(request.queryParams(key));
+                i++;
+                key = i.toString();
+
+            }
+            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            for (String a: toDelete){
+
+                int b = Integer.parseInt(a);
+                toDelete2.add(b);
+            }
+
+            favoritesModel.deleteItem(username, toDelete2);
+            //return "Producten zijn uit favorieten verwijderd!";
+            return null;
+        });
     }
 }
