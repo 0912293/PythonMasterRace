@@ -32,7 +32,8 @@ function updatePage(data) {
     var table = $('#cartTable');
     $.each(data, function (i, item) {
         table.find('tbody')
-            .append($('<tr>')
+            if(item.games_name != undefined || item.games_name != null){
+             table.append($('<tr>')
                 .append(
                     "<td><input type = 'checkbox'  value='"+ item.games_id + "' id = 'cartchk'" + item.games_id + "'/></td>" +
                     "<td>" + item.games_name + "</td>" +
@@ -40,8 +41,21 @@ function updatePage(data) {
                     "<td>" + item.games_price + "</td>" +
                     "<td>" + item.amount + "</td>"
                 )
-            );
+            );}
+            else{
+                console.log("Test2");
+                if(item.platform_name != undefined || item.platform_name != null){
+                table.append($('<tr>')
+                .append(
+                        "<td><input type = 'checkbox'  value='"+ item.platform_id + "' id = 'cartchk'" + item.platform_id + "'/></td>" +
+                        "<td>" + item.platform_name + "</td>" +
+                        "<td>" + item.platform_colour + "</td>" +
+                        "<td>" + item.platform_price + "</td>" +
+                        "<td>" + item.amount + "</td>"
+                    ));}
+            }
     });
+
     $("[id = cartchk]").change(function() {
         if(this.checked) {
             $('#deleteButton').removeAttr("disabled");
