@@ -35,9 +35,9 @@ function filltable(data) {
             trMeta.append('<td>&euro;'+product.product_price+'</td>');
             $('table').append(trMeta);
             if (product.g_id != -1){
-                $('#favbutton'+product.id).click(addFav(product.g_id, true))
+                $('#favbutton'+product.id).click(addFav(product.g_id, 1))
             }else{
-                $('#favbutton'+product.id).click(addFav(product.p_id, false))
+                $('#favbutton'+product.id).click(addFav(product.p_id, 0))
             }
 
         });
