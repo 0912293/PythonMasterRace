@@ -1,0 +1,119 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 200 113" style="enable-background:new 0 0 200 113;" xml:space="preserve">
+	<style type="text/css">
+		.HoofdCirkel {
+			fill: #292C2F
+		}
+		
+		.SubCirkel {
+		  animation: 4s linear infinite;
+		  fill:#E6E6E6;
+		}
+
+		.SubCirkel1 {
+		  animation-name: SubCirkel1;
+		}
+
+		.SubCirkel2 {
+		  animation-name: SubCirkel2;
+		}
+
+		.SubCirkel3 {
+		  animation-name: SubCirkel3;
+		}
+
+		.SubCirkel4 {
+		  animation-name: SubCirkel4;
+		}
+
+		.SubCirkel5 {
+		  animation-name: SubCirkel5;
+		}
+
+		@keyframes SubCirkel1 {
+			0%, 6% {
+				fill: #E6E6E6;
+			}
+			
+			16%, 90% {
+				fill: #779ECB;
+			}
+			100% {
+				fill: #E6E6E6;
+			}
+		}
+
+		@keyframes SubCirkel2 {
+			0%, 22% {
+				fill: #E6E6E6;
+			}
+			
+			32%, 88% {
+				fill: #779ECB;
+			}
+			98%, 100% {
+				fill: #E6E6E6;
+			}
+		}
+
+		@keyframes SubCirkel3 {
+			0%, 38% {
+				fill: #E6E6E6;
+			}
+			
+			48%, 86% {
+				fill: #779ECB;
+			}
+			96%, 100%{
+				fill: #E6E6E6;
+			}
+		}
+
+		@keyframes SubCirkel4 {
+			0%, 54%{
+				fill: #E6E6E6;
+			}
+			
+			64%, 84%{
+				fill: #779ECB;
+			}
+			94%, 100%{
+				fill: #E6E6E6;
+			}
+		}
+
+		@keyframes SubCirkel5 {
+			0%, 70%{
+				fill: #E6E6E6;
+			}
+			
+			80%, 82%{
+				fill: #779ECB;
+			}
+			92%, 100%{
+				fill: #E6E6E6;
+			}
+		}
+	</style>
+	<g id="Achtergrond">
+		<ellipse class="HoofdCirkel" cx="19.6238289"  cy="53.9732246" rx="19.6238289" ry="17.8045521"/>
+		<ellipse class="HoofdCirkel" cx="59.6238289"  cy="53.9732246" rx="19.6238289" ry="17.8045521"/>
+		<ellipse class="HoofdCirkel" cx="99.6238251"  cy="53.9732246" rx="19.6238289" ry="17.8045521"/>
+		<ellipse class="HoofdCirkel" cx="139.6238251" cy="53.9732246" rx="19.6238289" ry="17.8045521"/>
+		<ellipse class="HoofdCirkel" cx="179.6238251" cy="53.9732246" rx="19.6238289" ry="17.8045521"/>
+	</g>
+	<g id="Laag1">
+		<circle id="SubCirkel1" class="SubCirkel SubCirkel1" fill="#E6E6E6" cx="19.6372013" cy="53.9732246" r="10"/>
+	</g>
+	<g id="Laag2">
+		<circle id="SubCirkel2" class="SubCirkel SubCirkel2" fill="#E6E6E6" cx="59.6372032" cy="53.9732246" r="10"/>
+	</g>
+	<g id="Laag3">
+		<circle id="SubCirkel3" class="SubCirkel SubCirkel3" fill="#E6E6E6" cx="99.6371994" cy="53.9732246" r="10"/>
+	</g>
+	<g id="Laag4">
+		<circle id="SubCirkel4" class="SubCirkel SubCirkel4" fill="#E6E6E6" cx="139.637207" cy="53.9732246" r="10"/>
+	</g>
+	<g id="Laag5">
+		<circle id="SubCirkel5" class="SubCirkel SubCirkel5" fill="#E6E6E6" cx="179.637207" cy="53.9732246" r="10"/>
+	</g>
+</svg>

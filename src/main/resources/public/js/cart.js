@@ -30,6 +30,7 @@ function updatePage(data) {
     }
 
     var table = $('#cartTable');
+    table.find("tr:gt(0)").remove();
     $.each(data, function (i, item) {
         table.find('tbody')
             .append($('<tr>')
@@ -62,8 +63,6 @@ function deleteSelectedRows() {
         $(this).closest('tr').remove();
         //$('[id = deleteList]').append($(this).val());
         var key = i.toString();
-        console.log("The key = " + key);
-        console.log("The value = " + $(this).val());
         dict["p_id" + key] = ($(this).val());
         i++
     });
