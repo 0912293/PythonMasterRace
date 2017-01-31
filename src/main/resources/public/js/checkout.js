@@ -8,7 +8,7 @@ $(function() {
                 "to" : $('#mailadressTextCheck').val()
             };
             post("/mail", dict, function (data) {
-                alert("sent");
+                SpawnNotification('Mail - Actie: ', 'Verzonden', '/img/okIcon.png', 5000);
             })
         });
         return false;

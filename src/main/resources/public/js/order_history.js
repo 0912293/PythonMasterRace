@@ -65,7 +65,7 @@ function addFav(id, isGame){
 
     return function () {
         post("/favorites/add", {'id':id, 'isGame' : isGame}, function (msg) {
-            alert(msg)
+            SpawnNotification('Favorieten - actie: ', msg, '/img/okIcon.png', 5000);
         });
     }
 }

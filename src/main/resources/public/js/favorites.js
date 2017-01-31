@@ -70,7 +70,7 @@ function deleteSQL(dict) {
         url: "/favorites/delete",
         data: dict,
         success: function (data) {
-            alert(data)
+            SpawnNotification('Favorieten - Actie: ', data, '/img/deleteIcon.png', 5000);
         }
     });
 }

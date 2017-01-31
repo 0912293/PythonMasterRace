@@ -12,7 +12,7 @@ function addgame() {
     };
     post('/admin/product/add/game', dict, function (data) {
         if(data !== undefined){
-            alert(data);
+            SpawnNotification('Admin - Product: ', data, '/img/infoIcon.png', 5000);
         }
         reload();
     });
@@ -32,7 +32,7 @@ function addplatform() {
     };
     post('/admin/product/add/platform', dict, function (data) {
         if(data !== undefined){
-            alert(data);
+            SpawnNotification('Admin - platform: ', data, '/img/infoIcon.png', 5000);
         }
         reload();
     });
