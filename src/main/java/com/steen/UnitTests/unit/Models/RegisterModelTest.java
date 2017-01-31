@@ -119,9 +119,4 @@ public class RegisterModelTest {
         //Same as all the setters, but just in one method. The others work, so this does as well.
     }
 
-    @Test
-    public void parseReg() throws Exception {
-        //Only testable with an integration test due to SQL and private methods.
-    }
-
 }

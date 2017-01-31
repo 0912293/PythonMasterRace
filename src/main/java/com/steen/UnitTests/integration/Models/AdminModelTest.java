@@ -33,6 +33,7 @@ public class AdminModelTest {
     @After
     public void tearDown() throws Exception {
         this.Model = null;
+        this.connection = null;
         System.gc();
     }
 
