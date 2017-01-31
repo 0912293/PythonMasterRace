@@ -3,9 +3,11 @@ package com.steen.models;
 import com.steen.Main;
 import com.sun.istack.internal.Nullable;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by jesse on 23-1-2017.
@@ -17,6 +19,7 @@ public class FavoritesModel implements Model {
 
 
     private String insertquery;
+    private ArrayList<String> deleteList = new ArrayList<>();
     public FavoritesModel(){}
 
 
@@ -64,5 +67,32 @@ public class FavoritesModel implements Model {
                 "" + id + ");";
 
         System.out.print(this.insertquery);
+    }
+
+    public void deleteItem(String username, ArrayList<Integer> list){
+        updateDelete(username, list);
+        try{
+            Statement myStmt = connection.createStatement();
+            for (String item : deleteList) {
+                myStmt.execute(item);
+
+            }
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void updateDelete(String username, ArrayList<Integer> list){
+        String result = "";
+        ArrayList<String> sql_list = new ArrayList<>();
+        for(int item: list){
+            result = "DELETE FROM favorites " +
+                    "WHERE favorites.username = '" + username + "' " +
+                    "AND favorites.og_id = " + item + ";";
+            sql_list.add(result);
+        }
+        this.deleteList = sql_list;
+
     }
 }

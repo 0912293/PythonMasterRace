@@ -3,7 +3,10 @@ package com.steen.controllers;
 import com.steen.models.FavoritesModel;
 import com.steen.models.Model;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.steen.velocity.VelocityTemplateEngine;
@@ -57,6 +60,28 @@ public class FavoritesController {
             }
         });
 
+        post("/favorites/delete", (request, response) -> {
+            String username = request.session().attribute("username");
 
+            List<String> toDelete = new ArrayList<String>();
+            Integer i = 0;
+            String key = i.toString();
+            while(request.queryParams(key) != null){
+                toDelete.add(request.queryParams(key));
+                i++;
+                key = i.toString();
+
+            }
+            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            for (String a: toDelete){
+
+                int b = Integer.parseInt(a);
+                toDelete2.add(b);
+            }
+
+            favoritesModel.deleteItem(username, toDelete2);
+            //return "Producten zijn uit favorieten verwijderd!";
+            return null;
+        });
     }
 }
