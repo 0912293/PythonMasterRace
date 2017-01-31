@@ -84,8 +84,6 @@ public class ApiController {
             String search = request.queryParams("search");
             String order = request.queryParams("order");
             String filter = request.queryParams("filter");
-            System.out.println("Order check" + order);
-            System.out.println("Filter check" + filter);
 
             if (search != null && !search.equals("null") && !search.equals("")) {
                 platformModel.getSearch().addFilterParam("platform_name", search, Filter.Operator.LIKE);
@@ -96,7 +94,6 @@ public class ApiController {
             if (filter != null && !filter.equals("null") && !filter.equals("")) {
                 platformModel.getSearch().addFilterParam(filter);
             }
-            System.out.println(apiModel.getJSON(platformModel.getSearch()));
             return apiModel.getJSON(platformModel.getSearch());
         });
 
