@@ -26,6 +26,14 @@ public class ApiController {
         HistoryModel historyModel = (HistoryModel) models.get("history");
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
+        post("/api/user.ses", ((request, response) -> {
+            return new JSONObject("{ username :" + request.session().attribute("username")+" }");
+        }));
+
+        get("/api/admincheck.ses", (req, res) -> {
+            return adminModel.getAdmin(req.session().attribute("username"));
+        });
+
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("orders");
@@ -68,9 +76,6 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
-        post("/session/user.ses", ((request, response) -> {
-            return new JSONObject("{ username :" + request.session().attribute("username")+" }");
-        }));
 
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();

@@ -1,8 +1,8 @@
 $(function () {
     updateData();
+    get('/api/admincheck.ses', {}, showbutton);
+    retrieveJSON('/api/user.ses', {}, showWishlistButton)
 });
-var dict = {};
-$(document).ready(function(){get('/api/admincheck', dict, showbutton);});
 
 function showbutton(j){
     if(j[11] == "1") {
@@ -12,6 +12,15 @@ function showbutton(j){
     }
 }
 
+function showWishlistButton(data) {
+    var username = data.username;
+    console.log(username);
+    if (username !== undefined) {
+        if (data.username != "" && data.username != null) {
+            document.getElementById('wishlistButtonDiv').style.display = 'block';
+        }
+    }
+}
 
 function updateData() {
     var stdURL = "/api/product/view.json";
@@ -78,7 +87,7 @@ function filldata(data) {
         content.append("<center><img id='ProductImage' src='" + item.games_image  + "' class='img-responsive'></center>");
         content.append("<div class='col-lg-2 col-lg-offset-4 col-md-offset-4 col-md-2 col-sm-offset-3 col-sm-3 col-xs-offset-3 col-xs-3'/>");
         content.append("<div class='col-lg-2 col-md-6 col-sm-6'>");
-        content.append("</div><center><p id='ProductOmschrijving'>Omschrijving</p></center>");
+        content.append("</div><center><p id='ProductOmschrijving'></p></center>");
         content.append("</div>");
         content.append("<p><a class='btn btn-primary btn-lg' role='button' id='productViewCartButton"+ item.games_id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'/> toevoegen aan winkelwagen</a></p>");
         productContent.append(content);

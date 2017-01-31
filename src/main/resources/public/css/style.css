@@ -19,3 +19,185 @@
         .btn-fav:active {
             background-color:blue;
         }
+
+        @media(max-width:767px){
+            body{padding-top:300px;}
+            #imageBox{
+                width:90%;
+            }
+            .caroImg{
+                width:100%;
+            }
+            #game_price{
+                font-size: 110%;
+            }
+            #game_name{
+                font-size: 150%;
+            }
+            #ProductName{
+                padding: 50px 0 70px 0;
+            }
+            #ProductImage{
+                padding: 20px 0 50px 0;
+            }
+            #sortoption{
+                width: 90%;
+                height: 35px;
+                margin-bottom:20px;
+            }
+            #filteroption{
+                width: 90%;
+                height: 35px;
+            }
+            #chk{
+                width: 25px;
+                height: 25px;
+            }
+            #deleteButton{
+                margin-bottom: 20px;
+            }
+            .nav_text{
+                font-size:115%;
+            }
+            #admin_nav{
+                margin-bottom: 20px;
+            }
+            #admin_edit_user_btn{
+                display: block;
+                min-width:100%
+            }
+            #admin_btn_submit_edit_user{
+                margin-bottom: 20px;
+            }
+            #cartchk{
+                width: 25px;
+                height: 25px;
+            }
+            #register-btn{
+                margin-bottom: 20px;
+            }
+        }
+
+        @media(min-width:768px){
+            body{padding-top:70px;}
+            #imageBox{
+                width:90%;
+            }
+            .caroImg{
+                width:100%;
+            }
+            #game_price{
+                font-size: 110%;
+            }
+            #game_name{
+                font-size: 150%;
+            }
+            #ProductName{
+                padding: 50px 0 70px 0;
+            }
+            #ProductImage{
+                padding: 20px 0 50px 0;
+            }
+            #sortoption{
+                width: 90%;
+                height: 35px;
+                margin-bottom:20px;
+            }
+            #filteroption{
+                width: 90%;
+                height: 35px;
+            }
+            #chk{
+                width: 24px;
+                height: 24px;
+            }
+            #deleteButton{
+                margin-bottom: 20px;
+            }
+            .nav_text{
+                font-size:115%;
+            }
+            #admin_nav{
+                margin-bottom: 20px;
+            }
+            #admin_edit_user_btn{
+                display: block;
+                min-width:100%
+            }
+            #admin_btn_submit_edit_user{
+                margin-bottom: 20px;
+            }
+            #cartchk{
+                width: 23px;
+                height: 23px;
+            }
+            #register-btn{
+                margin-bottom: 20px;
+            }
+        }
+
+        @media(min-width:992px){
+            body{padding-top:70px;}
+            #imageBox{
+                width:95%;
+            }
+            .caroImg{
+                width:100%;
+            }
+            #game_price{
+                font-size: 100%;
+            }
+            #game_name{
+                font-size: 100%;
+            }
+            #ProductName{
+                padding: 10px 0 15px 0;
+            }
+            #ProductImage{
+                padding: 5px 0 10px 0;
+            }
+            #sortoption{
+                width: 90%;
+                height: 25px;
+                margin-bottom:20px;
+            }
+            #filteroption{
+                width: 90%;
+                height: 25px;
+            }
+            #chk{
+                width: 16px;
+                height: 16px;
+            }
+            #deleteButton{
+                margin-bottom: 0px;
+            }
+            .nav_text{
+                font-size:100%;
+            }
+            #admin_nav{
+                margin-bottom: 5px;
+            }
+            #admin_edit_user_btn{
+                display: block;
+                min-width:100%
+            }
+            #admin_btn_submit_edit_user{
+                margin-bottom: 20px;
+            }
+            #cartchk{
+                width: 16px;
+                height: 16px;
+            }
+            #register-btn{
+                margin-bottom: 5px;
+            }
+        }
+
+        @media(min-width:1200px){
+            body{padding-top:70px;}
+            #imageBox{
+                width: 1024px;
+                height:300px;
+            }
+        }

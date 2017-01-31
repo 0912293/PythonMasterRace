@@ -208,10 +208,6 @@ public class AdminController {
             return "success";
         });
 
-        get("/api/admincheck", (req, res) -> {
-            return adminModel.getAdmin(req.session().attribute("username"));
-        });
-
         post("/api/product/id", (req, res) -> {
             try{
                 id = Integer.parseInt(req.queryParams("id"));

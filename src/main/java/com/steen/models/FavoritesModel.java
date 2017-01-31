@@ -1,7 +1,6 @@
 package com.steen.models;
 
 import com.steen.Main;
-import com.sun.istack.internal.Nullable;
 
 import java.sql.Array;
 import java.sql.Connection;
