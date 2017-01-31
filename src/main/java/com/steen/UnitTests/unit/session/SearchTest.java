@@ -4,8 +4,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.*;
+
 /**
- * Created by Lennard Kras on 18-1-2017.
+ * Created by Lennard Kras on 31-1-2017.
  */
 public class SearchTest {
     @Before
@@ -59,11 +61,6 @@ public class SearchTest {
     }
 
     @Test
-    public void getObjects() throws Exception {
-
-    }
-
-    @Test
     public void getFilter() throws Exception {
 
     }
@@ -72,4 +69,5 @@ public class SearchTest {
     public void hasFilter() throws Exception {
 
     }
+
 }

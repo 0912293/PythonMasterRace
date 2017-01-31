@@ -47,32 +47,31 @@ ModelTests:
 		
 Session:
 	Filter:
-		status:
-		info:
+		status: niet begonnen
+		info: alleen unit
 	Insert:
-		status:
-		info:
+		status: niet begonnen
+		info: Integratie en unit
 	OrderBy:
-		status:
-		info:
-	
+		status: niet begonnen
+		info: alleen unit
 	Search:
-		status:
-		info:
-	
+		status: niet begonnen
+		info: Integratie en unit
 	User:
-		status:
-		info:
+		status: niet begonnen
+		info: Alleen unit. Niet heel interresant om te testen, want alleen maar getters en setters.
+
 Util:
 	DateBuilder:
-		status:
-		info:
+		status: niet begonnen
+		info: Alleen unit
 	JSONUtil:
-		status:
-		info:
+		status: niet begonnen
+		info: Alleen unit
 	SQLToJSON:
-		status:
-		info:
+		status: niet begonnen
+		info: Alleen unit
 	ViewUtil:
 		status:
 		info:

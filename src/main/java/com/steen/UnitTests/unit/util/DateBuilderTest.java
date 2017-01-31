@@ -1,4 +1,4 @@
-package com.steen.UnitTests.integration.session;
+package com.steen.UnitTests.unit.util;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Lennard Kras on 31-1-2017.
  */
-public class SearchTest {
+public class DateBuilderTest {
     @Before
     public void setUp() throws Exception {
 
@@ -21,17 +21,12 @@ public class SearchTest {
     }
 
     @Test
-    public void getResultSet() throws Exception {
+    public void build() throws Exception {
 
     }
 
     @Test
-    public void executeNonQuery() throws Exception {
-
-    }
-
-    @Test
-    public void getResultSet1() throws Exception {
+    public void getDate() throws Exception {
 
     }
 

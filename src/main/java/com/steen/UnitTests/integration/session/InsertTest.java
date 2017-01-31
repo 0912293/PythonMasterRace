@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 /**
  * Created by Lennard Kras on 31-1-2017.
  */
-public class SearchTest {
+public class InsertTest {
     @Before
     public void setUp() throws Exception {
 
@@ -21,17 +21,7 @@ public class SearchTest {
     }
 
     @Test
-    public void getResultSet() throws Exception {
-
-    }
-
-    @Test
-    public void executeNonQuery() throws Exception {
-
-    }
-
-    @Test
-    public void getResultSet1() throws Exception {
+    public void executeQuery() throws Exception {
 
     }
 
