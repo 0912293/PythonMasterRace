@@ -49,7 +49,6 @@ public class Search {
 
     public static ResultSet getResultSet(String query) {
         ResultSet resultSet = null;
-        System.out.println("De query is " + query);
         try {
             PreparedStatement myStmt = connection.prepareStatement(query);
             resultSet = myStmt.executeQuery(query);

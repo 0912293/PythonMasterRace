@@ -9,10 +9,19 @@ $(function () {
     });
     $('#sortoption').change(function(){ checkSort() });
     $('#filteroption').change(function () { checkFilter() });
-    updateDropdowns();
-    checkSort();
-    updateTable();
+    updateAll()
 });
+
+function checkAll() {
+    checkSort();
+    checkFilter();
+}
+
+function updateAll() {
+    checkAll();
+    updateDropdowns();
+    updateTable()
+}
 
 function checkSort() {
     var optObj = $('#sortoption').find(":selected");
@@ -28,7 +37,6 @@ function checkSort() {
     } else if (opt == "N_DESC") {
         sortOption = "games.games_name DESC";
     }
-    updateTable()
 }
 
 function checkFilter() {
@@ -41,11 +49,9 @@ function checkFilter() {
     } else if (optObj.parent().attr('label') == "Platform") {
         filterOption = "games.games_platform=" + "'" + opt + "'";
     }
-    updateTable();
 }
 
 function updateDropdowns() {
-    checkSort();
     var dict = { 'selector': 0};
     retrieveJSON("/api/product/filtering.json", dict, fillDropdownsOuter(0));
     dict = { 'selector': 1};
@@ -62,7 +68,6 @@ function fillDropdownsOuter(selector) {
             group = dropdown.find("optgroup[label='Platform']")
         }
         group.empty();
-        console.log(json);
         $.each(json, function (i, item) {
             if (selector == 0) {
                 group.append("<option>" + item.games_genre + "</option>")
@@ -90,7 +95,6 @@ function updateTable(searchAppend) {
 }
 var productContainer = $('#ProductContainer');
 function filltable(json) {
-
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.gameId));
         $('#productListCartButton' + item.gameId).click(getCartActionFunc(item.gameId,item.name,item.image, 0))
