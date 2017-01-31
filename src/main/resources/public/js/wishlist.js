@@ -101,7 +101,7 @@ function deleteSQL(dict) {
         url: "/wishlist/delete",
         data: dict,
         success: function (data) {
-            alert(data)
+            SpawnNotification('Wenslijst - Actie: ', data, '/img/deleteIcon.png', 5000);
         }
     });
 }

@@ -24,7 +24,7 @@ function enableLoader() {
 }
 
 function disableLoader() {
-    wacht(4500).then(() => {
+    wacht(2500).then(() => {
         document.getElementById('LoaderSvg').style.display = 'none';
         document.getElementById('ProductContainer').style.display = 'inline'
     });
@@ -117,7 +117,7 @@ function ConstructProductbox(name, price, image, id) {
         content.append("<h5 id='game_name'>" + name + "</h5>");
         content.append("<p id='game_price'>Prijs: &euro;" + price + "</p></a>");
         content.append("<div class='row'><div class='col-xs-7'><a href='/games/bekijken?id="+ id +"' class='btn btn-success btn-block' role='button' id='button1'>Bekijken</a></div></div> " +
-                "<div class='row'><div class='col-xs-7'><a href='#' class='btn btn-primary btn-block' role='button'  id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Toevoegen</a>" +
+                "<div class='row'><div class='col-xs-7'><a class='btn btn-primary btn-block' role='button'  id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Toevoegen</a>" +
                 "</div></div>");
         content.append("</div></div></div>");
     return content;
