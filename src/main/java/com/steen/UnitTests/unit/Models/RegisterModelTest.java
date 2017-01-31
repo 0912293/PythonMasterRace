@@ -1,4 +1,4 @@
-package com.steen.UnitTests.unit;
+package com.steen.UnitTests.unit.Models;
 
 import com.steen.util.DateBuilder;
 import com.steen.models.RegisterModel;

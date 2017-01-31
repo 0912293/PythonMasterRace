@@ -1,4 +1,4 @@
-package com.steen.UnitTests.integration.Models;
+package com.steen.UnitTests.unit.Models;
 
 import com.steen.models.ProductModel;
 import com.steen.session.Search;
