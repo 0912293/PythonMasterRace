@@ -38,16 +38,28 @@ function fillValues(data) {
 function fillTable(data) {
     var totalprice = 0.00;
     $.each(data, function (i, item) {
-            $('#tableBody')
-                .append($('<tr>')
+            var table = $('#tableBody')
+                if(item.games_name != undefined){
+                    table.append($('<tr>')
                     .append(
                         "<td>" + item.games_name + "</td>" +
                         "<td></td>" +
                         "<td>" + item.games_price + "</td>" +
                         "<td>" + item.amount + "</td>"
                     )
-                );
-            totalprice += item.games_price * item.amount;
+                );totalprice += item.games_price * item.amount;}
+                else{
+                    table.append($('<tr>')
+                        .append(
+                            "<td>" + item.platform_name + "</td>" +
+                            "<td></td>" +
+                            "<td>" + item.platform_price + "</td>" +
+                            "<td>" + item.amount + "</td>"
+                        )
+                    );
+                    totalprice += item.platform_price * item.amount;
+                }
+
         }
     );
     $('#totalCost').append("&euro;" + totalprice.toFixed(2));
