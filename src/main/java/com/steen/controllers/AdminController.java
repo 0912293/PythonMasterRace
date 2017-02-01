@@ -1,18 +1,13 @@
 package com.steen.controllers;
-
-import com.steen.models.AdminChartModel;
 import com.steen.models.AdminModel;
 import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
 import com.steen.session.Filter;
 import com.steen.velocity.VelocityTemplateEngine;
-import spark.ExceptionHandler;
 import spark.ModelAndView;
 import spark.Request;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
 import static spark.Spark.*;

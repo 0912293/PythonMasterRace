@@ -1,9 +1,7 @@
 package com.steen.controllers;
-
 import com.steen.models.*;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

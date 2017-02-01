@@ -1,5 +1,4 @@
 package com.steen.models;
-
 import com.steen.Cryptr;
 import com.steen.Main;
 import java.sql.Connection;

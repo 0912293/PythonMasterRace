@@ -1,5 +1,4 @@
 package com.steen.models;
-
 import com.steen.Cryptr;
 import com.steen.util.DateBuilder;
 import com.steen.Main;
@@ -8,7 +7,6 @@ import com.steen.session.Insert;
 import com.steen.session.User;
 import com.steen.util.SQLToJSON;
 import com.steen.session.Search;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

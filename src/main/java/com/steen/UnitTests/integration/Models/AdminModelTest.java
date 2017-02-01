@@ -1,20 +1,14 @@
 package com.steen.UnitTests.integration.Models;
-
 import com.steen.db.Connector;
 import com.steen.models.AdminModel;
 import com.steen.session.User;
-import org.apache.commons.lang.ObjectUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.Connection;
 import java.util.ArrayList;
 
-/**
- * Created by Lennard Kras on 18-1-2017.
- */
 public class AdminModelTest {
 
     AdminModel Model;

@@ -1,24 +1,14 @@
 package com.steen.controllers;
-
 import com.steen.models.HistoryModel;
 import com.steen.models.Model;
-
-import com.steen.models.Model;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
-
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
 import static spark.Spark.get;
-import static spark.Spark.post;
 
-/**
- * Created by jesse on 26-1-2017.
- */
 public class HistoryController {
 
     public HistoryController(final HashMap<String, Model> models){

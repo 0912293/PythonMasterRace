@@ -1,12 +1,7 @@
 package com.steen.session;
-
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import static com.steen.Main.connection;
-
-/**
- * Created by Lennard Kras on 24-1-2017.
- */
 
 public class Insert {
     private String TableName;

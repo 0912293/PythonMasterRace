@@ -1,8 +1,6 @@
 package com.steen.db;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import static com.steen.Main.connection;
 
 public class dbUtil {

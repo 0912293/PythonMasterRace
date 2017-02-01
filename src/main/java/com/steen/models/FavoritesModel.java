@@ -1,17 +1,9 @@
 package com.steen.models;
-
 import com.steen.Main;
-
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-/**
- * Created by jesse on 23-1-2017.
- */
-
 
 public class FavoritesModel implements Model {
     private Connection connection = Main.connection;

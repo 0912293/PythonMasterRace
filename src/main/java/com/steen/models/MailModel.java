@@ -1,5 +1,4 @@
 package com.steen.models;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Properties;
@@ -21,7 +20,7 @@ public class MailModel implements Model {
         mailMessage = new MimeMessage(mailSession);
         mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
         mailMessage.setSubject(subject);
-        mailMessage.setContent("<a href=\""+body+"\">Invoice</a>", "text/html; charset=utf-8");
+        mailMessage.setContent("<a href=\""+body+"\">"+body+"</a>", "text/html; charset=utf-8");
 
         MimeBodyPart messageBodyPart = new MimeBodyPart();
 

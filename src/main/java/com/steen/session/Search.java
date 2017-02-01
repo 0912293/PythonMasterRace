@@ -1,14 +1,11 @@
 package com.steen.session;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-
 import static com.steen.Main.connection;
 
 
 public class Search {
-//    private ProductModel productModel;
     private ArrayList<Object> objects = new ArrayList<>();
     private Filter filter;
     private OrderBy orderBy;
@@ -17,7 +14,6 @@ public class Search {
     private String filteredQuery;
 
     public Search(String baseQuery) {
-//        this.productModel = productModel;
         this.groupBy = new GroupBy();
         this.filter = new Filter();
         this.orderBy = new OrderBy();
@@ -36,7 +32,7 @@ public class Search {
         return getResultSet(filteredQuery);
     }
 
-    public int executeNonQuery() { //Use this in case of delete or update!
+    public int executeNonQuery() {
         updateQuery();
         int affectedRows = 0;
         try {
