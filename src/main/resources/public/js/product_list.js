@@ -3,7 +3,7 @@ var filterOption = null;
 var input = document.querySelector('input[type= text][id = "search"]');
 
 $(function () {
-    
+
     $('.form-filter').on("submit", function(e) {
         enableLoader();
         e.preventDefault();
@@ -20,7 +20,7 @@ $(function () {
 function checkAll() {
     checkSort();
     checkFilter();
-});
+}
 
 function updateAll() {
     enableLoader();
@@ -40,8 +40,6 @@ function disableLoader() {
         document.getElementById('LoaderSvg').style.display = 'none';
         document.getElementById('ProductContainer').style.display = 'inline'
     });
-}
-    checkFilter();
 }
 
 
@@ -127,7 +125,7 @@ function filltable(json) {
 function fillplatform(json) {
     // var productContainer = $('#ProductContainer');
     $.each(json, function (i, item) {
-        productContainer.append(ConstructProductbox(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
+        productContainer.append(kappaFix(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
         $('#productListCartButton' + item.platform_id).click(getCartActionFunc(item.platform_id, item.platform_name, item.platform_image, 0))
     });
 }
@@ -143,6 +141,20 @@ function ConstructProductbox(name, price, image, id) {
                 "<div class='row'><div class='col-xs-7'><a class='btn btn-primary btn-block' role='button'  id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Toevoegen</a>" +
                 "</div></div>");
         content.append("</div></div></div>");
+    return content;
+}
+
+function kappaFix(name, price, image, id) {
+    var content;
+    content = $("<div class='col-md-3 column productbox col-md-offset-0 col-xs-offset-3' id='productbox'>");
+    content.append("<img id='GamesPageImg' src='" + image + "'  class='img-responsive'>");
+    content.append("<div class='caption'>");
+    content.append("<h5 id='game_name'>" + name + "</h5>");
+    content.append("<p id='game_price'>Prijs: &euro;" + price + "</p></a>");
+    content.append(
+        "<div class='row'><div class='col-xs-7'><a class='btn btn-primary btn-block' role='button'  id='productListCartButton"+ id +"'><span class='glyphicon glyphicon-shopping-cart' aria-hidden='true'></span> Toevoegen</a>" +
+        "</div></div>");
+    content.append("</div></div></div>");
     return content;
 }
 
