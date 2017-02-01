@@ -134,7 +134,10 @@ public class ApiController {
 
         post("/api/favorites.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(FavoritesModel.getQuery(username));
+            JSONArray array1 = new JSONArray(apiModel.getJSON(FavoritesModel.getQuery(username)));
+            JSONArray array2 = new JSONArray(apiModel.getJSON(FavoritesModel.getQuery2(username)));
+            return JSONUtil.concat(array1, array2);
+
         }
         );
 
