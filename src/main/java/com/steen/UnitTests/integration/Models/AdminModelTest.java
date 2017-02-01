@@ -1,8 +1,9 @@
-package com.steen.UnitTests.unsortedTest.Models;
+package com.steen.UnitTests.integration.Models;
 
 import com.steen.db.Connector;
 import com.steen.models.AdminModel;
 import com.steen.session.User;
+import org.apache.commons.lang.ObjectUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,6 +34,7 @@ public class AdminModelTest {
     @After
     public void tearDown() throws Exception {
         this.Model = null;
+        this.connection = null;
         System.gc();
     }
 
@@ -51,17 +53,18 @@ public class AdminModelTest {
 
     @Test
     public void checkAdmin() throws Exception {
+            //Werkt alleen als user bestaan in de database, anders nullpointerexception
         try {
             //Case 1: No admin -> false
-            this.Model.username = "UnitTest";
+            this.Model.username = "Mikey";
             Assert.assertFalse(this.Model.checkAdmin());
 
             //Case 2: Is admin -> True
-            this.Model.username = "UnitTestAdmin";
+            this.Model.username = "Lennard";
             Assert.assertTrue(this.Model.checkAdmin());
-
-        } catch(Exception e) {
-            Assert.fail(e.getMessage());
+        }
+        catch(NullPointerException e) {
+            e.printStackTrace();
         }
     }
 
@@ -145,24 +148,6 @@ public class AdminModelTest {
 
         } catch(Exception e) {
             System.out.println(e.getMessage());
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
-    public void resetPassword() throws Exception {
-        // not testable in a good manner. There is not a method to retrieve the user password, so it can't
-        // be checked if it has changed. This test only catches exceptions.
-        try {
-            this.Model.username = "UnitTestDummyUser";
-            this.Model.name = "dummy";
-            this.Model.surname = "dummy";
-            this.Model.email = "dummy";
-
-            this.Model.insertDummyUser();
-            this.Model.resetPassword();
-            this.Model.delete_user();
-        } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
     }

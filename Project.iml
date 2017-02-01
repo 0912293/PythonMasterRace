@@ -10,8 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="cryptr-1.1" level="project" />
-    <orderEntry type="library" name="Arquillian JUnit:Release" level="project" />
+    <orderEntry type="library" name="cryptr-1.1" level="application" />
     <orderEntry type="library" name="Maven: com.sparkjava:spark-core:2.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.12" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-simple:1.7.12" level="project" />
@@ -38,14 +37,13 @@
     <orderEntry type="library" name="Maven: javax.mail:mail:1.4" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module-library">
-      <library name="Maven: com.steen:cryptr-1.1:1.1">
+      <library name="Maven: com.steen:cryptr:1.1">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/cryptr-1.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/cryptr-1.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.6" level="project" />
   </component>
 </module>
