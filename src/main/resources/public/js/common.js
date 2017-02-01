@@ -77,7 +77,6 @@ function retrieveJSON(url, dict, callback) {
                 callback(data)
         },
         error: function () {
-            console.log("Incorrect or missing JSON")
         }
     })
 }
@@ -92,7 +91,6 @@ function post(url, dict, callback) {
                 callback(data)
         },
         error: function () {
-            console.log("Could not post to: " + url)
         }
     })
 }
@@ -110,7 +108,6 @@ function get(url, dict, callback) {
             }
         },
         error: function () {
-            console.log("Could not get from: " + url)
         }
     })
 }

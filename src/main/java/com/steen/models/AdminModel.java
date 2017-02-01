@@ -157,9 +157,7 @@ public class AdminModel implements Model {
                 csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
                 csearch.executeNonQuery();
-                System.out.println("reseted password");
             } catch (Exception e) {
-                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -212,9 +210,7 @@ public class AdminModel implements Model {
             csearch.addFilterParam("address_id", this.address_id.toString(), Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
-            System.out.println("updated address");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -229,9 +225,7 @@ public class AdminModel implements Model {
             csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
-            System.out.println("updated user");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -254,7 +248,6 @@ public class AdminModel implements Model {
             getDate();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -276,7 +269,6 @@ public class AdminModel implements Model {
             searchUserAddress();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -284,7 +276,6 @@ public class AdminModel implements Model {
     private void searchUserAddress() {
         try {
             Search csearch = new Search("SELECT * FROM address");
-            System.out.println(address_id.toString());
             csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.EQUAL);
             rs = csearch.getResultSet();
             while (rs.next()) {
@@ -296,7 +287,6 @@ public class AdminModel implements Model {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -339,7 +329,6 @@ public class AdminModel implements Model {
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         } return null;
     }
     public Search getSearch() {return search;}

@@ -43,7 +43,6 @@ public class FavoritesController {
             String username = request.session().attribute("username");
             int id;
             id = Integer.parseInt(request.queryParams("id"));
-            System.out.println(id);
             int isGame;
             isGame = Integer.parseInt(request.queryParams("isGame"));
 

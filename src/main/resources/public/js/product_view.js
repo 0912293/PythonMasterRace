@@ -14,7 +14,6 @@ function showbutton(j){
 
 function showWishlistButton(data) {
     var username = data.username;
-    console.log(username);
     if (username !== undefined) {
         if (data.username != "" && data.username != null) {
             document.getElementById('wishlistButtonDiv').style.display = 'block';
@@ -25,7 +24,6 @@ function showWishlistButton(data) {
 function updateData() {
     var stdURL = "/api/product/view.json";
     var searchAppend = getCurrentUrlParam("id");
-    console.log(searchAppend);
 
     var searchDict = {
         'id': (searchAppend != null || searchDict !== undefined) ? searchAppend : null
@@ -69,7 +67,6 @@ function editGame() {
     var dict = {
         "id": getCurrentUrlParam("id")
     };
-    console.log(dict.id);
     post('/api/product/id', dict, function (data) {
         window.location.replace("/admin/product/edit");
     });
@@ -82,7 +79,6 @@ function filldata(data) {
     productContent.empty();
 
     $.each(json, function (i, item) {
-        console.log(item.games_id);
         content = $("<h1 id='ProductName' class='text-center'>" + item.games_name + "</h1>");
         content.append("<div class='row'>");
         content.append("<center><img id='ProductImage' src='" + item.games_image  + "' class='img-responsive'></center>");

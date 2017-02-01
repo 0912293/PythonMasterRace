@@ -54,7 +54,6 @@ public class AdminChartModel implements Model{
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }

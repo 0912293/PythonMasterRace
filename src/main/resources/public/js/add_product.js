@@ -1,5 +1,4 @@
 function addgame() {
-    console.log("Game added")
     var dict = {
         'url' : location.pathname,
         'gname' : $('#g_name').val(),
@@ -20,7 +19,6 @@ function addgame() {
 }
 
 function addplatform() {
-    console.log("Platform added")
     var dict = {
         'url' : location.pathname,
         'pname' : $('#p_name').val(),

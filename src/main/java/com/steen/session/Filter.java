@@ -73,7 +73,6 @@ public class Filter {
             filters.get(index);
             filters.remove(index);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("No parameter at index " + index);
         }
     }
 

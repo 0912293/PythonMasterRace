@@ -33,7 +33,6 @@ public class Search {
 
     public ResultSet getResultSet() {
         updateQuery();
-        System.out.println(filteredQuery);
         return getResultSet(filteredQuery);
     }
 
@@ -45,7 +44,6 @@ public class Search {
             affectedRows = myStmt.executeUpdate(filteredQuery);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return affectedRows;
@@ -57,7 +55,6 @@ public class Search {
             PreparedStatement myStmt = connection.prepareStatement(query);
             resultSet = myStmt.executeQuery(query);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return resultSet;
