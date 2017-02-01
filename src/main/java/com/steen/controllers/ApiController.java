@@ -90,7 +90,11 @@ public class ApiController {
             if (filter != null && !filter.equals("null") && !filter.equals("")) {
                 platformModel.getSearch().addFilterParam(filter);
             }
-            return apiModel.getJSON(platformModel.getSearch());
+            String json = "{}";
+            try {
+                json = apiModel.getJSON(platformModel.getSearch());
+            } catch (Exception e) {}
+            return json;
         });
 
         post("/api/product/games.json", ((request, response) -> {

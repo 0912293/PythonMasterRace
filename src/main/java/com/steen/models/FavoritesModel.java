@@ -76,7 +76,6 @@ public class FavoritesModel implements Model {
                     "VALUES('" + username + "', -1," +
                     "" + id + ");";
         }
-        System.out.print(this.insertquery);
     }
 
     public void deleteItems(String username, ArrayList<Integer> games, ArrayList<Integer> platforms){

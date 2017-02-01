@@ -10,9 +10,9 @@ $(function () {
         updateTable($('#search').val());
         disableLoader()
     });
-    $('#sortoption').change(function(){ checkSort(); disableLoader(); });
-    $('#filteroption').change(function () { checkFilter(); disableLoader(); });
-    updateAll()
+    $('#sortoption').change(function(){ updateAll(false); });
+    $('#filteroption').change(function () { updateAll(false); });
+    updateAll(true)
 });
 
 
@@ -22,10 +22,11 @@ function checkAll() {
     checkFilter();
 }
 
-function updateAll() {
+function updateAll(bool) {
     enableLoader();
     checkAll();
-    updateDropdowns();
+    if (bool)
+        updateDropdowns();
     updateTable();
     disableLoader();
 }
