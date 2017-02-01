@@ -21,7 +21,6 @@ $(function () {
 });
 
 function updatePage(data) {
-    console.log(data.length);
     if (data.length > 0) {
         $('#checkoutButton').removeAttr("disabled");
     } else {

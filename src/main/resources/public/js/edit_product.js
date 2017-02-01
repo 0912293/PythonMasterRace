@@ -63,7 +63,7 @@ function updateGame() {
     };
     post('/admin/product/edit/game', dict, function (data) {
         if(data !== undefined){
-            alert(data);
+            SpawnNotification('Admin - game: ', data, '/img/infoIcon.png', 5000);
         }
         reload();
     });
