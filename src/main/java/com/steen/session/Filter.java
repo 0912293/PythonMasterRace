@@ -21,34 +21,42 @@ public class Filter {
 
     public void addParameter(String column, String value, Operator o) {
         StringBuilder sb = new StringBuilder();
+        String safe_value = "";
         sb.append(column);
         switch (o) {
             case LIKE:
                 sb.append(" LIKE ");
+                safe_value = "'%" + value + "%'";
                 break;
             case NOT_LIKE:
                 sb.append(" NOT LIKE ");
+                safe_value = "'%" + value + "%'";
                 break;
             case NOT_EQUAL:
                 sb.append(" <> ");
+                safe_value = "'" + value + "'";
                 break;
             case LESS_THEN:
                 sb.append(" < ");
+                safe_value = "'" + value + "'";
                 break;
             case LESS_THAN_EQUAL:
                 sb.append(" <= ");
+                safe_value = "'" + value + "'";
                 break;
             case EQUAL:
                 sb.append(" = ");
+                safe_value = "'" + value + "'";
                 break;
             case HIGHER_EQUAL:
                 sb.append(" >= ");
+                safe_value = "'" + value + "'";
                 break;
             case HIGHER:
                 sb.append(" > ");
+                safe_value = "'" + value + "'";
                 break;
         }
-        String safe_value = "'%" + value + "%'";
         sb.append(safe_value);
         if (filters.contains(sb.toString())) return;
         filters.add(sb.toString());

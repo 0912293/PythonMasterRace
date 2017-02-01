@@ -1,5 +1,6 @@
 package com.steen.controllers;
 
+import com.steen.models.AdminChartModel;
 import com.steen.models.AdminModel;
 import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
