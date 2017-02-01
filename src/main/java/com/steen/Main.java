@@ -38,6 +38,7 @@ public class Main {
         models.put("checkout", new CheckoutModel());
         models.put("mail", new MailModel());
         models.put("admin_chart", new AdminChartModel());
+        models.put("history", new HistoryModel());
 
         new RootController(models);
         new ApiController(models);
@@ -48,7 +49,7 @@ public class Main {
         new UserController(models);
         new WishlistController(models);
         new FavoritesController(models);
-
+        new HistoryController(models);
         new CartController(models);
         new CheckoutController(models);
         new MailController(models);

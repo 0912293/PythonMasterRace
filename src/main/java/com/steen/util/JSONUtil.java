@@ -3,6 +3,9 @@ package com.steen.util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JSONUtil {
     public static JSONObject replaceKeys(JSONObject jsonObject, String[] oldKeys, String[] newKeys) {
         String[][] toReplace = new String[][] { oldKeys, newKeys};
@@ -22,6 +25,15 @@ public class JSONUtil {
             replaceKeys(json, oldKeys, newKeys);
         }
         return jsonArray;
+    }
+
+    public static java.util.List<org.json.JSONObject> replaceKeys(List<JSONObject> jsonObjectList, String[] oldKeys, String[] newKeys) {
+        List<JSONObject> res = new ArrayList<>();
+
+        for (JSONObject jso : jsonObjectList) {
+            res.add(replaceKeys(jso, oldKeys, newKeys));
+        }
+        return res;
     }
 
     public static JSONArray concat(JSONArray fst, JSONArray snd) {
