@@ -51,7 +51,6 @@ public class Search {
             PreparedStatement myStmt = connection.prepareStatement(query);
             resultSet = myStmt.executeQuery(query);
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return resultSet;
     }

@@ -28,7 +28,6 @@ public class SQLToJSON {
                 resList.add(obj);
             }
         } catch (Exception e){
-            e.printStackTrace();
         } finally {
             try{
                 rs.close();

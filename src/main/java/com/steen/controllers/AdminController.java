@@ -19,11 +19,15 @@ public class AdminController {
         AdminProductModel adminProductModel = (AdminProductModel) models.get("admin_product");
 
         before("/admin/*", (req,res) -> {
-            if (!isAdmin(req)) {halt("401 - not an admin");}
+            if (!isAdmin(req)) {
+                res.redirect("/");
+            }
         });
 
         before("/admin", (req,res) -> {
-            if (!isAdmin(req))halt("401 - not an admin");
+            if (!isAdmin(req)) {
+                res.redirect("/");
+            }
         });
 
         //--------------------------------AdminModel--------
@@ -44,6 +48,7 @@ public class AdminController {
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
             adminModel.delete_user();
+            res.redirect("/admin");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -54,6 +59,7 @@ public class AdminController {
             model.put("admin", req.session().attribute("admin"));
             model.put("correctinfo", req.queryParams("correctinfo"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
+            res.redirect("/admin");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -66,7 +72,7 @@ public class AdminController {
 
             adminModel.setData(req.queryParams("name"), req.queryParams("sur"), req.queryParams("email"), req.queryParams("year"), req.queryParams("month"), req.queryParams("day"), req.queryParams("country"),
                     req.queryParams("street"), req.queryParams("postal"), req.queryParams("number"), req.queryParams("city"));
-
+            res.redirect("/admin");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -79,6 +85,7 @@ public class AdminController {
             model.put("username", req.session().attribute("username"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
             adminModel.blacklistUser();
+            res.redirect("/admin");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
@@ -91,6 +98,7 @@ public class AdminController {
             model.put("username", req.session().attribute("username"));
             model.put("userblacklisted", adminModel.checkBlacklisted());
             adminModel.undoBlackList();
+            res.redirect("/admin");
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 
