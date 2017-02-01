@@ -53,8 +53,8 @@ function fillTable(data) {
                         .append(
                             "<td>" + item.platform_name + "</td>" +
                             "<td></td>" +
-                            "<td>" + item.platform_price + "</td>" +
-                            "<td>" + item.amount + "</td>"
+                            "<td>" + item.amount+ "</td>" +
+                            "<td>" + item.platform_price + "</td>"
                         )
                     );
                     totalprice += item.platform_price * item.amount;
