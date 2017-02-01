@@ -65,7 +65,7 @@ public class FavoritesController {
 
         post("/favorites/delete", (request, response) -> {
             String username = request.session().attribute("username");
-
+            int isGame = Integer.parseInt(request.queryParams("isGame"));
             List<String> toDelete = new ArrayList<String>();
             Integer i = 0;
             String key = i.toString();
