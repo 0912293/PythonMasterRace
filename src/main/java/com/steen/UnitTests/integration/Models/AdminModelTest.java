@@ -153,24 +153,6 @@ public class AdminModelTest {
     }
 
     @Test
-    public void resetPassword() throws Exception {
-        // not testable in a good manner. There is not a method to retrieve the user password, so it can't
-        // be checked if it has changed. This test only catches exceptions.
-        try {
-            this.Model.username = "UnitTestDummyUser";
-            this.Model.name = "dummy";
-            this.Model.surname = "dummy";
-            this.Model.email = "dummy";
-
-            this.Model.insertDummyUser();
-            this.Model.resetPassword();
-            this.Model.delete_user();
-        } catch(Exception e) {
-            Assert.fail(e.getMessage());
-        }
-    }
-
-    @Test
     public void setData() throws Exception {
         try {
 
