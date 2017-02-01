@@ -1,5 +1,5 @@
 $(function () {
-    retrieveJSON("/session/user.ses", {}, function (data) {
+    retrieveJSON("/api/user.ses", {}, function (data) {
         var checkoutbutton = $('#checkoutButton');
         console.log(data);
         if (data !== undefined) {
@@ -21,7 +21,6 @@ $(function () {
 });
 
 function updatePage(data) {
-    console.log(data.length);
     if (data.length > 0) {
         $('#checkoutButton').removeAttr("disabled");
     } else {
@@ -30,18 +29,33 @@ function updatePage(data) {
     }
 
     var table = $('#cartTable');
+    table.find("tr:gt(0)").remove();
     $.each(data, function (i, item) {
         table.find('tbody')
-            .append($('<tr>')
+            if(item.games_name != undefined || item.games_name != null){
+             table.append($('<tr>')
                 .append(
                     "<td><input type = 'checkbox'  value='"+ item.games_id + "' id = 'cartchk'" + item.games_id + "'/></td>" +
                     "<td>" + item.games_name + "</td>" +
                     "<td>" + item.games_platform + "</td>" +
-                    "<td>" + item.games_price + "</td>" +
+                    "<td>&euro;" + item.games_price + "</td>" +
                     "<td>" + item.amount + "</td>"
                 )
-            );
+            );}
+            else{
+                console.log("Test2");
+                if(item.platform_name != undefined || item.platform_name != null){
+                table.append($('<tr>')
+                .append(
+                        "<td><input type = 'checkbox'  value='"+ item.platform_id + "' id = 'cartchk'" + item.platform_id + "'/></td>" +
+                        "<td>" + item.platform_name + "</td>" +
+                        "<td>" + item.platform_colour + "</td>" +
+                        "<td>&euro;" + item.platform_price + "</td>" +
+                        "<td>" + item.amount + "</td>"
+                    ));}
+            }
     });
+
     $("[id = cartchk]").change(function() {
         if(this.checked) {
             $('#deleteButton').removeAttr("disabled");
@@ -62,8 +76,6 @@ function deleteSelectedRows() {
         $(this).closest('tr').remove();
         //$('[id = deleteList]').append($(this).val());
         var key = i.toString();
-        console.log("The key = " + key);
-        console.log("The value = " + $(this).val());
         dict["p_id" + key] = ($(this).val());
         i++
     });

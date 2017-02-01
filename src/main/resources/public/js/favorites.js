@@ -30,12 +30,18 @@ function filltable(data) {
         tr = $('<tr/>');
         if (item.og_id != -1) {
             tr.append("<input type='hidden' id='" + item.og_id + "' value='" + item.og_id + "'/>");
+            tr.append("<td>" + item.games_name + "</td>");
+            tr.append("<td>" + item.games_price + "</td>");
+            tr.append("<td>-</td>");
+            tr.append("<td>" + item.games_platform+ "</td>");
         } else{
-            tr.append("<input type='hidden' id='" + item.op_id + "' value='" + item.op_id + "'/>");
+            tr.append("<input type='hidden' id='" + item.opl_id + "' value='" + item.opl_id + "'/>");
+            tr.append("<td>" + item.platform_name + "</td>");
+            tr.append("<td>" + item.platform_price + "</td>");
+            tr.append("<td>" + item.platform_colour+ "</td>");
+            tr.append("<td>-</td>");
         }
-        tr.append("<td>" + item.games_name + "</td>");
-        tr.append("<td>" + item.games_price + "</td>");
-        tr.append("<td>" + item.games_platform+ "</td>");
+
 
         if (item.og_id != -1) {
             tr.append("<td><input type = 'checkbox'  value='" + item.games_id + "' id = 'chk'" + item.games_id + "'/></td>");
@@ -70,7 +76,7 @@ function deleteSQL(dict) {
         url: "/favorites/delete",
         data: dict,
         success: function (data) {
-            alert(data)
+            SpawnNotification('Favorieten - Actie: ', data, '/img/deleteIcon.png', 5000);
         }
     });
 }

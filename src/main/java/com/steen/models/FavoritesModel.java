@@ -30,12 +30,28 @@ public class FavoritesModel implements Model {
                 "AND f.og_id = g.games_id";
     }
 
-    public Boolean checkInDatabase(String username, int id){
-        ResultSet rs = null;
-        String query = "SELECT * FROM " +
-                "favorites f, games g " +
+    public static String getQuery2(String username){
+        return "SELECT * FROM " +
+                "favorites f, platforms p " +
                 "WHERE f.username = " + "'" + username + "'" +
-                "AND f.og_id = " + id + ";";
+                "AND f.op_id = p.platform_id";
+    }
+    //public static String
+
+    public Boolean checkInDatabase(String username, int id, int isGame){
+        ResultSet rs = null;
+        String query = null;
+        if (isGame == 1) {
+            query = "SELECT * FROM " +
+                    "favorites f, games g " +
+                    "WHERE f.username = " + "'" + username + "'" +
+                    "AND f.og_id = " + id + ";";
+        } else{
+            query = "SELECT * FROM " +
+                    "favorites f, platforms p " +
+                    "WHERE f.username = " + "'" + username + "'" +
+                    "AND f.op_id = " + id + ";";
+        }
         try{
             Statement myStmt = connection.createStatement();
             rs = myStmt.executeQuery(query);
@@ -47,8 +63,8 @@ public class FavoritesModel implements Model {
         }
 
     }
-    public void insertItem(String username, int id) {
-        updateInsert(username, id);
+    public void insertItem(String username, int id, int isGame) {
+        updateInsert(username, id, isGame);
         try {
             Statement myStmt = connection.createStatement();
             myStmt.execute(this.insertquery);
@@ -59,12 +75,16 @@ public class FavoritesModel implements Model {
         }
 
     }
-    private void updateInsert(String username, int id) {
-
-        this.insertquery = "INSERT INTO favorites (username, og_id)" +
-                "VALUES('" + username + "'," +
-                "" + id + ");";
-
+    private void updateInsert(String username, int id, int isGame) {
+        if (isGame == 1) {
+            this.insertquery = "INSERT INTO favorites (username, og_id, op_id)" +
+                    "VALUES('" + username + "'," +
+                    "" + id + ", -1);";
+        } else{
+            this.insertquery = "INSERT INTO favorites (username, og_id, op_id)" +
+                    "VALUES('" + username + "', -1," +
+                    "" + id + ");";
+        }
         System.out.print(this.insertquery);
     }
 

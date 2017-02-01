@@ -63,7 +63,7 @@ public class CheckoutModel implements Model {
         //order_pd
         DateBuilder dab = new DateBuilder();
         Calendar cal = new GregorianCalendar();
-        dab.build("" + cal.get(Calendar.DAY_OF_YEAR), "" + (cal.get(Calendar.MONTH)+1), "" + cal.get(Calendar.YEAR));
+        dab.build("" + cal.get(Calendar.DAY_OF_MONTH), "" + (cal.get(Calendar.MONTH)+1), "" + cal.get(Calendar.YEAR));
         this.order_pd = dab.getDate();
 
         //users_username

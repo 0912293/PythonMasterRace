@@ -23,6 +23,10 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+        AdminChartModel adminChartModel = (AdminChartModel) models.get("admin_chart");
+
+        ProductModel platformModel = (ProductModel) models.get("platform");
+
         HistoryModel historyModel = (HistoryModel) models.get("history");
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
@@ -31,20 +35,18 @@ public class ApiController {
         }));
 
         get("/api/admincheck.ses", (req, res) -> {
-            return adminModel.getAdmin(req.session().attribute("username"));
+            return adminChartModel.getAdmin(req.session().attribute("username"));
         });
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("orders");
-
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
             if (order != null && !order.equals("")) {
                 adminModel.getSearch().addOrderParam(order);
             }
-
             return apiModel.getJSON(adminModel.getSearch());
         });
 
@@ -76,6 +78,25 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
+        post("/api/product/platforms.json", (request, response) -> {
+            platformModel.clearSession();
+            platformModel.setSearch(new Search("SELECT * FROM platforms"));
+
+            String search = request.queryParams("search");
+            String order = request.queryParams("order");
+            String filter = request.queryParams("filter");
+
+            if (search != null && !search.equals("null") && !search.equals("")) {
+                platformModel.getSearch().addFilterParam("platform_name", search, Filter.Operator.LIKE);
+            }
+            if (order != null && !order.equals("null") && !order.equals("")) {
+                platformModel.getSearch().addOrderParam(order);
+            }
+            if (filter != null && !filter.equals("null") && !filter.equals("")) {
+                platformModel.getSearch().addFilterParam(filter);
+            }
+            return apiModel.getJSON(platformModel.getSearch());
+        });
 
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();
@@ -113,7 +134,10 @@ public class ApiController {
 
         post("/api/favorites.json", (request, response) -> {
             String username = request.session().attribute("username");
-            return apiModel.getJSON(FavoritesModel.getQuery(username));
+            JSONArray array1 = new JSONArray(apiModel.getJSON(FavoritesModel.getQuery(username)));
+            JSONArray array2 = new JSONArray(apiModel.getJSON(FavoritesModel.getQuery2(username)));
+            return JSONUtil.concat(array1, array2);
+
         }
         );
 
@@ -161,17 +185,17 @@ public class ApiController {
 
         post("/api/admin/chart1.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart1JSON();
+            return adminChartModel.getChart1JSON();
         });
 
         post("/api/admin/chart2.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart2JSON();
+            return adminChartModel.getChart2JSON();
         });
 
         post("/api/admin/chart3.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart3JSON();
+            return adminChartModel.getChart3JSON();
         });
     }
 }
