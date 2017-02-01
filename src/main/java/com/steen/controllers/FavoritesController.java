@@ -12,7 +12,6 @@ import static com.steen.Main.sfp;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-
 public class FavoritesController {
 
 
@@ -78,7 +77,6 @@ public class FavoritesController {
             }
 
             favoritesModel.deleteItems(username, games, platforms);
-            //return "Producten zijn uit favorieten verwijderd!";
             return null;
         });
     }
