@@ -3,7 +3,7 @@ $(function() {
         post("/invoice/new", {}, function (data) {
             window.location = "/invoice?uid=" + data;
             var dict = {
-                "title" : "invoice",
+                "title" : "Your Steen™ invoice" ,
                 "url" : "http://" + location.href.split( '/' )[2] + "/invoice?uid="+data,
                 "to" : $('#mailadressTextCheck').val()
             };
