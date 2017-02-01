@@ -43,7 +43,6 @@ public class FavoritesController {
             String username = request.session().attribute("username");
             int id;
             id = Integer.parseInt(request.queryParams("id"));
-            System.out.println(id);
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();

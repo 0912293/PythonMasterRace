@@ -1,5 +1,5 @@
 $(function () {
-    retrieveJSON("/session/user.ses", {}, function (data) {
+    retrieveJSON("/api/user.ses", {}, function (data) {
         var checkoutbutton = $('#checkoutButton');
         console.log(data);
         if (data !== undefined) {

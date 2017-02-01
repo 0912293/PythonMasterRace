@@ -18,7 +18,7 @@ var options2 = {
 
 var options3 = {
     'legend':'left',
-    'title':'Omzet per dag',
+    'title':'Omzet aan games per dag',
     'is3D':false,
     'width':600,
     'height':300

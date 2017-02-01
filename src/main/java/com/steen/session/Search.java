@@ -33,6 +33,7 @@ public class Search {
 
     public ResultSet getResultSet() {
         updateQuery();
+        System.out.println(filteredQuery);
         return getResultSet(filteredQuery);
     }
 

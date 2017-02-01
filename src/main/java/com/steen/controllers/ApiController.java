@@ -161,17 +161,17 @@ public class ApiController {
 
         post("/api/admin/chart1.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart1JSON();
+            return adminChartModel.getChart1JSON();
         });
 
         post("/api/admin/chart2.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart2JSON();
+            return adminChartModel.getChart2JSON();
         });
 
         post("/api/admin/chart3.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart3JSON();
+            return adminChartModel.getChart3JSON();
         });
     }
 }

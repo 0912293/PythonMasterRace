@@ -73,7 +73,7 @@ public class AdminModel implements Model {
     public boolean checkAdmin(){
         try {
             Search csearch = new Search("SELECT admin FROM users");
-            csearch.addFilterParam("username",this.username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while(rs.next()){
@@ -140,7 +140,7 @@ public class AdminModel implements Model {
         if(!checkAdmin()) {
             try {
                 Search csearch = new Search("DELETE FROM users");
-                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
+                csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
                 csearch.executeNonQuery();
                 System.out.println("deleted user");
             } catch (Exception e) {
@@ -154,7 +154,7 @@ public class AdminModel implements Model {
         if(!checkAdmin()) {
             try {
                 Search csearch = new Search("UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString());
-                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
+                csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
                 csearch.executeNonQuery();
                 System.out.println("reseted password");
@@ -226,7 +226,7 @@ public class AdminModel implements Model {
                             this.surname + "', email = '" +
                             this.email + "', birth_date = '" +
                             this.birth_date + "'");
-            csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
             System.out.println("updated user");
@@ -239,7 +239,7 @@ public class AdminModel implements Model {
     public void searchUser(String user) {
         try {
             Search csearch = new Search("SELECT * FROM users");
-            csearch.addFilterParam("username", user, Filter.Operator.LIKE);
+            csearch.addFilterParam("username", user, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while (rs.next()) {
@@ -265,7 +265,7 @@ public class AdminModel implements Model {
                     "EXTRACT(MONTH FROM birth_date) AS birthmonth , " +
                     "EXTRACT(DAY FROM birth_date) AS birthday " +
                     "FROM users");
-            csearch.addFilterParam("username", username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",username, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while (rs.next()) {
@@ -284,8 +284,8 @@ public class AdminModel implements Model {
     private void searchUserAddress() {
         try {
             Search csearch = new Search("SELECT * FROM address");
-            csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.LIKE);
-
+            System.out.println(address_id.toString());
+            csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.EQUAL);
             rs = csearch.getResultSet();
             while (rs.next()) {
                 address_country = rs.getString("address_country");
