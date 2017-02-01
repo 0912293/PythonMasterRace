@@ -43,15 +43,19 @@ public class FavoritesController {
             String username = request.session().attribute("username");
             int id;
             id = Integer.parseInt(request.queryParams("id"));
+            System.out.println(id);
+            int isGame;
+            isGame = Integer.parseInt(request.queryParams("isGame"));
+
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
                 }
-                if (favoritesModel.checkInDatabase(username, id)) {
+                if (favoritesModel.checkInDatabase(username, id, isGame)) {
                     return "Product staat al in je favorieten.";
 
                 }else{
-                    favoritesModel.insertItem(username, id);
+                    favoritesModel.insertItem(username, id, isGame);
                     return "Product is toegevoegd aan je favorieten.";
                 }
             } catch (Exception e){

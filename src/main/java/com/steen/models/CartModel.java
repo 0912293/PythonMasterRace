@@ -4,8 +4,13 @@ import com.steen.session.Search;
 import static com.steen.util.SQLToJSON.getFormattedResult;
 import static com.steen.util.SQLToJSON.JsonListToString;
 import static com.steen.util.SQLToJSON.Type;
+
+import com.steen.util.JSONUtil;
+import com.steen.util.SQLToJSON;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +70,7 @@ public class CartModel implements Model {
     public String getCartJSON() {
         // Get all products from id's
         String query = "SELECT * FROM games g WHERE ";
+        String queryPlatform = "SELECT * FROM platforms p WHERE ";
         if (products.size() <= 0) {
             return "[]";
         }
@@ -76,14 +82,33 @@ public class CartModel implements Model {
             query += "g.games_id = " + k + "";
         }
 
+        boolean cheapsolutionLoL = true;
+        for (int k : products.keySet()) {
+            if (!cheapsolutionLoL) {
+                queryPlatform += " OR ";
+            } else cheapsolutionLoL = false;
+            queryPlatform += "p.platform_id = " + k + "";
+        }
+
+
+
         ResultSet rs = Search.getResultSet(query); // ResultSet containing all games with listed product ID
         List<JSONObject> jsonList = getFormattedResult(rs);
-
+        Search search = new Search("SELECT * FROM PLATFORMS");
+        ResultSet rs0 = search.getResultSet(queryPlatform);
+        List<JSONObject> jsonList2 = getFormattedResult(rs0);
         for (JSONObject jsonObject : jsonList) {
             int id = jsonObject.getInt("games_id");
             jsonObject.put("amount", products.get(id));
         }
-        return JsonListToString(jsonList, Type.ARRAY);
+        for (JSONObject jsonObject: jsonList2){
+            int id = jsonObject.getInt("platform_id");
+            jsonObject.put("amount", products.get(id));
+        }
+        JSONArray jsonArray = new JSONArray(JsonListToString(jsonList, Type.ARRAY));
+        JSONArray jsonArray1 = new JSONArray(JsonListToString(jsonList2, Type.ARRAY));
+        JSONArray finalArray = JSONUtil.concat(jsonArray, jsonArray1);
+        return finalArray.toString();
     }
 
     @Override
