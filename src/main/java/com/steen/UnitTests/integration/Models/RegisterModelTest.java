@@ -57,14 +57,6 @@ public class RegisterModelTest {
     }
 
     @Test
-    public void setPassword() throws Exception {
-        String password = "123";
-        String e_password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
-        this.model.setPassword(password);
-        Assert.assertEquals(this.model.password, e_password);
-    }
-
-    @Test
     public void setName() throws Exception {
         String name = "Bassie";
         this.model.setName(name);
@@ -140,39 +132,39 @@ public class RegisterModelTest {
         // model.setParameters();
     }
 
-    @Test
-    public void parseReg() throws Exception {
-
-        this.dbuilder.build("28", "12", "1940");
-        this.model.setParameters("Karel", "122", "Bassiee", "Clown", "Nederland" +
-                "", "Rotterdam", "Hoogstraat", "3073YD", "52", dbuilder.getDate(), "hallo@gmail.com");
-        this.model.ParseReg();
-
-        ResultSet rs = null;
-        String query = "SELECT username, name, surname, email, birth_date FROM users " +
-                "WHERE username = 'Karel';";
-        try {
-            Statement myStmt = connection.createStatement();
-            rs = myStmt.executeQuery(query);
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-        ArrayList<String> list = new ArrayList<>();
-
-        //System.out.print(rs.next());
-        while (rs.next()) {
-            int i = 1;
-            while (i <= 5){
-                list.add(rs.getString(i++));
-            }
-        }
-        assertTrue(list.contains("Karel"));
-
-        try {
-            Statement myStmt = connection.createStatement();
-            myStmt.execute("DELETE FROM users WHERE username = 'Karel';");
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-    }
+//    @Test
+//    public void parseReg() throws Exception {
+//
+//        this.dbuilder.build("28", "12", "1940");
+//        this.model.setParameters("Karel", "122", "Bassiee", "Clown", "Nederland" +
+//                "", "Rotterdam", "Hoogstraat", "3073YD", "52", dbuilder.getDate(), "hallo@gmail.com");
+//        this.model.ParseReg();
+//
+//        ResultSet rs = null;
+//        String query = "SELECT username, name, surname, email, birth_date FROM users " +
+//                "WHERE username = 'Karel';";
+//        try {
+//            Statement myStmt = connection.createStatement();
+//            rs = myStmt.executeQuery(query);
+//        } catch (Exception e) {
+//            System.out.print(e.getMessage());
+//        }
+//        ArrayList<String> list = new ArrayList<>();
+//
+//        //System.out.print(rs.next());
+//        while (rs.next()) {
+//            int i = 1;
+//            while (i <= 5){
+//                list.add(rs.getString(i++));
+//            }
+//        }
+//        assertTrue(list.contains("Karel"));
+//
+//        try {
+//            Statement myStmt = connection.createStatement();
+//            myStmt.execute("DELETE FROM users WHERE username = 'Karel';");
+//        } catch (Exception e) {
+//            System.out.print(e.getMessage());
+//        }
+//    }
 }

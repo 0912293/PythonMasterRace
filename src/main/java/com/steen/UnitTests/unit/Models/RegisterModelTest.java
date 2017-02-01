@@ -36,14 +36,6 @@ public class RegisterModelTest {
     }
 
     @Test
-    public void setPassword() throws Exception {
-        String password = "123";
-        String e_password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
-        this.Model.setPassword(password);
-        Assert.assertEquals(this.Model.password, e_password);
-    }
-
-    @Test
     public void setName() throws Exception {
         String name = "Bassie";
         this.Model.setName(name);
