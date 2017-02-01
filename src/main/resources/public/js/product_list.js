@@ -15,8 +15,6 @@ $(function () {
     updateAll(true)
 });
 
-
-
 function checkAll() {
     checkSort();
     checkFilter();
@@ -42,8 +40,6 @@ function disableLoader() {
         document.getElementById('ProductContainer').style.display = 'inline'
     });
 }
-
-
 
 function checkSort() {
     var optObj = $('#sortoption').find(":selected");

@@ -23,6 +23,7 @@ public class RegisterModel implements Model {
     Connection connection = Main.connection;
 
     public RegisterModel() {}
+
     //----setters-----------------------------------
     public void setUsername(String username) {
         this.username = username;
@@ -153,7 +154,6 @@ public class RegisterModel implements Model {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
 

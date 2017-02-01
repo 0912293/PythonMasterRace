@@ -83,7 +83,6 @@ public class RegisterModelTest {
         String db = "1995-11-28";
         this.dbuilder.build("28", "11", "1995");
         Assert.assertEquals(dbuilder.getDate(), db);
-
     }
 
     @Test
@@ -104,5 +103,4 @@ public class RegisterModelTest {
     public void setParameters() throws Exception {
         //Same as all the setters, but just in one method. The others work, so this does as well.
     }
-
 }

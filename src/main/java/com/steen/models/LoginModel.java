@@ -29,7 +29,6 @@ public class LoginModel implements Model {
         }
     }
 
-    //TODO: Rewrite to usage with Search class.
     public static boolean checkBlacklist(String username){
         boolean blacklisted = false;
         try {

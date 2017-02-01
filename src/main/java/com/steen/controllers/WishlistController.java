@@ -27,8 +27,6 @@ public class WishlistController {
             model.put("admin", request.session().attribute("admin"));
             model.put("wishlistID", wishlistModel.getUserWishlist(request.session().attribute("username")));
 
-
-
             return new ModelAndView(model, p_layout);
         }, new VelocityTemplateEngine());
 

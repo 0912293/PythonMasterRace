@@ -14,10 +14,12 @@ public class Main {
     public static final String sfp = staticFilePath;
     public static final String p_layout = sfp + "html/p_layout.vtl";
     public static Map<Integer, Map<String, Object>> sessions = new HashMap<>();
+    public static int port = 80;
 
 
     public static void main(String[] args) {
-        Spark.port(4567);
+        Spark.port(port);
+        System.out.println("USE WEBSITE WITH PORT: " + port);
 
         staticFileLocation("/public"); // sets folder for non java files
 

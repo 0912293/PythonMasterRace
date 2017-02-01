@@ -18,8 +18,6 @@ function getJson(url) {
     });
 }
 
-
-
 function filltable(data) {
     var json = data;
     var tr = [];
@@ -38,7 +36,6 @@ function filltable(data) {
             tr.append("<td>" + item.platform_colour+ "</td>");
             tr.append("<td>-</td>");
         }
-
 
         if (item.og_id != -1) {
             tr.append("<td><input type = 'checkbox'  value='" + item.games_id + "' id = 'chk'" + item.games_id + "'/></td>");

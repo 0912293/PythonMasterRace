@@ -12,9 +12,8 @@ public class FavoritesModel implements Model {
     private String insertquery;
     private ArrayList<String> deleteGames = new ArrayList<>();
     private ArrayList<String> deletePlatforms = new ArrayList<>();
+
     public FavoritesModel(){}
-
-
 
     public static String getQuery(String username){
         return "SELECT * FROM " +
@@ -29,7 +28,6 @@ public class FavoritesModel implements Model {
                 "WHERE f.username = " + "'" + username + "'" +
                 "AND f.op_id = p.platform_id";
     }
-    //public static String
 
     public Boolean checkInDatabase(String username, int id, int isGame){
         ResultSet rs = null;

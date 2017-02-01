@@ -14,7 +14,6 @@ public class AdminModelTest {
     AdminModel Model;
     public static Connection connection;
 
-
     @Before
     public void setUp() throws Exception {
         this.connection = Connector.connect();
@@ -42,7 +41,6 @@ public class AdminModelTest {
         } catch(Exception e) {
             Assert.fail(e.getMessage());
         }
-
     }
 
     @Test
@@ -235,6 +233,4 @@ public class AdminModelTest {
             Assert.fail(e.getMessage());
         }
     }
-
-
 }

@@ -18,13 +18,11 @@
 }
 
 /* Footer left */
-
 .footer-distributed .footer-left{
     width: 40%;
 }
 
 /* The company logo */
-
 .footer-distributed h3{
     color:  #ffffff;
     font: normal 36px 'Cookie', cursive;
@@ -36,7 +34,6 @@
 }
 
 /* Footer links */
-
 .footer-distributed .footer-links{
     color:  #ffffff;
     margin: 20px 0 12px;
@@ -58,7 +55,6 @@
 }
 
 /* Footer Center */
-
 .footer-distributed .footer-center{
     width: 35%;
 }
@@ -102,7 +98,6 @@
 
 
 /* Footer Right */
-
 .footer-distributed .footer-right{
     width: 20%;
 }
@@ -145,7 +140,6 @@
 }
 
 /* If you don't want the footer to be responsive, remove these media queries */
-
 @media (max-width: 880px) {
 
     .footer-distributed{
@@ -164,5 +158,4 @@
     .footer-distributed .footer-center i{
         margin-left: 0;
     }
-
 }

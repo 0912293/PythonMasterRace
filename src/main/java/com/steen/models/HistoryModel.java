@@ -79,5 +79,4 @@ public class HistoryModel implements Model {
         }
         return JSON;
     }
-
 }

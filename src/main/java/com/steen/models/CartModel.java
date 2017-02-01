@@ -40,7 +40,6 @@ public class CartModel implements Model {
             }
         }
         return removed;
-
     }
 
     public int getCount() {
@@ -84,8 +83,6 @@ public class CartModel implements Model {
             } else cheapsolutionLoL = false;
             queryPlatform += "p.platform_id = " + k + "";
         }
-
-
 
         ResultSet rs = Search.getResultSet(query); // ResultSet containing all games with listed product ID
         List<JSONObject> jsonList = getFormattedResult(rs);

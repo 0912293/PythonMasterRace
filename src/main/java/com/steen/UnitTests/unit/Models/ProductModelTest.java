@@ -31,7 +31,6 @@ public class ProductModelTest {
         catch(Exception e){
             Assert.fail(e.getMessage());
         }
-
     }
 
     @Test
@@ -54,8 +53,5 @@ public class ProductModelTest {
         catch(Exception e){
             Assert.fail(e.getMessage());
         }
-
     }
-
-
 }

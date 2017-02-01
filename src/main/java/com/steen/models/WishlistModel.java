@@ -16,7 +16,6 @@ public class WishlistModel implements Model {
     public WishlistModel() {
     }
 
-
     public String getUserWishlist(String username){
         return "SELECT * FROM user_wishlist u WHERE u.username =" + "'" + username + "'";
     }
@@ -52,8 +51,6 @@ public class WishlistModel implements Model {
         }
     }
 
-
-
     public void deleteItem(String cryptedUser, ArrayList<Integer> list){
         updateDelete(cryptedUser, list);
         try{
@@ -67,7 +64,6 @@ public class WishlistModel implements Model {
         }
     }
 
-
     public String getQuery(String crypt){
         return "SELECT * FROM " +
                 "wishlist w, games g " +
@@ -75,11 +71,9 @@ public class WishlistModel implements Model {
                 "AND w.games_id = g.games_id";
     }
 
-
     public String getUserCrypt(String username){
         return "SELECT crypted_user FROM user_wishlist WHERE username="+ "'" + username + "'";
     }
-
 
     private void updateDelete(String cryptedUser, ArrayList<Integer> list) {
         String result = "";

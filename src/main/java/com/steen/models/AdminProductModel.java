@@ -53,7 +53,6 @@ public class AdminProductModel implements Model{
         }
     }
 
-
     public void AddPlatform(String name, float price, String color, String manufact, String memory, int stock){
         PreparedStatement myStmt;
         try {
@@ -74,7 +73,6 @@ public class AdminProductModel implements Model{
     }
 
     public String getGame(String id){return getJSON("SELECT * FROM games WHERE games_id = '"+id+"'");}
-
 
     public String getJSON(String query) {
         List jsonList;

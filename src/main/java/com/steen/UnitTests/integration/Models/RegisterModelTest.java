@@ -90,7 +90,6 @@ public class RegisterModelTest {
         String db = "1995-11-28";
         this.dbuilder.build("28", "11", "1995");
         Assert.assertEquals(dbuilder.getDate(), db);
-
     }
 
     @Test

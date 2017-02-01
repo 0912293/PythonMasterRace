@@ -5,7 +5,7 @@ import java.sql.Driver.*;
 
 public final class Connector {
 
-
+    //    private static String url = "jdbc:mysql://localhost:3306/webshopdb";
     private static String url = "jdbc:mysql://projectsteen.ddns.net:3306/webshopdb";
     private static String user = "projectapp";
     private static String password = "HRO!1";
