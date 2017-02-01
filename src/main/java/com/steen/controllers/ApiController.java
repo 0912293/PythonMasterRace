@@ -23,6 +23,8 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+        AdminChartModel adminChartModel = (AdminChartModel) models.get("admin_chart");
+
         ProductModel platformModel = (ProductModel) models.get("platform");
 
         HistoryModel historyModel = (HistoryModel) models.get("history");
@@ -33,20 +35,18 @@ public class ApiController {
         }));
 
         get("/api/admincheck.ses", (req, res) -> {
-            return adminModel.getAdmin(req.session().attribute("username"));
+            return adminChartModel.getAdmin(req.session().attribute("username"));
         });
 
         post("/api/admin/users.json", (request, response) -> {
             String filter = request.queryParams("search");
             String order = request.queryParams("orders");
-
             if (filter != null && !filter.equals("")) {
                 adminModel.getSearch().addFilterParam("games_name", filter, Filter.Operator.LIKE);
             }
             if (order != null && !order.equals("")) {
                 adminModel.getSearch().addOrderParam(order);
             }
-
             return apiModel.getJSON(adminModel.getSearch());
         });
 
@@ -182,17 +182,17 @@ public class ApiController {
 
         post("/api/admin/chart1.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart1JSON();
+            return adminChartModel.getChart1JSON();
         });
 
         post("/api/admin/chart2.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart2JSON();
+            return adminChartModel.getChart2JSON();
         });
 
         post("/api/admin/chart3.json", (request, response) -> {
             adminModel.getSearch();
-            return adminModel.getChart3JSON();
+            return adminChartModel.getChart3JSON();
         });
     }
 }
