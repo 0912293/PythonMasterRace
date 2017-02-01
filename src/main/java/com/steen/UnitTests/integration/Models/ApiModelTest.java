@@ -1,5 +1,4 @@
 package com.steen.UnitTests.integration.Models;
-
 import com.steen.db.Connector;
 import com.steen.models.ApiModel;
 import com.steen.session.Filter;
@@ -10,10 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import java.sql.Connection;
-
-/**
- * Created by Lennard Kras on 18-1-2017.
- */
 
 public class ApiModelTest {
 

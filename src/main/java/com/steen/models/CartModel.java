@@ -1,19 +1,14 @@
 package com.steen.models;
-
 import com.steen.session.Search;
-import static com.steen.util.SQLToJSON.getFormattedResult;
-import static com.steen.util.SQLToJSON.JsonListToString;
-import static com.steen.util.SQLToJSON.Type;
-
 import com.steen.util.JSONUtil;
-import com.steen.util.SQLToJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.sql.Array;
 import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
+import static com.steen.util.SQLToJSON.Type;
+import static com.steen.util.SQLToJSON.getFormattedResult;
+import static com.steen.util.SQLToJSON.JsonListToString;
 
 public class CartModel implements Model {
     private HashMap<Integer, Integer> products;

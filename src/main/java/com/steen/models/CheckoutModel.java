@@ -1,15 +1,12 @@
 package com.steen.models;
-
 import com.steen.util.DateBuilder;
 import com.steen.util.JSONUtil;
 import com.steen.util.SQLToJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
-
 import static com.steen.Main.connection;
 import static com.steen.util.SQLToJSON.JsonListToString;
 import static com.steen.util.SQLToJSON.getFormattedResult;

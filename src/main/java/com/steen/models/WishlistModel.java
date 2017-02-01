@@ -1,7 +1,5 @@
 package com.steen.models;
-
 import com.steen.Main;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;

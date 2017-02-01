@@ -1,17 +1,13 @@
 package com.steen.controllers;
-
 import com.steen.models.*;
-import static com.steen.models.LoginModel.checkBlacklist;
 import com.steen.session.User;
-import static com.steen.Main.p_layout;
-import static com.steen.Main.sfp;
-import static com.steen.models.LoginModel.checkBlacklist;
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
-import static spark.Spark.get;
-import static spark.Spark.post;
 import java.util.HashMap;
 import java.util.Map;
+import static com.steen.Main.p_layout;
+import static com.steen.models.LoginModel.checkBlacklist;
+import static spark.Spark.post;
 
 public class LoginController {
     public User user = new User();

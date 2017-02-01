@@ -1,10 +1,6 @@
 package com.steen.session;
-
 import java.util.ArrayList;
 
-/**
- * Created by Jamal on 1-11-2016.
- */
 public class OrderBy {
     ArrayList<String> orders = new ArrayList<>();
 

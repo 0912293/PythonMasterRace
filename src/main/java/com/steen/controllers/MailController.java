@@ -1,10 +1,7 @@
 package com.steen.controllers;
-
 import com.steen.models.MailModel;
 import com.steen.models.Model;
-
 import java.util.HashMap;
-
 import static spark.Spark.post;
 
 public class MailController {

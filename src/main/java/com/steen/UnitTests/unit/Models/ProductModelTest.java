@@ -1,5 +1,4 @@
 package com.steen.UnitTests.unit.Models;
-
 import com.steen.models.ProductModel;
 import com.steen.session.Search;
 import org.junit.After;
@@ -7,9 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * Created by Lennard Kras on 18-1-2017.
- */
 public class ProductModelTest {
 
     ProductModel Model;

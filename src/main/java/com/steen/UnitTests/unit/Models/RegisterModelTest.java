@@ -1,16 +1,10 @@
 package com.steen.UnitTests.unit.Models;
-
 import com.steen.util.DateBuilder;
 import com.steen.models.RegisterModel;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import com.steen.Cryptr;
-
-/**
- * Created by Lennard Kras on 18-1-2017.
- */
 
 public class RegisterModelTest {
 

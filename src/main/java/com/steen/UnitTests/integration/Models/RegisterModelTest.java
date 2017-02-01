@@ -1,34 +1,14 @@
 package com.steen.UnitTests.integration.Models;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-/**
- * Created by Lennard Kras on 31-1-2017.
- */
-import com.steen.Cryptr;
 import com.steen.Main;
 import com.steen.db.Connector;
 import com.steen.models.RegisterModel;
 import com.steen.util.DateBuilder;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
-/**
- * Created by jesse on 31-1-2017.
- */
 public class RegisterModelTest {
 
     RegisterModel model;

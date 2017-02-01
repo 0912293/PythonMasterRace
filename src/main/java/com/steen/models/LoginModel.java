@@ -1,10 +1,7 @@
 package com.steen.models;
-
 import com.steen.Cryptr;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import static com.steen.Main.connection;
 
 public class LoginModel implements Model {

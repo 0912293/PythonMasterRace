@@ -1,25 +1,17 @@
 package com.steen.controllers;
-
 import com.steen.models.FavoritesModel;
 import com.steen.models.Model;
-
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.steen.velocity.VelocityTemplateEngine;
 import spark.ModelAndView;
-
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-/**
- * Created by jesse on 23-1-2017.
- */
 public class FavoritesController {
 
 
@@ -85,7 +77,6 @@ public class FavoritesController {
             }
 
             favoritesModel.deleteItems(username, games, platforms);
-            //return "Producten zijn uit favorieten verwijderd!";
             return null;
         });
     }

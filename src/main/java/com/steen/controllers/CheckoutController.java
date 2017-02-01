@@ -1,5 +1,4 @@
 package com.steen.controllers;
-
 import com.steen.Cryptr;
 import com.steen.models.CartModel;
 import com.steen.models.CheckoutModel;
@@ -7,13 +6,10 @@ import com.steen.models.Model;
 import com.steen.velocity.VelocityTemplateEngine;
 import org.json.JSONArray;
 import spark.ModelAndView;
-
 import java.util.Date;
 import java.util.HashMap;
-
 import static com.steen.Main.p_layout;
 import static com.steen.Main.sfp;
-import static spark.Spark.modelAndView;
 import static spark.Spark.post;
 import static spark.Spark.get;
 

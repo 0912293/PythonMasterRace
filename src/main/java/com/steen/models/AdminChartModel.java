@@ -1,15 +1,8 @@
 package com.steen.models;
-
-import com.steen.Main;
 import com.steen.session.Filter;
 import com.steen.session.Search;
-import com.steen.util.DateBuilder;
 import com.steen.util.SQLToJSON;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.List;
-
 import static com.steen.util.SQLToJSON.JsonListToString;
 import static com.steen.util.SQLToJSON.getFormattedResult;
 

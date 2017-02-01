@@ -1,5 +1,4 @@
 package com.steen.controllers;
-import com.steen.Cryptr;
 import com.steen.models.*;
 import com.steen.session.Filter;
 import com.steen.session.Search;
@@ -7,11 +6,7 @@ import com.steen.util.JSONUtil;
 import com.steen.util.SQLToJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.sql.ResultSet;
 import java.util.HashMap;
-import java.util.Objects;
-
 import static spark.Spark.get;
 import static spark.Spark.post;
 

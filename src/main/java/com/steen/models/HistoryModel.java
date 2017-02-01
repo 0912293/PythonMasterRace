@@ -1,12 +1,7 @@
 package com.steen.models;
-
-import com.steen.Main;
 import com.steen.util.JSONUtil;
-import com.steen.util.SQLToJSON;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,12 +10,7 @@ import java.util.List;
 import static com.steen.Main.connection;
 import static com.steen.util.SQLToJSON.getFormattedResult;
 
-/**
- * Created by jesse on 26-1-2017.
- */
 public class HistoryModel implements Model {
-
-    //private Connection connection = Main.connection;
 
     public HistoryModel(){}
 
