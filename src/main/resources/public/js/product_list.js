@@ -7,11 +7,11 @@ $(function () {
     $('.form-filter').on("submit", function(e) {
         enableLoader();
         e.preventDefault();
-        updateTable($('#search').val())
+        updateTable($('#search').val());
         disableLoader()
     });
-    $('#sortoption').change(function(){ checkSort() });
-    $('#filteroption').change(function () { checkFilter() });
+    $('#sortoption').change(function(){ checkSort(); disableLoader(); });
+    $('#filteroption').change(function () { checkFilter(); disableLoader(); });
     updateAll()
 });
 
