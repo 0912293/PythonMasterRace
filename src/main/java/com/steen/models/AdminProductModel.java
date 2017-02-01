@@ -32,7 +32,6 @@ public class AdminProductModel implements Model{
 
             myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -53,7 +52,6 @@ public class AdminProductModel implements Model{
 
             myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -74,7 +72,6 @@ public class AdminProductModel implements Model{
 
             myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -88,7 +85,6 @@ public class AdminProductModel implements Model{
             jsonList = getFormattedResult(Search.getResultSet(query));
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }

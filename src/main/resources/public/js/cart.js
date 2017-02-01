@@ -1,7 +1,6 @@
 $(function () {
     retrieveJSON("/api/user.ses", {}, function (data) {
         var checkoutbutton = $('#checkoutButton');
-        console.log(data);
         if (data !== undefined) {
             if (data.username != "" && data.username != null) {
                 checkoutbutton.click(function() {
@@ -43,7 +42,6 @@ function updatePage(data) {
                 )
             );}
             else{
-                console.log("Test2");
                 if(item.platform_name != undefined || item.platform_name != null){
                 table.append($('<tr>')
                 .append(

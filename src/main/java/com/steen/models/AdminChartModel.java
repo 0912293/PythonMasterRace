@@ -12,11 +12,10 @@ import java.util.List;
 
 import static com.steen.util.SQLToJSON.JsonListToString;
 import static com.steen.util.SQLToJSON.getFormattedResult;
-import static com.sun.deploy.config.JREInfo.clear;
 
 public class AdminChartModel implements Model{
     public AdminChartModel() {
-        clear();
+
     }
     private Search search = new Search("SELECT * FROM users");
 
@@ -54,7 +53,6 @@ public class AdminChartModel implements Model{
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }

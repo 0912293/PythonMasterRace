@@ -39,7 +39,6 @@ public class UserModel implements Model {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -57,7 +56,6 @@ public class UserModel implements Model {
 
                     myStmt.executeUpdate();
                 } catch (Exception e) {
-                    System.out.println(e.getMessage());
                     e.printStackTrace();
                 }
                 return true;

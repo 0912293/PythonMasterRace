@@ -43,7 +43,6 @@ public class LoginModel implements Model {
                 blacklisted = rs.getBoolean("blacklisted");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return blacklisted;
@@ -66,7 +65,6 @@ public class LoginModel implements Model {
                 admin = resultSet.getBoolean("admin");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

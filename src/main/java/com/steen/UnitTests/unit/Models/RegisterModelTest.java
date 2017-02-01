@@ -1,4 +1,4 @@
-package com.steen.UnitTests.unsortedTest.Models;
+package com.steen.UnitTests.unit.Models;
 
 import com.steen.util.DateBuilder;
 import com.steen.models.RegisterModel;
@@ -33,14 +33,6 @@ public class RegisterModelTest {
         String username = "UnitTest";
         this.Model.setUsername(username);
         Assert.assertEquals(this.Model.username, username);
-    }
-
-    @Test
-    public void setPassword() throws Exception {
-        String password = "123";
-        String e_password = Cryptr.getInstance(password, Cryptr.Type.MD5).getEncryptedString();
-        this.Model.setPassword(password);
-        Assert.assertEquals(this.Model.password, e_password);
     }
 
     @Test
@@ -117,11 +109,6 @@ public class RegisterModelTest {
     @Test
     public void setParameters() throws Exception {
         //Same as all the setters, but just in one method. The others work, so this does as well.
-    }
-
-    @Test
-    public void parseReg() throws Exception {
-        //Only testable with an integration test due to SQL and private methods.
     }
 
 }

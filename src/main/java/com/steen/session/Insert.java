@@ -29,7 +29,6 @@ public class Insert {
             LengthViolationCheck(record);
             Records.add(record);
         } catch (IllegalArgumentException IA) {
-            System.out.println(IA.getMessage() + " The record hasn't been added!");
             IA.printStackTrace();
         }
     }
@@ -49,7 +48,6 @@ public class Insert {
             PreparedStatement myStmt = connection.prepareStatement(ConstructedSQL);
             affectedRows = myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return affectedRows;

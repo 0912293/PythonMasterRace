@@ -1,6 +1,5 @@
 $(function () {
     if(!('Notification' in window)) {
-        console.log("This browser does not support system notifications");
     }
     else if(Notification.permission !== 'granted' && Notification.permission !== 'denied') {
         SpawnPermissionDialog();
@@ -9,7 +8,6 @@ $(function () {
 
 function SpawnPermissionDialog(){
     Notification.requestPermission().then(function(result) {
-        console.log(result);
     });
 }
 

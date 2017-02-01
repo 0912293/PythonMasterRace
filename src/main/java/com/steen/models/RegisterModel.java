@@ -89,9 +89,7 @@ public class RegisterModel implements Model {
 
             ParseRegUser();
             ParseLinkAddressToUser();
-            System.out.println("User registered");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -110,7 +108,6 @@ public class RegisterModel implements Model {
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -137,9 +134,7 @@ public class RegisterModel implements Model {
                 i = rs.getInt("address_id");
             }
 
-            System.out.println("address id found");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return i;
@@ -157,7 +152,6 @@ public class RegisterModel implements Model {
 
             myStmt.executeUpdate();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 

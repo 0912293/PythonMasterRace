@@ -58,7 +58,6 @@ public class FavoritesModel implements Model {
             rs = myStmt.executeQuery(query);
             return rs.isBeforeFirst();
         } catch (Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -71,7 +70,6 @@ public class FavoritesModel implements Model {
             myStmt.execute(this.insertquery);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -99,7 +97,6 @@ public class FavoritesModel implements Model {
                 myStmt.execute(item);
             }
         } catch(Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

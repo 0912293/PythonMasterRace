@@ -5,16 +5,9 @@ import java.sql.DriverManager;
 import java.sql.Driver.*;
 
 public final class Connector {
-//  private static String url = "jdbc:mysql://localhost:3306/webshoptest";
-  // Local credentials -> Lucas
-//  private static String user = "app";
-//  private static String password = "letmesee";
 
-//    private static String user = "root";
-//  private static String password = "root";
 
     private static String url = "jdbc:mysql://projectsteen.ddns.net:3306/webshopdb";
-//    private static String url = "jdbc:mysql://localhost:3306/webshopdb"; //gebruiken bij deployen
     private static String user = "projectapp";
     private static String password = "HRO!1";
 
@@ -23,7 +16,6 @@ public final class Connector {
 
             Connection connection = DriverManager.getConnection(url, user, password);
 
-            System.out.println("Connection successful");
             return connection;
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -39,7 +39,6 @@ public class WishlistModel implements Model {
             return resultSet;
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return resultSet;
@@ -51,7 +50,6 @@ public class WishlistModel implements Model {
             myStmt.executeUpdate(query);
         }
         catch (Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -67,7 +65,6 @@ public class WishlistModel implements Model {
 
             }
         } catch(Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

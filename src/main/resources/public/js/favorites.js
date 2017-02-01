@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log("Check1")
     updateData();
 });
 
@@ -9,14 +8,12 @@ function updateData() {
 }
 
 function getJson(url) {
-    //console.log(url);
     $.ajax({
         type: 'POST',
         url: url,
         dataType: "json",
         success: filltable,
         error: function () {
-            console.log("Incorrect or missing JSON")
         }
     });
 }
@@ -58,11 +55,8 @@ function deleterows2() {
     var dict = {};
     var i = 0;
     $('[id = chk]:checked').each(function () {
-        console.log($(this).val());
         $(this).closest('tr').remove();
         var key = i.toString();
-        console.log("The key = " + key);
-        console.log("The value = " + $(this).val());
         dict[key] = ($(this).val());
         i++
     });
