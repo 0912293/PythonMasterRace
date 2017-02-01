@@ -23,6 +23,8 @@ public class ApiController {
         WishlistModel wishlistModel = (WishlistModel) models.get("wishlist");
         CartModel cartModel = (CartModel) models.get("cart");
         CheckoutModel checkoutModel = (CheckoutModel) models.get("checkout");
+        ProductModel platformModel = (ProductModel) models.get("platform");
+
         HistoryModel historyModel = (HistoryModel) models.get("history");
         FavoritesModel favoritesModel = (FavoritesModel) models.get("favorites");
 
@@ -76,6 +78,25 @@ public class ApiController {
             return apiModel.getJSON(query);
         }));
 
+        post("/api/product/platforms.json", (request, response) -> {
+            platformModel.clearSession();
+            platformModel.setSearch(new Search("SELECT * FROM platforms"));
+
+            String search = request.queryParams("search");
+            String order = request.queryParams("order");
+            String filter = request.queryParams("filter");
+
+            if (search != null && !search.equals("null") && !search.equals("")) {
+                platformModel.getSearch().addFilterParam("platform_name", search, Filter.Operator.LIKE);
+            }
+            if (order != null && !order.equals("null") && !order.equals("")) {
+                platformModel.getSearch().addOrderParam(order);
+            }
+            if (filter != null && !filter.equals("null") && !filter.equals("")) {
+                platformModel.getSearch().addFilterParam(filter);
+            }
+            return apiModel.getJSON(platformModel.getSearch());
+        });
 
         post("/api/product/games.json", ((request, response) -> {
             productModel.clearSession();

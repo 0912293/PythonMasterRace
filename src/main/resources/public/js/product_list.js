@@ -3,7 +3,7 @@ var filterOption = null;
 var input = document.querySelector('input[type= text][id = "search"]');
 
 $(function () {
-    enableLoader();
+    
     $('.form-filter').on("submit", function(e) {
         enableLoader();
         e.preventDefault();
@@ -12,11 +12,23 @@ $(function () {
     });
     $('#sortoption').change(function(){ checkSort() });
     $('#filteroption').change(function () { checkFilter() });
-    updateDropdowns();
+    updateAll()
+});
+
+
+
+function checkAll() {
     checkSort();
+    checkFilter();
+});
+
+function updateAll() {
+    enableLoader();
+    checkAll();
+    updateDropdowns();
     updateTable();
     disableLoader();
-});
+}
 
 function enableLoader() {
     document.getElementById('LoaderSvg').style.display = 'inline';
@@ -29,6 +41,10 @@ function disableLoader() {
         document.getElementById('ProductContainer').style.display = 'inline'
     });
 }
+    checkFilter();
+}
+
+
 
 function checkSort() {
     var optObj = $('#sortoption').find(":selected");
@@ -44,7 +60,6 @@ function checkSort() {
     } else if (opt == "N_DESC") {
         sortOption = "games.games_name DESC";
     }
-    updateTable()
 }
 
 function checkFilter() {
@@ -57,11 +72,9 @@ function checkFilter() {
     } else if (optObj.parent().attr('label') == "Platform") {
         filterOption = "games.games_platform=" + "'" + opt + "'";
     }
-    updateTable();
 }
 
 function updateDropdowns() {
-    checkSort();
     var dict = { 'selector': 0};
     retrieveJSON("/api/product/filtering.json", dict, fillDropdownsOuter(0));
     dict = { 'selector': 1};
@@ -91,22 +104,32 @@ function fillDropdownsOuter(selector) {
 
 function updateTable(searchAppend) {
     var stdURL = "/api/product/games.json";
+    var stdURL1 = "/api/product/platforms.json";
+
     var dict = {
         'search': (searchAppend !== undefined) ? searchAppend : null,
         'order': sortOption,
         'filter': filterOption
     };
+
+    $('#ProductContainer').empty();
+    retrieveJSON(stdURL1, dict, fillplatform);
     retrieveJSON(stdURL, dict, filltable);
 }
-
+var productContainer = $('#ProductContainer');
 function filltable(json) {
-    var productContainer = $('#ProductContainer');
-
-    productContainer.empty();
     $.each(json, function (i, item) {
         productContainer.append(ConstructProductbox(item.name, item.price, item.image, item.gameId));
         $('#productListCartButton' + item.gameId).click(getCartActionFunc(item.gameId,item.name,item.image, 0))
-    })
+    });
+}
+
+function fillplatform(json) {
+    // var productContainer = $('#ProductContainer');
+    $.each(json, function (i, item) {
+        productContainer.append(ConstructProductbox(item.platform_name, item.platform_price, item.platform_image, item.platform_id));
+        $('#productListCartButton' + item.platform_id).click(getCartActionFunc(item.platform_id, item.platform_name, item.platform_image, 0))
+    });
 }
 
 function ConstructProductbox(name, price, image, id) {
