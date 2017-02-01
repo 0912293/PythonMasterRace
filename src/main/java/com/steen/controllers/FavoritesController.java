@@ -75,14 +75,18 @@ public class FavoritesController {
                 key = i.toString();
 
             }
-            ArrayList<Integer> toDelete2 = new ArrayList<Integer>();
+            ArrayList<Integer> games = new ArrayList<>();
+            ArrayList<Integer> platforms = new ArrayList<>();
             for (String a: toDelete){
 
                 int b = Integer.parseInt(a);
-                toDelete2.add(b);
+                if (b < 1000)
+                    games.add(b);
+                else
+                    platforms.add(b);
             }
 
-            favoritesModel.deleteItem(username, toDelete2);
+            favoritesModel.deleteItems(username, games, platforms);
             //return "Producten zijn uit favorieten verwijderd!";
             return null;
         });

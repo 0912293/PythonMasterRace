@@ -18,7 +18,8 @@ public class FavoritesModel implements Model {
 
 
     private String insertquery;
-    private ArrayList<String> deleteList = new ArrayList<>();
+    private ArrayList<String> deleteGames = new ArrayList<>();
+    private ArrayList<String> deletePlatforms = new ArrayList<>();
     public FavoritesModel(){}
 
 
@@ -88,13 +89,14 @@ public class FavoritesModel implements Model {
         System.out.print(this.insertquery);
     }
 
-    public void deleteItem(String username, ArrayList<Integer> list){
-        updateDelete(username, list);
+    public void deleteItems(String username, ArrayList<Integer> games, ArrayList<Integer> platforms){
+        updateDelete(username, games, platforms);
         try{
             Statement myStmt = connection.createStatement();
-            for (String item : deleteList) {
+            for (String item : deleteGames) {
                 myStmt.execute(item);
-
+            } for (String item : deletePlatforms) {
+                myStmt.execute(item);
             }
         } catch(Exception e){
             System.out.println(e.getMessage());
@@ -102,16 +104,21 @@ public class FavoritesModel implements Model {
         }
     }
 
-    private void updateDelete(String username, ArrayList<Integer> list){
+    private void updateDelete(String username, ArrayList<Integer> games, ArrayList<Integer> platforms){
         String result = "";
         ArrayList<String> sql_list = new ArrayList<>();
-        for(int item: list){
+        for(int item: games){
             result = "DELETE FROM favorites " +
                     "WHERE favorites.username = '" + username + "' " +
                     "AND favorites.og_id = " + item + ";";
-            sql_list.add(result);
+            deleteGames.add(result);
         }
-        this.deleteList = sql_list;
+        for(int item: platforms){
+            result = "DELETE FROM favorites " +
+                    "WHERE favorites.username = '" + username + "' " +
+                    "AND favorites.op_id = " + item + ";";
+            deletePlatforms.add(result);
+        }
 
     }
 }
