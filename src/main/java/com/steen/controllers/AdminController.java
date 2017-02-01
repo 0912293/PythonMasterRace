@@ -1,5 +1,6 @@
 package com.steen.controllers;
 
+import com.steen.models.AdminChartModel;
 import com.steen.models.AdminModel;
 import com.steen.models.AdminProductModel;
 import com.steen.models.Model;
@@ -149,7 +150,6 @@ public class AdminController {
                     model.put("number", adminModel.getData(AdminModel.Data.NUMBER));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
-                    System.out.println("malformed 'number' attribute for selected user");
                     res.redirect("/admin");
                 }
                 adminModel.clear();

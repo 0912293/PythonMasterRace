@@ -37,6 +37,7 @@ public class Main {
         models.put("cart", new CartModel());
         models.put("checkout", new CheckoutModel());
         models.put("mail", new MailModel());
+        models.put("admin_chart", new AdminChartModel());
         models.put("platform", new ProductModel());
         models.put("history", new HistoryModel());
 

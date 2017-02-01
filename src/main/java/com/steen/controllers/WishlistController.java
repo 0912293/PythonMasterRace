@@ -41,9 +41,7 @@ public class WishlistController {
             String username = request.session().attribute("username");
             Cryptr encrypter = Cryptr.getInstance(username, Cryptr.Type.MD5);
             String encrypted_user = encrypter.getEncryptedString();
-            System.out.println(encrypted_user);
             int id = Integer.parseInt(request.queryParams("id"));
-            System.out.println("De id is " + id);
             try {
                 if (username == null || username.equals("")){
                     throw new Exception();
@@ -62,7 +60,6 @@ public class WishlistController {
                 }
                 return "Item has been added to your wishlist.";
             } catch (Exception e) {
-                System.out.println(e);
                 return "Please, check that you are logged in.";
             }
         });
@@ -96,7 +93,6 @@ public class WishlistController {
 
             }
             catch (Exception e){
-                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
             return "Items have been deleted!";

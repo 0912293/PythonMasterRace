@@ -25,7 +25,6 @@ function getJsonUser() {
         dataType: "json",
         success: getJsonID,
         error: function () {
-            console.log("Incorrect or missing JSON")
         }
     });
 }
@@ -37,7 +36,6 @@ function getJsonUserCrypt() {
         dataType: "json",
         success: shareLink,
         error: function () {
-            console.log("Incorrect or missing JSON")
         }
     });
 }
@@ -83,11 +81,8 @@ function deleterows() {
     var dict = {};
     var i = 0;
     $('[id = chk]:checked').each(function () {
-        console.log($(this).val());
         $(this).closest('tr').remove();
         var key = i.toString();
-        console.log("The key = " + key);
-        console.log("The value = " + $(this).val());
         dict[key] = ($(this).val());
         i++
     });
@@ -110,7 +105,6 @@ function fillviewTable(data) {
     var json = data;
     var tr = [];
 
-    console.log(data);
 
     $.each(json, function (i, item) {
         tr = $('<tr/>');

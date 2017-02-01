@@ -73,7 +73,7 @@ public class AdminModel implements Model {
     public boolean checkAdmin(){
         try {
             Search csearch = new Search("SELECT admin FROM users");
-            csearch.addFilterParam("username",this.username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while(rs.next()){
@@ -100,12 +100,10 @@ public class AdminModel implements Model {
             int affected = insert.executeQuery();
             if(affected > 0) {
                 System.out.println("blacklisted user");
-
             }
             else{
                 System.out.print("Blacklisting went wrong :^)");
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -116,7 +114,6 @@ public class AdminModel implements Model {
         try {
             //LOWER IS NOT SUPPORT BY SEARCH (YET)
             sql = "DELETE FROM blacklist WHERE LOWER(username) = LOWER('" + this.username + "');";
-
             PreparedStatement myStmt = connection.prepareStatement(sql);
             myStmt.executeUpdate();
             System.out.println("blacklisted user");
@@ -131,7 +128,6 @@ public class AdminModel implements Model {
                 ArrayList<String> list = new ArrayList<String >(Arrays.asList("username","name", "surname", "email", "birth_date"));
                 Insert insert =  new Insert("users", list);
                 insert.addRecord(new ArrayList<>(Arrays.asList("'" + this.username + "'", "'" + this.name + "'", "'" + this.surname + "'", "'" + this.email + "'", "'1996-07-05'")));
-
                 insert.executeQuery();
                 System.out.println("Inserted dummy user");
             } catch (Exception e) {
@@ -144,8 +140,7 @@ public class AdminModel implements Model {
         if(!checkAdmin()) {
             try {
                 Search csearch = new Search("DELETE FROM users");
-                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
-
+                csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
                 csearch.executeNonQuery();
                 System.out.println("deleted user");
             } catch (Exception e) {
@@ -159,12 +154,10 @@ public class AdminModel implements Model {
         if(!checkAdmin()) {
             try {
                 Search csearch = new Search("UPDATE users SET password = '" + Cryptr.getInstance("0000", Cryptr.Type.MD5).getEncryptedString());
-                csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
+                csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
                 csearch.executeNonQuery();
-                System.out.println("reseted password");
             } catch (Exception e) {
-                System.out.println(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -186,7 +179,6 @@ public class AdminModel implements Model {
             this.address_city = city;
             dbuilder.build(this.day, this.month, this.year);
             this.birth_date = dbuilder.getDate();
-
             updateAddress();
             updateUser();
         }
@@ -218,9 +210,7 @@ public class AdminModel implements Model {
             csearch.addFilterParam("address_id", this.address_id.toString(), Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
-            System.out.println("updated address");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -232,12 +222,10 @@ public class AdminModel implements Model {
                             this.surname + "', email = '" +
                             this.email + "', birth_date = '" +
                             this.birth_date + "'");
-            csearch.addFilterParam("username", this.username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",this.username, Filter.Operator.EQUAL);
 
             csearch.executeNonQuery();
-            System.out.println("updated user");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -245,7 +233,7 @@ public class AdminModel implements Model {
     public void searchUser(String user) {
         try {
             Search csearch = new Search("SELECT * FROM users");
-            csearch.addFilterParam("username", user, Filter.Operator.LIKE);
+            csearch.addFilterParam("username", user, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while (rs.next()) {
@@ -260,7 +248,6 @@ public class AdminModel implements Model {
             getDate();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -271,7 +258,7 @@ public class AdminModel implements Model {
                     "EXTRACT(MONTH FROM birth_date) AS birthmonth , " +
                     "EXTRACT(DAY FROM birth_date) AS birthday " +
                     "FROM users");
-            csearch.addFilterParam("username", username, Filter.Operator.LIKE);
+            csearch.addFilterParam("username",username, Filter.Operator.EQUAL);
 
             rs = csearch.getResultSet();
             while (rs.next()) {
@@ -282,7 +269,6 @@ public class AdminModel implements Model {
             searchUserAddress();
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -290,8 +276,7 @@ public class AdminModel implements Model {
     private void searchUserAddress() {
         try {
             Search csearch = new Search("SELECT * FROM address");
-            csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.LIKE);
-
+            csearch.addFilterParam("address_id", address_id.toString(), Filter.Operator.EQUAL);
             rs = csearch.getResultSet();
             while (rs.next()) {
                 address_country = rs.getString("address_country");
@@ -302,7 +287,6 @@ public class AdminModel implements Model {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -345,45 +329,7 @@ public class AdminModel implements Model {
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
-        }
-        return null;
+        } return null;
     }
-
-    public String getAdmin(String user){
-        Search csearch = new Search("SELECT admin FROM users");
-        csearch.addFilterParam("username", user, Filter.Operator.LIKE);
-        return getJSON(csearch);
-    }
-    public String getChart1JSON(){
-        Search csearch = new Search("SELECT games_platform, SUM(games_stock) AS stock FROM games");
-        csearch.addOrderParam("games_platform");
-        return getJSON(csearch);
-    }
-
-    public String getChart2JSON(){
-        Search csearch = new Search("SELECT games_platform, COUNT(games_id) AS game_count FROM games");
-        csearch.addOrderParam("games_platform");
-        return getJSON(csearch);
-    }
-
-    public String getChart3JSON(){
-        Search csearch = new Search("SELECT admin as user, COUNT(username) AS ucount FROM users");
-        csearch.addOrderParam("admin");
-        return getJSON(csearch);
-    }
-
-    public String getJSON(Search search) {
-        List jsonList;
-        try {
-            jsonList = getFormattedResult(search.getResultSet());
-            return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
-        } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
-        }
-        return null;
-    }
-    public Search getSearch() {
-        return search;
-    }
+    public Search getSearch() {return search;}
 }

@@ -15,7 +15,6 @@ public class ApiModel implements Model {
             jsonList = getFormattedResult(search.getResultSet());
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }
@@ -26,7 +25,6 @@ public class ApiModel implements Model {
             jsonList = getFormattedResult(Search.getResultSet(query));
             return JsonListToString(jsonList, SQLToJSON.Type.ARRAY);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }
@@ -37,7 +35,6 @@ public class ApiModel implements Model {
             jsonList = getFormattedResult(Search.getResultSet(query));
             return JsonListToString(jsonList, type);
         } catch (Exception e) {
-            System.out.println("SQL >> Could not get JSON");
         }
         return null;
     }

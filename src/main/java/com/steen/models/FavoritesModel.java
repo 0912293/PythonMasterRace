@@ -30,6 +30,14 @@ public class FavoritesModel implements Model {
                 "AND f.og_id = g.games_id";
     }
 
+    public static String getQuery2(String username){
+        return "SELECT * FROM " +
+                "favorites f, platforms p " +
+                "WHERE f.username = " + "'" + username + "'" +
+                "AND f.op_id = p.platform_id";
+    }
+    //public static String
+
     public Boolean checkInDatabase(String username, int id, int isGame){
         ResultSet rs = null;
         String query = null;
@@ -49,7 +57,6 @@ public class FavoritesModel implements Model {
             rs = myStmt.executeQuery(query);
             return rs.isBeforeFirst();
         } catch (Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -62,7 +69,6 @@ public class FavoritesModel implements Model {
             myStmt.execute(this.insertquery);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
@@ -89,7 +95,6 @@ public class FavoritesModel implements Model {
 
             }
         } catch(Exception e){
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

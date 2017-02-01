@@ -50,7 +50,6 @@ function fillform(data) {
 }
 
 function updateGame() {
-    console.log("Game updated")
     var dict = {
         'url' : location.pathname,
         'gname' : $('#g_name').val(),

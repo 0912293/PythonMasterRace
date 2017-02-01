@@ -15,7 +15,6 @@ $(function () {
 });
 
 function updatePage(invoice) {
-    console.log(invoice);
 
     if (invoice != null) {
         fillData(invoice);

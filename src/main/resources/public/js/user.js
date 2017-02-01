@@ -1,5 +1,4 @@
 function changepass() {
-    console.log("Password changed");
     var dict = {
         'url' : location.pathname,
         'opass' : $('#wachtwoord').val(),

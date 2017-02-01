@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log("Check1")
     updateData();
 });
 
@@ -9,14 +8,12 @@ function updateData() {
 }
 
 function getJson(url) {
-    //console.log(url);
     $.ajax({
         type: 'POST',
         url: url,
         dataType: "json",
         success: filltable,
         error: function () {
-            console.log("Incorrect or missing JSON")
         }
     });
 }
@@ -30,12 +27,18 @@ function filltable(data) {
         tr = $('<tr/>');
         if (item.og_id != -1) {
             tr.append("<input type='hidden' id='" + item.og_id + "' value='" + item.og_id + "'/>");
+            tr.append("<td>" + item.games_name + "</td>");
+            tr.append("<td>" + item.games_price + "</td>");
+            tr.append("<td>-</td>");
+            tr.append("<td>" + item.games_platform+ "</td>");
         } else{
-            tr.append("<input type='hidden' id='" + item.op_id + "' value='" + item.op_id + "'/>");
+            tr.append("<input type='hidden' id='" + item.opl_id + "' value='" + item.opl_id + "'/>");
+            tr.append("<td>" + item.platform_name + "</td>");
+            tr.append("<td>" + item.platform_price + "</td>");
+            tr.append("<td>" + item.platform_colour+ "</td>");
+            tr.append("<td>-</td>");
         }
-        tr.append("<td>" + item.games_name + "</td>");
-        tr.append("<td>" + item.games_price + "</td>");
-        tr.append("<td>" + item.games_platform+ "</td>");
+
 
         if (item.og_id != -1) {
             tr.append("<td><input type = 'checkbox'  value='" + item.games_id + "' id = 'chk'" + item.games_id + "'/></td>");
@@ -52,11 +55,8 @@ function deleterows2() {
     var dict = {};
     var i = 0;
     $('[id = chk]:checked').each(function () {
-        console.log($(this).val());
         $(this).closest('tr').remove();
         var key = i.toString();
-        console.log("The key = " + key);
-        console.log("The value = " + $(this).val());
         dict[key] = ($(this).val());
         i++
     });

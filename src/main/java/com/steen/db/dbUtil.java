@@ -14,7 +14,6 @@ public class dbUtil {
             resultSet = myStmt.executeQuery(query);
             return resultSet.isBeforeFirst();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
         return false;
