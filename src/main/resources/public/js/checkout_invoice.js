@@ -46,15 +46,15 @@ function fillData(data) {
     $('#customerPostalAddress').append(userinfo.address_postalcode + " " + userinfo.address_country);
     var totalprice = 0.00;
     $.each(products, function (i, item) {
+            totalprice += item.product_price * item.amount;
             $('#invoiceTableBody')
                 .append($('<tr>')
                     .append(
                         "<td>" + item.product_name + "</td>" +
-                        "<td>&euro;" + item.product_price + "</td>" +
-                        "<td>" + item.amount + "</td>"
+                        "<td>" + item.amount + "</td>" +
+                        "<td>&euro;" + item.product_price + "</td>"
                     )
                 );
-            totalprice += item.product_price * item.amount;
         }
     );
     $('#totalCost').append("&euro;" + totalprice.toFixed(2));
