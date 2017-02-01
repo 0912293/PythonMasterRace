@@ -50,7 +50,7 @@ function fillData(data) {
                 .append($('<tr>')
                     .append(
                         "<td>" + item.product_name + "</td>" +
-                        "<td>" + item.product_price + "</td>" +
+                        "<td>&euro;" + item.product_price + "</td>" +
                         "<td>" + item.amount + "</td>"
                     )
                 );

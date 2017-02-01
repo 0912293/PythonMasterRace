@@ -20,7 +20,7 @@ $(function () {
 function checkAll() {
     checkSort();
     checkFilter();
-});
+}
 
 function updateAll() {
     enableLoader();
@@ -40,8 +40,6 @@ function disableLoader() {
         document.getElementById('LoaderSvg').style.display = 'none';
         document.getElementById('ProductContainer').style.display = 'inline'
     });
-}
-    checkFilter();
 }
 
 

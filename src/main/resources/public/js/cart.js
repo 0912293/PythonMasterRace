@@ -38,7 +38,7 @@ function updatePage(data) {
                     "<td><input type = 'checkbox'  value='"+ item.games_id + "' id = 'cartchk'" + item.games_id + "'/></td>" +
                     "<td>" + item.games_name + "</td>" +
                     "<td>" + item.games_platform + "</td>" +
-                    "<td>" + item.games_price + "</td>" +
+                    "<td>&euro;" + item.games_price + "</td>" +
                     "<td>" + item.amount + "</td>"
                 )
             );}
@@ -50,7 +50,7 @@ function updatePage(data) {
                         "<td><input type = 'checkbox'  value='"+ item.platform_id + "' id = 'cartchk'" + item.platform_id + "'/></td>" +
                         "<td>" + item.platform_name + "</td>" +
                         "<td>" + item.platform_colour + "</td>" +
-                        "<td>" + item.platform_price + "</td>" +
+                        "<td>&euro;" + item.platform_price + "</td>" +
                         "<td>" + item.amount + "</td>"
                     ));}
             }
