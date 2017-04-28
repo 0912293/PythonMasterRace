@@ -24,7 +24,7 @@ public class MailModel implements Model {
         multipart.addBodyPart(messageBodyPart);
         mailMessage.setContent(multipart);
         Transport transport = mailSession.getTransport("smtp");
-        transport.connect("smtp.gmail.com", "steensupp0rt", "steen123321steen");
+        transport.connect("smtp.gmail.com", "steensupp0rt", "***");
         transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
         transport.close();
     }
